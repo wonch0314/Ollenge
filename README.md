@@ -2,5 +2,5 @@
 
 + 팀장: 원찬호 (Front-end)
 - 팀원
-  
-  - 김현영 (Frone-end)
+  - 김현영 (Front-end)
+  - 이도경 (Back-end)
