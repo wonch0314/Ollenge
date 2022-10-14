@@ -6,3 +6,4 @@
   - 이도경 (Back-end)
   - 우시은 (Back-end, Infra)
   - 조혜림 (Front-end, UX/UI)
+  - 홍제민(Front-end)
