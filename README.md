@@ -18,7 +18,7 @@
 [분류] 이슈 이름
 ```
 
-- 분류 : FE, BE, INFRA, 설계, 기획, 발표
+- 분류 : FE, BE, INFRA, 설계, 기획, 발표, ETC
 
 ### Sprint
 
