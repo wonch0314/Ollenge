@@ -2,10 +2,17 @@
 
 ## 서비스 소개
 
+### 기술 스택
+
+- Front-end : Nginx, React Native, Material UI
+- Back-end : Spring Boot, JPA, QueryDSL
+- Infra, etc : Docker, Jenkins
 
 ## 팀 소개
 
 ### 팀 명
+
+- 밍기뉴
 
 ### 팀원 소개
 
