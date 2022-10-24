@@ -22,11 +22,11 @@ public class Report {
     long reportId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "report_user_id")
+    @JoinColumn(name = "report_user_id", nullable = false)
     User reportUserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reported_user_id")
+    @JoinColumn(name = "reported_user_id", nullable = false)
     User reportedUserId;
 
     @Column(nullable = false)
