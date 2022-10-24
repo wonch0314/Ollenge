@@ -30,12 +30,16 @@ public class Challenge {
     @Column(length = 50, nullable = false)
     String challengeName;
 
+    @Column(nullable = false)
     LocalDate startDate;
 
+    @Column(nullable = false)
     LocalDate endDate;
 
+    @Column(nullable = false)
     LocalTime startTime;
 
+    @Column(nullable = false)
     LocalTime endTime;
 
     @Column(length = 8, nullable = false)

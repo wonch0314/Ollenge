@@ -1,10 +1,11 @@
 package com.ollenge.db.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,28 +14,21 @@ import java.time.LocalTime;
 @Builder
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class ChallengePreset {
+public class Feed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long challengePresetId;
+    long feedId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "participation_id")
+    Participation participation;
 
     @Column(nullable = false)
-    String challengePresetImg;
+    @CreatedDate
+    LocalDateTime createdDatetime;
 
     @Column(nullable = false)
-    String presetName;
-
-    @Column(length = 50, nullable = false)
-    String topic;
-
-    @Column(nullable = false)
-    LocalTime startTime;
-
-    @Column(nullable = false)
-    LocalTime endTime;
-
-    @Column(length = 100, nullable = false)
-    String description;
+    String feedImg;
 
 }
