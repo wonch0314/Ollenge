@@ -21,7 +21,7 @@ public class Feed {
     long feedId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "participation_id")
+    @JoinColumn(name = "participation_id", nullable = false)
     Participation participation;
 
     @Column(nullable = false)

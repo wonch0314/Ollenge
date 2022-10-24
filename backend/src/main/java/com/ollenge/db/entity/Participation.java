@@ -19,11 +19,11 @@ public class Participation {
     long participationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "challenge_id")
+    @JoinColumn(name = "challenge_id", nullable = false)
     Challenge challenge;
 
 }

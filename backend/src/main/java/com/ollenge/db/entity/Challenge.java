@@ -1,6 +1,7 @@
 package com.ollenge.db.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.time.LocalTime;
 @Builder
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@DynamicInsert
 public class Challenge {
 
     @Id
@@ -51,6 +53,6 @@ public class Challenge {
     @Column(length = 100)
     String penaltyContent;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "int default 0")
     int challengeScore;
 }

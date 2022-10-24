@@ -21,7 +21,7 @@ public class Badge {
     long badgeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     User user;
 
     @Column(length = 10, nullable = false)

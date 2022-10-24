@@ -1,6 +1,7 @@
 package com.ollenge.db.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Builder
 @AllArgsConstructor
+@DynamicInsert
 public class User {
 
     @Id
@@ -33,7 +35,7 @@ public class User {
     @Column(length = 300)
     String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "int default 0")
     int userScore;
 
 }
