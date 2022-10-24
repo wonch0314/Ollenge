@@ -31,3 +31,16 @@
   + 해당오류를 해결하기 위해서 `npm start --tunnel` 를 통해 해결할 수 있다.
   + 또한, 동일한 Wi-fi에 접속하고 있어야만 가능하다!
 
+---
+
+[React Native UI Framework](https://ccusean.tistory.com/entry/React-Native-UI-Components-Library-Top-3)
+
+1. React Native Elements
++ 쉬운 커스터마이징과 약 3년간 부동의 1위 자리를 지키고 있는 라이브러리이다.
+
+2. React Native Paper
++ 꾸준히 잘 성장하고 있는 컴포넌트 라이브러리이다.
++ 구글 Material Design 가이드라인을 준수하고 잘 반영되어 있다.
+
+3. Native Base
++ 호환성의 문제로 점유율이 하락하였으나,과거에는 1위를 자리하던 UI 컴포넌트 라이브러리이다.
