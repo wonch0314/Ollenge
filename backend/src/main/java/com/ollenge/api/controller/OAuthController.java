@@ -1,6 +1,9 @@
 package com.ollenge.api.controller;
 
+import com.ollenge.api.response.UserLoginPostRes;
 import com.ollenge.api.service.OAuthService;
+import com.ollenge.common.util.JwtTokenUtil;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,22 +19,24 @@ public class OAuthController {
     OAuthService oAuthService;
 
     @GetMapping("/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestParam String accessToken) {
+    public ResponseEntity<UserLoginPostRes> kakaoLogin(@RequestParam String accessToken) {
         String userId = "";
 
         try {
-
-            // 존재하면 로그인
-
-            // 존재하지 않으면 계정 추가
+            JSONObject jsonObject = oAuthService.getKakaoUser(accessToken);
+            userId = jsonObject.getString("id");
+            // 존재하지 않으면 회원가입
+            if (!oAuthService.checkUser(jsonObject)) {
+                oAuthService.createUser(jsonObject);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return ResponseEntity.status(400).body(UserLoginPostRes.of("카카오 로그인 실패", 400, null));
         }
 
-
-        return null;
+        // ** JwtTokenUtil 확인 **
+        return ResponseEntity.status(200).body(UserLoginPostRes.of("카카오 로그인 성공", 200, JwtTokenUtil.getToken(userId)));
     }
 
 
