@@ -16,8 +16,6 @@ import SignupScreen from "../components/StartScreen/SignupScreen"
 const Stack = createNativeStackNavigator()
 
 function StartScreen({ startScreenChange }) {
-  const [isSignup, setIsSignup] = useState(0)
-
   return (
     <NavigationContainer style={{ flex: 1 }}>
       <Stack.Navigator
