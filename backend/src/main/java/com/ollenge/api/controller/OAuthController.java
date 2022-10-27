@@ -35,7 +35,6 @@ public class OAuthController {
             return ResponseEntity.status(400).body(UserLoginPostRes.of("카카오 로그인 실패", 400, null));
         }
 
-        // ** JwtTokenUtil 확인 **
         return ResponseEntity.status(200).body(UserLoginPostRes.of("카카오 로그인 성공", 200, JwtTokenUtil.getToken(userId)));
     }
 
