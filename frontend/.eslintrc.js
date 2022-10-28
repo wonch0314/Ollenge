@@ -3,7 +3,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended"],
+  extends: ["eslint:recommended", "plugin:react/all"],
   overrides: [],
   parserOptions: {
     ecmaVersion: "latest",
@@ -12,7 +12,7 @@ module.exports = {
   plugins: ["react"],
   rules: {
     indent: ["error", 2],
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", 0],
     quotes: ["error", "double"],
     semi: ["error", "never"],
   },
