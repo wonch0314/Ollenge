@@ -1,18 +1,19 @@
-import { View, StyleSheet } from "react-native"
+import React from "react"
+
+import { StyleSheet } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 
 import ColorSet from "../../style/ColorSet"
-import AppText from "../common/AppText"
 import AppBoldText from "../common/AppBoldText"
 import ImagePickerContainer from "../common/ImagePicker"
+import TextInputContainer from "../common/TextInputContainer"
 
 function SignupScreen() {
   return (
     <LinearGradient style={styles.rootScreen} colors={["white", `${ColorSet.paleBlueColor(100)}`]}>
-      <View>
-        <AppBoldText>회원 정보 설정</AppBoldText>
-        <ImagePickerContainer />
-      </View>
+      <AppBoldText>회원 정보 설정</AppBoldText>
+      <ImagePickerContainer />
+      <TextInputContainer />
     </LinearGradient>
   )
 }
