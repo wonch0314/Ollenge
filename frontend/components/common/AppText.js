@@ -3,13 +3,23 @@ import ColorSet from "../../style/ColorSet"
 
 /*
 Text 컴포넌트
-color prop으로 아래 theme 5개 중 하나를 선택해서 넣고
-size prop으로, 숫자를 넣습니다.
+color prop
+아래 theme 5개 중 하나를 선택해서 넣고
+
+size prop
+숫자를 넣습니다.
+
+weight prop
+'normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900'
+중 1개를 택해서 넣습니다.
+
 기본값은 각각 navy, 30px입니다.
+
 */
 const AppText = (props) => {
   const selectedColor = props.color ? props.color : "navy"
   const selectedSize = props.size ? parseInt(props.size) : 30
+  const selectedWeight = props.weight ? props.weight : "normal"
 
   const theme = {
     orange: ColorSet.orangeColor(1),
@@ -24,6 +34,7 @@ const AppText = (props) => {
       style={{
         color: theme[selectedColor],
         fontSize: selectedSize,
+        fontWeight: selectedWeight,
       }}
     >
       {props.children}
