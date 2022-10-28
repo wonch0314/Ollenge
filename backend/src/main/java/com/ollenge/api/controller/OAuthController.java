@@ -12,18 +12,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/oauth")
+@RequestMapping("/oauth")
 public class OAuthController {
 
     @Autowired
     OAuthService oAuthService;
 
     @GetMapping("/kakao")
-    public ResponseEntity<UserLoginPostRes> kakaoLogin(@RequestParam String accessToken) {
+    public ResponseEntity<UserLoginPostRes> kakaoLogin(@RequestParam String code) {
         String userId = "";
+        System.out.println("kakao login test");
+        System.out.println(code);
 
         try {
-            JSONObject jsonObject = oAuthService.getKakaoUser(accessToken);
+            JSONObject jsonObject = oAuthService.getKakaoUser(code);
             userId = jsonObject.getString("id");
             // 존재하지 않으면 회원가입
             if (!oAuthService.checkUser(jsonObject)) {

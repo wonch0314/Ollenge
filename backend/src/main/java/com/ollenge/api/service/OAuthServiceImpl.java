@@ -59,6 +59,10 @@ public class OAuthServiceImpl implements OAuthService {
 
     @Override
     public User createUser(JSONObject jsonObject) throws JSONException {
-        return null;
+        User user = new User();
+        user.setNickname("testname");
+        user.setAuthCode("testcode");
+        user.setLoginType(jsonObject.getString("loginType"));
+        return userRepository.save(user);
     }
 }
