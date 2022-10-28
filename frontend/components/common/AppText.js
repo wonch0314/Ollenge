@@ -1,3 +1,4 @@
+import React from "react-native"
 import { Text } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import { RFPercentage } from "react-native-responsive-fontsize"

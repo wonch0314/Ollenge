@@ -1,7 +1,5 @@
-import { View, StyleSheet, ScrollView } from "react-native"
-import { Text, Card } from "react-native-paper"
-import { Pressable } from "react-native"
-import styled, { ThemeProvider } from "styled-components/native"
+import React from "react-native"
+import styled from "styled-components"
 import AppText from "../components/common/AppText"
 import { NavigationContainer } from "@react-navigation/native"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
@@ -12,25 +10,6 @@ import ColorSet from "../style/ColorSet"
 
 function MyCGScreen() {
   const Tab = createMaterialTopTabNavigator()
-
-  const tempRankingCgList = [
-    {
-      challengeImg: "tempImage",
-      challengeName: "하루 3번 물마시기",
-      startDate: "2022-10-21",
-      endDate: "2022-10-21",
-    },
-    {
-      challengeImg: "tempImage",
-      challengeName: "하루 3번 물마시기",
-      startDate: "2022-10-21",
-      endDate: "2022-10-21",
-    },
-  ]
-  const tempNormalCgList = []
-  const tempFunc = () => {
-    console.log("앙냥냥")
-  }
 
   return (
     <Body>
@@ -73,19 +52,10 @@ function MyCGScreen() {
 
 export default MyCGScreen
 
-const styles = StyleSheet.create({})
-
 const Body = styled.View`
   flex: 1;
   background-color: white;
   width: 100%;
-`
-
-const StatusTab = styled.Pressable`
-  flex: 3;
-  height: 70%;
-  justify-content: center;
-  align-items: center;
 `
 
 // styled-components 부분
@@ -106,11 +76,4 @@ const HeaderTextView = styled.View`
 
 const HeaderTextColumn = styled.View`
   flex: 1;
-`
-
-const HeaderTabView = styled.View`
-  flex: 4;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-end;
 `
