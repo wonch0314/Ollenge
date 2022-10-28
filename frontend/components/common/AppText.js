@@ -1,5 +1,6 @@
 import { Text } from "react-native"
 import ColorSet from "../../style/ColorSet"
+import { RFPercentage } from "react-native-responsive-fontsize"
 
 /*
 Text 컴포넌트
@@ -27,6 +28,7 @@ const AppText = (props) => {
     yellow: ColorSet.yellowColor(1),
     paleBlue: ColorSet.paleBlueColor(1),
     green: ColorSet.greenColor(1),
+    black: ColorSet.blackColor(1),
   }
 
   return (
