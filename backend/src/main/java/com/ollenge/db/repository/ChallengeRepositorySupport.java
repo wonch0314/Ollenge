@@ -21,7 +21,10 @@ public class ChallengeRepositorySupport {
         List<Challenge> rankingChallengeTopicPeriod = jpaQueryFactory
                 .select(qChallenge)
                 .from(qChallenge)
-                .where(qChallenge.startDate.eq(startDate), qChallenge.endDate.eq(endDate), qChallenge.challengeTopic.eq(challengeTopic))
+                .where(qChallenge.challengePreset.isNotNull()
+                        .and(qChallenge.startDate.eq(startDate))
+                        .and(qChallenge.endDate.eq(endDate))
+                        .and(qChallenge.challengeTopic.eq(challengeTopic)))
                 .fetch();
         return rankingChallengeTopicPeriod;
     }

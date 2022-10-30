@@ -1,16 +1,11 @@
 package com.ollenge.api.service;
 
-import com.ollenge.api.exception.DuplicatedPeriodTopicRankingChallengeException;
-import com.ollenge.api.exception.InvalidAuthTypeException;
-import com.ollenge.api.exception.InvalidDateTimeException;
-import com.ollenge.api.exception.InvalidFieldException;
+import com.ollenge.api.exception.*;
+import com.ollenge.api.request.ChallengeParticipationPostReq;
 import com.ollenge.api.request.ChallengePostReq;
 import com.ollenge.api.response.data.ChallengeCreatedData;
 import com.ollenge.common.util.LocalDateTimeUtils;
-import com.ollenge.db.entity.AuthClassification;
-import com.ollenge.db.entity.Challenge;
-import com.ollenge.db.entity.ChallengePreset;
-import com.ollenge.db.entity.ClassificationType;
+import com.ollenge.db.entity.*;
 import com.ollenge.db.repository.*;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -29,12 +24,12 @@ public class ChallengeService {
     private final ChallengeRepositorySupport challengeRepositorySupport;
     private final ClassificationTypeRepository classificationTypeRepository;
     private final AuthClassificationRepository authClassificationRepository;
-    private final AuthClassificationRepositorySupport authClassificationRepositorySupport;
+    private final ParticipationRepository participationRepository;
 
     public ChallengeCreatedData createChallenge(ChallengePostReq challengePostReq) throws NoSuchElementException, InvalidDateTimeException, DuplicatedPeriodTopicRankingChallengeException, InvalidAuthTypeException, InvalidFieldException {
         ChallengePreset challengePreset = null;
         // 날짜 검증
-        if (!LocalDateTimeUtils.isValidStartDate(challengePostReq.getStartDate()) && !LocalDateTimeUtils.isValidEndDate(challengePostReq.getStartDate(), challengePostReq.getEndDate()))
+        if (!LocalDateTimeUtils.isValidStartDate(challengePostReq.getStartDate()) || !LocalDateTimeUtils.isValidEndDate(challengePostReq.getStartDate(), challengePostReq.getEndDate()))
             throw new InvalidDateTimeException("Start date or End Date invalid exception");
         //동일 주제, 기간 중복 검증
         if (challengePostReq.getChallengePresetId() != null) {
@@ -83,7 +78,37 @@ public class ChallengeService {
             authClassificationRepository.save(authClassification);
         }
 
+        Participation participation = Participation.builder()
+                .user(User.builder().userId(challengePostReq.getUserId()).build())
+                .challenge(challenge)
+                .build();
+        participationRepository.save(participation);
+
         return ChallengeCreatedData.of(challengeId, inviteCode);
+    }
+
+    public void participateChallenge(ChallengeParticipationPostReq challengeParticipationPostReq) throws NoSuchElementException, DuplicatedPeriodTopicRankingChallengeException, InvalidChallengeIdException, AlreadyParticipatedException, InvalidDateTimeException, InvalidInviteCodeException {
+        Challenge challenge = challengeRepository.findById(challengeParticipationPostReq.getChallengeId())
+                .orElseThrow(() -> { return new InvalidChallengeIdException("Invalid challenge ID " + challengeParticipationPostReq.getChallengeId()); });;
+        User user = User.builder().userId(challengeParticipationPostReq.getUserId()).build();
+        
+        if (!challenge.getInviteCode().equals(challengeParticipationPostReq.getInviteCode())) {
+            throw new InvalidInviteCodeException("Invalid invite code");
+        }
+        else if (challenge.getChallengePreset() != null && isDuplicatedTopicPeriod(challenge.getStartDate(), challenge.getEndDate(), challenge.getChallengeTopic())) {
+            throw new DuplicatedPeriodTopicRankingChallengeException("Duplicated ranking challenge that has same period and topic exception");
+        }
+        else if (participationRepository.findByChallengeAndUser(challenge, user).size() > 0) {
+            throw new AlreadyParticipatedException("Already participated challenge.");
+        }
+        else if (!LocalDateTimeUtils.isValidStartDate(challenge.getStartDate())) {
+            throw new InvalidDateTimeException("Already started challenge.");
+        }
+        Participation participation = Participation.builder()
+                .user(user)
+                .challenge(challenge)
+                .build();
+        participationRepository.save(participation);
     }
 
     private boolean isValidAuthType(String authType) {
