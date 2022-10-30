@@ -78,7 +78,6 @@ public class ChallengeService {
             challenge.setChallengeId(challengeId);
             AuthClassification authClassification = AuthClassification.builder()
                     .classificationType(classificationType)
-//                    .classificationType(ClassificationType.builder().classificationTypeId(challengePostReq.getClassificationTypeID()).build())
                     .challenge(challenge)
                     .build();
             authClassificationRepository.save(authClassification);

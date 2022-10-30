@@ -4,10 +4,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -15,7 +12,7 @@ import java.time.LocalTime;
 @Setter
 public class ChallengePostReq {
     @ApiParam(value = "유저 ID", required = true)
-    @NotBlank
+    @Positive
     private Long userId;
 
     @ApiParam(value = "챌린지 프리셋 ID")
@@ -44,19 +41,19 @@ public class ChallengePostReq {
     private String authType;
 
     @ApiParam(value = "챌린지 시작일", required = true)
-    @NotBlank
+    @NotNull
     private LocalDate startDate;
 
     @ApiParam(value = "챌린지 종료일", required = true)
-    @NotBlank
+    @NotNull
     private LocalDate endDate;
 
     @ApiParam(value = "챌린지 인증 시작 시간", required = true)
-    @NotBlank
+    @NotNull
     private LocalTime startTime;
 
     @ApiParam(value = "챌린지 인증 종료 시간", required = true)
-    @NotBlank
+    @NotNull
     private LocalTime endTime;
 
     @ApiParam(value = "챌린지 보상")

@@ -63,7 +63,7 @@ public class Challenge {
     @Column(nullable = false, columnDefinition = "int default 0")
     int challengeScore;
 
-    @Column(length = 300, nullable = false)
+    @Column(length = 300)
     String challengeDescription;
 
     @OneToOne(mappedBy = "challenge")

@@ -41,6 +41,6 @@ public class ChallengePreset {
     int stepCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classification_type_id", nullable = false)
+    @JoinColumn(name = "classification_type_id")
     ClassificationType classificationType;
 }

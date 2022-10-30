@@ -16,10 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
@@ -29,7 +26,6 @@ import java.util.NoSuchElementException;
 public class ChallengeController {
 
     private final ChallengeService challengeService;
-
 
     @PostMapping
     @ApiOperation(value = "글쓰기", notes = "댓글을 작성합니다")
@@ -65,4 +61,18 @@ public class ChallengeController {
         }
     }
 
+//    @GetMapping
+//    @ApiOperation(value = "글쓰기", notes = "댓글을 작성합니다")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "챌린지가 생성되었습니다."),
+//            @ApiResponse(code = 500, message = "서버 에러 발생")
+//    })
+//    public ResponseEntity<? extends BaseResponseBody> getChallenge() {
+//        try {
+//            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "테스트 성공"));
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));
+//        }
+//    }
 }
