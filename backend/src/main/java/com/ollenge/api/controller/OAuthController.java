@@ -25,7 +25,8 @@ public class OAuthController {
         System.out.println(code);
 
         try {
-            JSONObject jsonObject = oAuthService.getKakaoUser(code);
+            String token = oAuthService.getKakaoAccessToken(code);
+            JSONObject jsonObject = oAuthService.getKakaoUser(token);
             userId = jsonObject.getString("id");
             // 존재하지 않으면 회원가입
             if (!oAuthService.checkUser(jsonObject)) {
