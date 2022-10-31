@@ -8,7 +8,6 @@ const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from
 
 function KakaloLoginScreen() {
   const getCode = (target) => {
-    console.log(target)
     const exp = "code="
     const condition = target.indexOf(exp)
     if (condition !== -1) {
@@ -27,7 +26,9 @@ function KakaloLoginScreen() {
         javaScriptEnabled
         onMessage={(event) => {
           const data = event.nativeEvent.url
-          getCode(data)
+          if (data) {
+            getCode(data)
+          }
         }}
       />
     </View>
