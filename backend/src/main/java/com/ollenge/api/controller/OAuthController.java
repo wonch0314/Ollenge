@@ -21,12 +21,11 @@ public class OAuthController {
     @GetMapping("/kakao")
     public ResponseEntity<UserLoginPostRes> kakaoLogin(@RequestParam String code) {
         String userId = "";
-        System.out.println("kakao login test");
-        System.out.println(code);
 
         try {
             String token = oAuthService.getKakaoAccessToken(code);
             JSONObject jsonObject = oAuthService.getKakaoUser(token);
+            jsonObject.put("login_type", "kakao");
             userId = jsonObject.getString("id");
             // 존재하지 않으면 회원가입
             if (!oAuthService.checkUser(jsonObject)) {

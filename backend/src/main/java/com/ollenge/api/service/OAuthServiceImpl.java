@@ -25,8 +25,6 @@ public class OAuthServiceImpl implements OAuthService {
         String accessToken="";
         String reqURL="https://kauth.kakao.com/oauth/token";
 
-        System.out.println("test get access token");
-
         try {
             URL url=new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -45,9 +43,6 @@ public class OAuthServiceImpl implements OAuthService {
             bw.write(sb.toString());
             bw.flush();
 
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-
             //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
@@ -57,14 +52,11 @@ public class OAuthServiceImpl implements OAuthService {
                 result.append(line);
             }
 
-            System.out.println(result);
-
             JSONObject jObject=new JSONObject(result.toString());
             accessToken = jObject.getString("access_token");
 
             br.close();
             bw.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +83,6 @@ public class OAuthServiceImpl implements OAuthService {
             while ((line = br.readLine()) != null) {
                 result.append(line);
             }
-            System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -104,17 +95,15 @@ public class OAuthServiceImpl implements OAuthService {
     @Override
     public boolean checkUser(JSONObject jsonObject) throws JSONException {
         String id = jsonObject.getString("id");
-        System.out.println("id : " + id);
-        System.out.println(userRepository.findUserByUserId(Long.parseLong(id)).isPresent());
-        return userRepository.findUserByUserId(Long.parseLong(id)).isPresent();
+        return userRepository.findUserByAuthCode(id).isPresent();
     }
 
     @Override
     public User createUser(JSONObject jsonObject) throws JSONException {
         User user = new User();
         user.setNickname("testname");
-        user.setAuthCode("testcode");
-        user.setLoginType("testtype");
+        user.setAuthCode(jsonObject.getString("id"));
+        user.setLoginType(jsonObject.getString("login_type"));
         return userRepository.save(user);
     }
 }
