@@ -1,6 +1,7 @@
 import React from "react-native"
 import { View, ScrollView, Image, Dimensions } from "react-native"
 import AppText from "../common/AppText"
+import AppBoldText from "../common/AppBoldText"
 import styled from "styled-components"
 import ChallengingCard from "./ChallengingCard"
 import {
@@ -15,7 +16,7 @@ const Challenging = () => {
       title: "하루 3잔 물마시기",
       teamName: "찬호와 아이들",
       memberNumber: 4,
-      progress: 50,
+      progress: 20,
       startDate: "10.26",
       endDate: "11.05",
     },
@@ -45,7 +46,7 @@ const Challenging = () => {
         <IconView>
           <RankingChallengeIcon />
         </IconView>
-        <AppText size="30">랭킹 챌린지</AppText>
+        <AppBoldText>랭킹 챌린지</AppBoldText>
       </DivideView>
       {tempList
         .filter((listItem) => listItem.isChallenge)
@@ -56,7 +57,7 @@ const Challenging = () => {
         <IconView>
           <NormalChallengeIcon />
         </IconView>
-        <AppText size="30">일반 챌린지</AppText>
+        <AppBoldText>일반 챌린지</AppBoldText>
       </DivideView>
       {tempList
         .filter((listItem) => !listItem.isChallenge)
