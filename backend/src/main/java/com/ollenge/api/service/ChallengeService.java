@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -111,6 +112,7 @@ public class ChallengeService {
         participationRepository.save(participation);
     }
 
+    @Transactional
     public void giveUpChallenge(long challengeId, long userId) throws NoSuchElementException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException {
         Challenge challenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> { return new InvalidChallengeIdException("Invalid challenge ID " + challengeId); });

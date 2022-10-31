@@ -114,7 +114,7 @@ public class ChallengeController {
     public ResponseEntity<? extends BaseResponseBody> giveUpChallenge(@PathVariable long challengeId, @PathVariable long userId) {
         try {
             challengeService.giveUpChallenge(challengeId, userId);
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "챌린지 참여 성공"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "챌린지 포기 성공"));
         } catch (InvalidChallengeIdException invalidChallengeIdException) {
             invalidChallengeIdException.printStackTrace();
             return ResponseEntity.status(400).body(BaseResponseBody.of(400, "해당하는 챌린지가 없습니다."));
