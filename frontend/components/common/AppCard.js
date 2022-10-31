@@ -21,7 +21,7 @@ export default function AppCard(props) {
       style={{
         backgroundColor: "#edf8ff",
         height: parseInt(height),
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
       }}
     >
