@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import React from "react-native"
+=======
+import React from "react"
+
+>>>>>>> develop
 import { Text } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import { RFPercentage } from "react-native-responsive-fontsize"
@@ -30,6 +35,7 @@ const AppText = (props) => {
     paleBlue: ColorSet.paleBlueColor(1),
     green: ColorSet.greenColor(1),
     black: ColorSet.blackColor(1),
+    deepOrange: ColorSet.deepOrangeColor(1),
   }
 
   return (

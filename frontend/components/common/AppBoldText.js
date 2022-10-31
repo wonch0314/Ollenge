@@ -1,3 +1,5 @@
+import React from "react"
+
 import { Text } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import { RFPercentage } from "react-native-responsive-fontsize"
@@ -8,7 +10,7 @@ color prop으로 아래 theme 5개 중 하나를 선택해서 넣고
 size prop으로, 숫자를 넣습니다.
 기본값은 각각 navy, 30px입니다.
 */
-const AppText = (props) => {
+const AppBoldText = (props) => {
   const selectedColor = props.color ? props.color : "navy"
   const selectedSize = props.size ? parseInt(props.size) : 3
 
@@ -19,6 +21,7 @@ const AppText = (props) => {
     paleBlue: ColorSet.paleBlueColor(1),
     green: ColorSet.greenColor(1),
     black: ColorSet.blackColor(1),
+    deepOrange: ColorSet.deepOrangeColor(1),
   }
 
   return (
@@ -34,4 +37,4 @@ const AppText = (props) => {
   )
 }
 
-export default AppText
+export default AppBoldText
