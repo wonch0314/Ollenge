@@ -31,7 +31,7 @@ const MyComponent = () => {
     })
   }
 
-  const [index, setIndex] = React.useState(4)
+  const [index, setIndex] = React.useState(2)
   const [routes] = React.useState([
     {
       key: "myCG",
