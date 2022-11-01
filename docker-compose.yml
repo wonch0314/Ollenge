@@ -8,7 +8,7 @@ services:
     container_name: mysql
     restart: always
     volumes:
-      - ./deployment/db-init:/docker-entrypoint-initdb.d
+      - ./deployment/db-init/:/docker-entrypoint-initdb.d/
     networks:
       - app-network
     ports:
@@ -51,8 +51,8 @@ services:
     container_name: certbot
     image: certbot/certbot
     volumes:
-      - ./certbot-etc:/etc/letsencrypt
-      - ./dist:/var/www/html
+      - ./deployment/certbot-etc:/etc/letsencrypt
+      - ./deployment/dist:/var/www/html
     command: renew
   nginx:
     container_name: nginx
@@ -62,9 +62,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./dist:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
-      - ./certbot-etc:/etc/letsencrypt
+      - ./deployment/dist:/var/www/html
+      - ./deployment/nginx-conf:/etc/nginx/conf.d
+      - ./deployment/certbot-etc:/etc/letsencrypt
     networks:
       - app-network
     depends_on:
@@ -78,7 +78,6 @@ services:
       - "8000:8080"
       - "50000:50000"
     volumes:
-      - /jenkins:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   certbot-etc:
