@@ -35,6 +35,7 @@ const AppText = (props) => {
         color: theme[selectedColor],
         fontSize: RFPercentage(selectedSize),
         fontFamily: "HyeminRegular",
+        textAlign: "center",
       }}
     >
       {props.children}
