@@ -61,7 +61,7 @@ const Body = styled.View`
 
 // Header
 const Header = styled.View`
-  flex: 1.5;
+  /* flex: 1.5; */
   background-color: white;
 `
 
