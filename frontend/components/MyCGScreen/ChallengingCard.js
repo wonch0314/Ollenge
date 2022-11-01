@@ -16,6 +16,8 @@ export default function ChallengingCard(props) {
   const progress = props.challengeInfo.progress
   const startDate = props.challengeInfo.startDate
   const endDate = props.challengeInfo.endDate
+  // 카드 높이 * 70%(상단높이) * 상단높이 위쪽 깎기 * 보다 약간 작게
+  const circleHeightWidth = 200 * 0.7 * 0.95 * 0.75
   return (
     <View
       style={{
@@ -44,7 +46,7 @@ export default function ChallengingCard(props) {
             {/* 전체 넓이 지정 View */}
             <View
               style={{
-                height: "95%",
+                height: "85%",
                 width: windowWidth * 0.8,
                 flexDirection: "row",
               }}
@@ -59,9 +61,10 @@ export default function ChallengingCard(props) {
                 <View
                   style={{
                     backgroundColor: "white",
-                    borderRadius: 200 * 0.7 * 0.95 * 0.9,
-                    width: 200 * 0.7 * 0.95 * 0.9 + 2,
-                    height: 200 * 0.7 * 0.95 * 0.9 + 2,
+                    borderRadius: circleHeightWidth,
+                    // 카드 높이 * 70%(상단높이) * 상단높이 위쪽 깎기 * 보다 약간 작게
+                    width: circleHeightWidth,
+                    height: circleHeightWidth,
                     zIndex: 10,
                     elevation: 7,
                   }}
@@ -74,12 +77,12 @@ export default function ChallengingCard(props) {
                   style={{
                     backgroundColor: "#80A7B3",
                     position: "absolute",
-                    width: windowWidth * 0.8 - 200 * 0.7 * 0.95 * 0.9 * 0.5,
-                    borderRightRadius: 200 * 0.7 * 0.95 * 0.9 * 0.4,
-                    borderBottomRightRadius: 200 * 0.7 * 0.95 * 0.9 * 0.4,
-                    borderTopRightRadius: 200 * 0.7 * 0.95 * 0.9 * 0.4,
-                    left: 200 * 0.7 * 0.95 * 0.9 * 0.5,
-                    height: 200 * 0.7 * 0.95 * 0.9 * 0.4,
+                    width: windowWidth * 0.8 - circleHeightWidth * 0.5,
+                    borderRightRadius: circleHeightWidth * 0.4,
+                    borderBottomRightRadius: circleHeightWidth * 0.4,
+                    borderTopRightRadius: circleHeightWidth * 0.4,
+                    left: circleHeightWidth * 0.5,
+                    height: circleHeightWidth * 0.45,
                     zIndex: 5,
                     flexDirection: "row",
                     alignItems: "center",
@@ -90,14 +93,14 @@ export default function ChallengingCard(props) {
                   <View
                     style={{
                       position: "absolute",
-                      left: (200 * 0.7 * 0.95 * 0.9) / 2,
+                      left: (200 * 0.7 * 0.95 * 0.75) / 2,
                       right: 10,
                       height: "100%",
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    <AppBoldText>하루 3잔 물마시기</AppBoldText>
+                    <AppBoldText color="white">{title}</AppBoldText>
                   </View>
                 </View>
               </View>
@@ -111,8 +114,9 @@ export default function ChallengingCard(props) {
                   style={{
                     position: "absolute",
                     top: 200 * 0.7 * 0.95 * 0.9 * 0.4,
-                    height: 200 * 0.7 * 0.95 * 0.9 * 0.6,
-                    left: 0,
+                    height: circleHeightWidth * 0.55,
+                    width: windowWidth * 0.8 - circleHeightWidth,
+                    // left: 0,
                     right: 0,
                     // backgroundColor: "red",
                     justifyContent: "center",
@@ -122,21 +126,22 @@ export default function ChallengingCard(props) {
                   <View
                     style={{
                       flexDirection: "row",
+                      alignItems: "center",
                     }}
                   >
-                    <AppText>{teamName}</AppText>
+                    <AppText size="2">{teamName}</AppText>
                     <View
                       style={{
-                        width: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.4,
-                        height: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.4,
-                        borderRadius: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.4,
+                        width: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.5,
+                        height: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.5,
+                        borderRadius: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.5,
                         marginLeft: 5,
                         backgroundColor: "#FCBE32",
                         justifyContent: "center",
                         alignItems: "center",
                       }}
                     >
-                      <AppText>{memberNumber}</AppText>
+                      <AppText size="2">{memberNumber}명</AppText>
                     </View>
                   </View>
                 </View>
@@ -182,7 +187,7 @@ export default function ChallengingCard(props) {
                         width: 30,
                         height: 30,
                         left: (windowWidth * 0.8 * progress) / 100 - 15,
-                        bottom: 5,
+                        bottom: 4,
                       }}
                     >
                       <RunningIcon

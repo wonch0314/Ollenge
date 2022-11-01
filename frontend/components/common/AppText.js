@@ -27,6 +27,7 @@ const AppText = (props) => {
     black: ColorSet.blackColor(1),
     deepOrange: ColorSet.deepOrangeColor(1),
     white: ColorSet.whiteColor(1),
+    lightBlue: ColorSet.lightBlueColor(1),
   }
 
   return (
@@ -35,6 +36,7 @@ const AppText = (props) => {
         color: theme[selectedColor],
         fontSize: RFPercentage(selectedSize),
         fontFamily: "HyeminRegular",
+        textAlign: "center",
       }}
     >
       {props.children}
