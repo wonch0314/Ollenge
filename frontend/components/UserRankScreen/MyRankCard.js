@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, View, Dimensions, Image } from "react-native"
+import { Text, View, Dimensions, Image, StyleSheet } from "react-native"
 
 import styled from "styled-components/native"
 import { Avatar } from "react-native-paper"
@@ -21,10 +21,20 @@ const PaperBack = styled.View`
   flex: 1;
 `
 
+const styles = StyleSheet.create({
+  containerStyle: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+})
+
 export default function MyRankCard() {
   return (
     <MyRankArea>
-      <PaperBack>
+      <PaperBack style={styles.containerStyle}>
         <View
           style={{
             flexDirection: "row",
