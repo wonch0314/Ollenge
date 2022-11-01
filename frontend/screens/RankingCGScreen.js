@@ -7,12 +7,14 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import ColorSet from "../style/ColorSet"
 import Parcitipating from "../components/RankingCGScreen/Participating"
 import Proceeding from "../components/RankingCGScreen/Proceeeding"
+import TopMargin from "../components/common/TopMargin"
 
 function RankingCGScreen() {
   const Tab = createMaterialTopTabNavigator()
 
   return (
     <Body>
+      <TopMargin />
       {/* Header부분 */}
       <Header>
         <HeaderTextView>
