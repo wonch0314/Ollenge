@@ -16,7 +16,7 @@ function UserRankScreen() {
   return (
     <LinearGradient
       style={{ flex: 1 }}
-      colors={[`${ColorSet.paleBlueColor(1)}`, `${ColorSet.yellowColor(0.4)}`]}
+      colors={[`${ColorSet.paleBlueColor(1)}`, `${ColorSet.yellowColor(1)}`]}
       end={{ x: 0.5, y: 1 }}
     >
       <TitleText>유저 랭킹</TitleText>
