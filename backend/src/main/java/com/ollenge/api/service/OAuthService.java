@@ -21,6 +21,9 @@ public class OAuthService {
     @Value("${kakao.apikey}")
     private String apiKey;
 
+    @Value("${kakao.apiurl}")
+    private String apiURL;
+
     @Autowired
     UserRepository userRepository;
 
@@ -41,7 +44,7 @@ public class OAuthService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id="+apiKey);
-            sb.append("&redirect_uri=https://k7a501.p.ssafy.io/api/oauth/kakao");
+            sb.append("&redirect_uri=" + apiURL);
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();
