@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+    certbot:
+        image: certbot/certbot
+        volumes:
+            - ./certbot-etc:/etc/letsencrypt
+        command: certonly --webroot --webroot-path=/var/www/html --email ramtk6726@gmail.com --agree-tos --no-eff-email --staging -d k7a501.p.ssafy.io
+        depends_on:
+            - nginx
+
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx-conf:/etc/nginx/conf.d
+            - ./certbot-etc:/etc/letsencrypt
+        networks:
+            - app-network
+
+volumes:
+    certbot-etc:
+    nginx-conf:
+
+networks:
+    app-network:
+        driver: bridge
