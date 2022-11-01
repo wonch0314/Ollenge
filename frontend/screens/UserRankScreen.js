@@ -21,11 +21,6 @@ const TitleArea = styled.View`
   margin-top: ${statusBarHeight}px;
 `
 
-const TopRankArea = styled.View`
-  width: 100%;
-  height: ${deviceHeight * 0.2}px;
-  flex-direction: row;
-`
 const RanksArea = styled.View`
   width: 100%;
   align-items: center;
@@ -41,17 +36,15 @@ function UserRankScreen() {
     >
       <View style={{ position: "relative" }}>
         <TitleArea>
-          <AppText color="navy" size="4%" style={{ fontWeight: "bold" }}>
+          <AppText color="navy" size="4%" style={{ fontWeight: 900 }}>
             유저 랭킹
           </AppText>
         </TitleArea>
 
         {/* Top 3 보여주는 영역 */}
-        <TopRankArea>
+        <View style={{ width: "100%" }}>
           <TopUserCard />
-          <TopUserCard />
-          <TopUserCard />
-        </TopRankArea>
+        </View>
 
         {/* 내 랭크 정보를 보여주는 영역 */}
         <MyRankCard />

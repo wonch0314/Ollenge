@@ -1,32 +1,73 @@
 import React from "react"
-import { Image, Text, View } from "react-native"
+import { Image, Text, View, Dimensions } from "react-native"
+import { styles as shadowStyles } from "../common/AppCard"
+import Styled from "styled-components/native"
+import AppCard from "../common/AppCard"
+
+const deviceWidth = Dimensions.get("window").width
+
+const users = [
+  { rank: 1, nickname: "chanchan", score: 100 },
+  { rank: 2, nickname: "chanchan", score: 100 },
+  { rank: 3, nickname: "chanchan", score: 100 },
+]
+
+const WholeFrame = Styled.View`
+    width: 100%;
+    padding: 0px 12px;
+    flex-direction: row;
+    position: relative;
+    `
+const TopCard = Styled.View`
+  flex: 1;
+  width: ${deviceWidth / 3};
+  height: ${deviceWidth / 3};
+  margin: 0 2px;
+  background-color: white;
+  position: relative;
+`
 
 export default function TopUserCard() {
   return (
-    <View
-      alignItems="center"
-      style={{
-        backgroundColor: "white",
-        height: "100%",
-        borderRadius: 10,
-        marginLeft: 2,
-        marginRight: 2,
-      }}
-      flex={1}
-    >
-      <View flex={4}>
-        <Image
-          source={require("../../assets/images/default-image.png")}
-          style={{ width: "90%", height: "90%" }}
-        />
-        <Text>asdasd</Text>
-      </View>
-      <View flex={1}>
-        <Text>Chan0314</Text>
-      </View>
-      <View flex={1}>
-        <Text>15132점</Text>
-      </View>
-    </View>
+    <WholeFrame>
+      <TopCard style={shadowStyles.cardShadow}>
+        <View flex={1}>
+          <Image
+            source={require("../../assets/images/orange.png")}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+        <View alignItems="center">
+          <Text>Chan</Text>
+          <Text>1000점</Text>
+        </View>
+      </TopCard>
+
+      <TopCard style={shadowStyles.cardShadow}>
+        <View flex={1}>
+          <Image
+            source={require("../../assets/images/orange.png")}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+        <View alignItems="center">
+          <Text>Chan</Text>
+          <Text>1000점</Text>
+        </View>
+      </TopCard>
+
+      <TopCard style={shadowStyles.cardShadow}>
+        <View flex={1}>
+          <Image
+            source={require("../../assets/images/orange.png")}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+        <View alignItems="center">
+          <Text>Chan</Text>
+          <Text>1000점</Text>
+        </View>
+      </TopCard>
+    </WholeFrame>
   )
 }

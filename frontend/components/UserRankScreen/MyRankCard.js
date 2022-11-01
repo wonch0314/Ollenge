@@ -1,6 +1,6 @@
 import React from "react"
 import { Text, View, Dimensions, Image, StyleSheet } from "react-native"
-
+import { styles as shadowStyles } from "../common/AppCard"
 import styled from "styled-components/native"
 import { Avatar } from "react-native-paper"
 
@@ -21,20 +21,17 @@ const PaperBack = styled.View`
   flex: 1;
 `
 
-const styles = StyleSheet.create({
-  containerStyle: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-})
+const TextCover = styled.Text`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 40px;
+`
 
 export default function MyRankCard() {
   return (
     <MyRankArea>
-      <PaperBack style={styles.containerStyle}>
+      <PaperBack style={shadowStyles.cardShadow}>
         <View
           style={{
             flexDirection: "row",
@@ -58,9 +55,10 @@ export default function MyRankCard() {
             />
           </View>
           <View flex={2} style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text>
-              ChanChanChanChanChanChanChanChanChanChanChanChanChanChanChanChanChanChanChanChanChan
-            </Text>
+            <TextCover>
+              Chan Chan ChanChanChanChanChanChanChanChanChanChanChanChanChanChanCh
+              anChanChanChanChan
+            </TextCover>
           </View>
           <View flex={1.5} style={{ justifyContent: "center", alignItems: "center" }}>
             <Text>1290088</Text>
