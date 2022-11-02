@@ -15,6 +15,7 @@ import { OrangeLogo } from "../assets/images/index"
 import LoginScreen from "../components/StartScreen/LoginScreen"
 import SignupScreen from "../components/StartScreen/SignupScreen"
 import KakaloLoginScreen from "../components/StartScreen/KakaoLoginScreen"
+import GoogleLoginScreen from "../components/StartScreen/GoogleLoginScreen"
 
 const Stack = createNativeStackNavigator()
 
@@ -34,6 +35,7 @@ function StartScreen({ startScreenChange }) {
         </Stack.Screen>
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Kakao" component={KakaloLoginScreen} />
+        <Stack.Screen name="Google" component={GoogleLoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

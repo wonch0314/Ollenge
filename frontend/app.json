@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -27,6 +29,11 @@
     },
     "web": {
       "favicon": "./assets/iamges/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a69ffeed-7a6a-4e6f-ae90-c105edd2a93b"
+      }
     }
   }
 }
