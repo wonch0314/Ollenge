@@ -5,6 +5,7 @@ import * as Google from "expo-auth-session/providers/google"
 import { View } from "react-native"
 import styled from "styled-components/native"
 
+import { EXPO_CLIENT_ID, ANDROID_CLIENT_ID, IOS_CLIENT_ID } from "@env"
 import { GoogleLogo } from "../../assets/images"
 import AppText from "../common/AppText"
 
@@ -12,10 +13,9 @@ WebBrowser.maybeCompleteAuthSession()
 
 function GoogleButton(props) {
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: "740839938048-b0tlrmtd14uuvrb37agu1nunshvmcf49.apps.googleusercontent.com",
-    iosClientId: "740839938048-iajk03amiojgqj13so5o9tq915fli6h8.apps.googleusercontent.com",
-    androidClientId: "740839938048-1ed9e84qce1d0hkplkv80cd78m99bngm.apps.googleusercontent.com",
-    webClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+    expoClientId: EXPO_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
   })
 
   React.useEffect(() => {
