@@ -124,7 +124,7 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
                 status_code=403,
                 content={
                     "message": f"토큰이 제대로 입력되지 않았습니다.",
-                    "errcode": 4,
+                    "errcode": 3,
                     },
             ) 
 
@@ -133,7 +133,7 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
             status_code=403,
             content={
                 "message": f"토큰이 입력되지 않았습니다.",
-                "errcode": 4,
+                "errcode": 3,
                 },
         ) 
     try:
@@ -154,7 +154,7 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
                 status_code=403,
                 content={
                     "message": f"알맞지 않은 참가자 아이디 입니다.",
-                    "errcode": 5,
+                    "errcode": 4,
                     },
             ) 
         # 인증 시간 관련
@@ -167,7 +167,7 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
                 status_code=400,
                 content={
                     "message": f"인증 시간이 아닙니다.",
-                    "errcode": 2,
+                    "errcode": 6,
                     },
             )
     except:
@@ -175,7 +175,7 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
             status_code=500,
             content={
                 "message": f"DB 접근 오류",
-                "errcode": 6,
+                "errcode": 5,
                 },
         )
     
@@ -195,7 +195,7 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
             status_code=500,
             content={
                 "message": f"S3 오류 혹은 DB 오류",
-                "errcode": 3
+                "errcode": 2
                 },
         )
 
@@ -223,7 +223,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
                 status_code=403,
                 content={
                     "message": f"토큰이 제대로 입력되지 않았습니다.",
-                    "errcode": 5,
+                    "errcode": 3,
                     },
             ) 
     else:
@@ -231,7 +231,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
             status_code=403,
             content={
                 "message": f"토큰이 입력되지 않았습니다.",
-                "errcode": 5,
+                "errcode": 3,
                 },
         ) 
 
@@ -255,7 +255,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
                 status_code=403,
                 content={
                     "message": f"알맞지 않은 참가자 아이디 입니다.",
-                    "errcode": 6,
+                    "errcode": 4,
                     },
             ) 
         # 인증 시간 관련
@@ -268,7 +268,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
                 status_code=400,
                 content={
                     "message": f"인증 시간이 아닙니다.",
-                    "errcode": 4,
+                    "errcode": 6,
                     },
             )
     except:
@@ -276,7 +276,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
             status_code=500,
             content={
                 "message": f"DB 접근 오류",
-                "errcode": 7,
+                "errcode": 5,
                 },
         )
     
@@ -305,7 +305,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
             status_code=500,
             content={
                 "message": f"Clarifai 서버 문제, 혹은 그에 관한 문제",
-                "errcode": 2,
+                "errcode": 10,
                 },
         )
 
@@ -316,7 +316,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
             status_code=500,
             content={
                 "message": f"Clarifai 서버 문제, 혹은 그에 관한 문제",
-                "errcode": 2,
+                "errcode": 10,
                 },
         )
 
@@ -336,7 +336,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
                 status_code=500,
                 content={
                     "message": f"S3 오류",
-                    "errcode": 5
+                    "errcode": 2
                     },
             )
 
@@ -353,7 +353,7 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
             status_code=400,
             content={
                 "message": f"해당 단어에 알맞지 않은 사진이거나, 사진을 다시 찍어주세요.",
-                "errcode": 3,
+                "errcode": 9,
                 },
         )
 
@@ -373,7 +373,7 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
                 status_code=403,
                 content={
                     "message": f"토큰이 제대로 입력되지 않았습니다.",
-                    "errcode": 5,
+                    "errcode": 3,
                     },
             ) 
     else:
@@ -381,7 +381,7 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
             status_code=403,
             content={
                 "message": f"토큰이 입력되지 않았습니다.",
-                "errcode": 5,
+                "errcode": 3,
                 },
         ) 
 
@@ -408,8 +408,8 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
         return JSONResponse(
             status_code=400,
             content={
-                "message": f"사진이 첨부되지 않았습니다.",
-                "errcode": 2
+                "message": f"입력이 바르지 않습니다. 혹은 이미지 처리에 문제가 있을 수 있습니다.",
+                "errcode": 1
                 },
         )
     try:
@@ -418,7 +418,7 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
                 status_code=403,
                 content={
                     "message": f"알맞지 않은 참가자 아이디 입니다.",
-                    "errcode": 6,
+                    "errcode": 4,
                     },
             )
     except:
@@ -426,7 +426,7 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
             status_code=500,
             content={
                 "message": f"DB 접근 오류",
-                "errcode": 6,
+                "errcode": 5,
                 },
         )
 
@@ -438,8 +438,8 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
         return JSONResponse(
             status_code=400,
             content={
-                "message": f"특징점이 확실한 사직을 찍어주세요.",
-                "errcode": 3
+                "message": f"특징점이 확실한 사진을 찍어주세요.",
+                "errcode": 7
                 },
         )
     else:
@@ -454,7 +454,7 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
                 status_code=500,
                 content={
                     "message": f"사진이 업로드 되지 않습니다.",
-                    "errcode": 4
+                    "errcode": 2
                     },
             )
 
@@ -489,7 +489,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
                 status_code=403,
                 content={
                     "message": f"토큰이 제대로 입력되지 않았습니다.",
-                    "errcode": 6,
+                    "errcode": 3,
                     },
             ) 
 
@@ -498,7 +498,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
             status_code=403,
             content={
                 "message": f"토큰이 입력되지 않았습니다.",
-                "errcode": 6,
+                "errcode": 3,
                 },
         ) 
 
@@ -520,7 +520,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
             status_code=400,
             content={
                 "message": f"기준 사진이 존재하지 않습니다.",
-                "errcode": 2
+                "errcode": 8
                 },
         )
     try:
@@ -529,7 +529,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
                 status_code=403,
                 content={
                     "message": f"알맞지 않은 참가자 아이디 입니다.",
-                    "errcode": 7,
+                    "errcode": 4,
                     },
             ) 
         # 인증 시간 관련
@@ -541,7 +541,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
                 status_code=400,
                 content={
                     "message": f"인증 시간이 아닙니다.",
-                    "errcode": 3,
+                    "errcode": 6,
                     },
             )
     except:
@@ -549,7 +549,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
             status_code=500,
             content={
                 "message": f"DB 접근 오류",
-                "errcode": 8,
+                "errcode": 5,
                 },
         )
     imgdata = base64.b64decode(feed_img)
@@ -636,7 +636,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
             status_code=400,
             content={
                 "message": f"사진이 일치하지 않습니다.",
-                "errcode": 4
+                "errcode": 11
                 },
         )
     else:
@@ -651,7 +651,7 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
                 status_code=500,
                 content={
                     "message": f"사진이 업로드 되지 않습니다.",
-                    "errcode": 5
+                    "errcode": 2
                     },
             )
         remove_img(filename)
@@ -690,7 +690,7 @@ async def isauthedtoday(participation_id: int):
             status_code=500,
             content={
                 "message": f"DB 접근 오류",
-                "errcode": 1,
+                "errcode": 5,
                 },
         )
 
@@ -720,10 +720,10 @@ async def isstdimg(participation_id: int):
             status_code=500,
             content={
                 "message": f"DB 접근 오류",
-                "errcode": 1,
+                "errcode": 5,
                 },
         )
 
 # reload app``
 if __name__ == '__main__':
-    uvicorn.run("authimg:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("authimg:app", host="localhost", port=8090, reload=True)
