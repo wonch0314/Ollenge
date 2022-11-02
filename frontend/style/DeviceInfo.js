@@ -2,9 +2,9 @@ import { Dimensions } from "react-native"
 
 const { width, height } = Dimensions.get("window")
 
-const device = {
+const DeviceInfo = {
   dw: width,
   dh: height,
 }
 
-export default device
+export default DeviceInfo

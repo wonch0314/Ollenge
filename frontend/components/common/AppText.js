@@ -38,6 +38,7 @@ const AppText = (props) => {
         fontFamily: "HyeminRegular",
         textAlign: "center",
       }}
+      numberOfLines={props.lineNumber ? props.lineNumber : 0}
     >
       {props.children}
     </Text>

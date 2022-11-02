@@ -18,6 +18,7 @@ function UserRankScreen() {
           headerTransparent: true,
           headerTintColor: `${ColorSet.navyColor(100)}`,
         }}
+        initialRouteName="RankList"
       >
         <Stack.Screen name="RankList" options={{ headerShown: false }} component={RankList} />
         <Stack.Screen name="UserBadge" component={ShowUserBadge} />

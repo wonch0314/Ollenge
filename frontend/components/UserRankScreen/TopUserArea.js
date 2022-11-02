@@ -22,13 +22,13 @@ const FirstCard = Styled.View`
   width: ${cardWidth}px;
   z-index: 30
   position: absolute;
-  left: 33%;
+  left: 31%;
+  top: -5%;
   align-items: center;
 `
 
 const SecondCard = Styled.View`
   width: ${cardWidth}px;
-  height: ${cardHeight}px;
   position: absolute;
   bottom: 10%;
   align-items: center;
@@ -36,8 +36,6 @@ const SecondCard = Styled.View`
 
 const ThirdCard = Styled.View`
   width: ${cardWidth}px;
-  height: ${cardHeight}px;
-
   position: absolute;
   right: 0;
   bottom: 0;
@@ -45,8 +43,8 @@ const ThirdCard = Styled.View`
 `
 
 const BdImage = Styled.View`
-  width: ${cardWidth}px;
-  height: ${cardWidth}px;
+  width: ${cardWidth * 0.9}px;
+  height: ${cardWidth * 0.9}px;
   overflow: hidden;
   border: 4px solid ${(props) => (props.color ? props.color : "black")};
   border-radius: 120px;
@@ -64,7 +62,7 @@ export default function TopUserArea() {
           />
         </BdImage>
         <AppText size={4}>Chan</AppText>
-        <AppText size={3}>{(123551).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}점</AppText>
+        <AppText size={3}>{(1235).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}점</AppText>
       </FirstCard>
       <SecondCard>
         <BdImage color="silver">

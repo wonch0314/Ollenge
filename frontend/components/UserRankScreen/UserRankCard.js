@@ -39,7 +39,7 @@ export default function UserRankCard() {
             <View flex={2}>
               <Image
                 source={require("../../assets/profile/me2.jpg")}
-                style={{ width: "90%", height: "90%", borderRadius: 10 }}
+                style={{ width: "90%", height: "90%", borderRadius: 50 }}
               />
             </View>
             <View flex={2} alignItems="center">
@@ -49,7 +49,7 @@ export default function UserRankCard() {
               />
             </View>
             <View flex={3}>
-              <AppText>Chan</AppText>
+              <AppText lineNumber={1}>Chanasdasdasdsdas</AppText>
             </View>
             <View flex={3} justifyContent="center">
               <AppText>123.5k</AppText>

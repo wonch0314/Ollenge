@@ -18,8 +18,8 @@ const Case = styled.View`
 `
 
 const BadgeBox = styled.View`
-  width: ${cw / 3};
-  height: ${cw / 3};
+  width: ${cw / 3}px;
+  height: ${cw / 3}px;
   border: 0.5px rgba(0, 0, 0, 0.1);
   justify-content: center;
   align-items: center;
