@@ -3,13 +3,8 @@ package com.ollenge.api.controller;
 import com.ollenge.api.exception.*;
 import com.ollenge.api.request.ChallengeParticipationPostReq;
 import com.ollenge.api.request.ChallengePostReq;
-import com.ollenge.api.response.ChallengeInfoGetRes;
-import com.ollenge.api.response.ChallengePostRes;
-import com.ollenge.api.response.ChallengePresetGetRes;
-import com.ollenge.api.response.ChallengeStateGetRes;
-import com.ollenge.api.response.data.ChallengeCreatedData;
-import com.ollenge.api.response.data.ChallengeInfoData;
-import com.ollenge.api.response.data.ChallengeStateData;
+import com.ollenge.api.response.*;
+import com.ollenge.api.response.data.*;
 import com.ollenge.api.service.ChallengeService;
 import com.ollenge.api.service.UserService;
 import com.ollenge.common.model.response.BaseResponseBody;
@@ -29,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -187,31 +183,6 @@ public class ChallengeController {
         }
     }
 
-    ///////////////////////////////////// 여기 부터 //////////////////////////////////////////////
-    @GetMapping("/ongoing/{userId}")
-    @ApiOperation(value = "진행 중인 랭킹 챌린지 주제 조회", notes = "진행 중인 랭킹 챌린지 주제를 조회합니다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "조회 성공"),
-            @ApiResponse(code = 400, message = "권한이 없습니다."),
-            @ApiResponse(code = 500, message = "서버 에러 발생")
-    })
-    public ResponseEntity<? extends BaseResponseBody> getChallengeOngoing(@ApiIgnore Authentication authentication, @PathVariable long userId) {
-        long id = JwtTokenUtil.getUserIdByJWT(authentication);
-        User user = userService.getUserByUserId(id);
-
-        if (user == null) return ResponseEntity.status(400).body(BaseResponseBody.of(400, "권한이 없습니다."));
-
-        try {
-
-
-
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));
-        }
-    }
-
     @GetMapping("/ongoing/{challengePresetId}/{userId}")
     @ApiOperation(value = "주제별 진행 중인 랭킹 챌린지의 순위 조회", notes = "주제별 진행 중인 랭킹 챌린지의 순위를 조회합니다.")
     @ApiResponses({
@@ -219,15 +190,18 @@ public class ChallengeController {
             @ApiResponse(code = 400, message = "권한이 없습니다."),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
-    public ResponseEntity<? extends BaseResponseBody> getChallengeOngoingRanking(@ApiIgnore Authentication authentication, @PathVariable long challengePresetId, @PathVariable long userId) {
-        long id = JwtTokenUtil.getUserIdByJWT(authentication);
-        User user = userService.getUserByUserId(id);
+    public ResponseEntity<? extends BaseResponseBody> getChallengeOngoingRanking(@ApiIgnore Authentication authentication, @PathVariable long challengePresetId) {
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        User user = userService.getUserByUserId(userId);
 
         if (user == null) return ResponseEntity.status(400).body(BaseResponseBody.of(400, "권한이 없습니다."));
 
         try {
+            LocalDate now = LocalDate.now();
+            UserRankData userRank = challengeService.getUserRank(userId, challengePresetId, now);
+            List<RankingData> rankingList = challengeService.getRankingList(challengePresetId, now);
 
-            return null;
+            return ResponseEntity.status(200).body(ChallengeRankingGetRes.of(200, "주제별 랭킹 챌린지 순위 조회 성공", userRank, rankingList));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));
@@ -242,14 +216,15 @@ public class ChallengeController {
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
     public ResponseEntity<? extends BaseResponseBody> getChallengeScheduled(@ApiIgnore Authentication authentication) {
-        long id = JwtTokenUtil.getUserIdByJWT(authentication);
-        User user = userService.getUserByUserId(id);
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        User user = userService.getUserByUserId(userId);
 
         if (user == null) return ResponseEntity.status(400).body(BaseResponseBody.of(400, "권한이 없습니다."));
         try {
             List<ChallengePreset> challengePresetList = challengeService.getChallengePreset();
-            LocalDate start = challengeService.getChallengePresetStartDate(LocalDate.now());
-            LocalDate end = challengeService.getChallengePresetEndDate(LocalDate.now());
+            LocalDate now = LocalDate.now();
+            LocalDate start = challengeService.getChallengePresetStartDate(now);
+            LocalDate end = challengeService.getChallengePresetEndDate(now);
             return ResponseEntity.status(200).body(ChallengePresetGetRes.of(200, "모집 중인 랭킹 챌린지 조회 성공", start, end, challengePresetList));
         } catch (Exception e) {
             e.printStackTrace();

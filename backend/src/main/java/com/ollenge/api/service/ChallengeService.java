@@ -3,9 +3,7 @@ package com.ollenge.api.service;
 import com.ollenge.api.exception.*;
 import com.ollenge.api.request.ChallengeParticipationPostReq;
 import com.ollenge.api.request.ChallengePostReq;
-import com.ollenge.api.response.data.ChallengeCreatedData;
-import com.ollenge.api.response.data.ChallengeInfoData;
-import com.ollenge.api.response.data.ChallengeStateData;
+import com.ollenge.api.response.data.*;
 import com.ollenge.common.util.LocalDateTimeUtils;
 import com.ollenge.db.entity.*;
 import com.ollenge.db.repository.*;
@@ -167,10 +165,20 @@ public class ChallengeService {
     }
 
     public LocalDate getChallengePresetStartDate(LocalDate today) {
-        return today.minusDays(today.getDayOfWeek().getValue() - 1).plusDays(7);
+        return today.minusDays(today.getDayOfWeek().getValue() - 1);
     }
 
     public LocalDate getChallengePresetEndDate(LocalDate today) {
-        return today.plusDays(7 - today.getDayOfWeek().getValue()).plusDays(7);
+        return today.plusDays(7 - today.getDayOfWeek().getValue());
     }
+
+    public UserRankData getUserRank(long userId, long challengePresetId, LocalDate today) {
+
+        return null;
+    }
+
+    public List<RankingData> getRankingList(long challengePresetId, LocalDate today) {
+        return null;
+    }
+
 }
