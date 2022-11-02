@@ -167,10 +167,10 @@ public class ChallengeService {
     }
 
     public LocalDate getChallengePresetStartDate(LocalDate today) {
-        return today.minusDays(today.getDayOfWeek().getValue() - 1);
+        return today.minusDays(today.getDayOfWeek().getValue() - 1).plusDays(7);
     }
 
     public LocalDate getChallengePresetEndDate(LocalDate today) {
-        return today.plusDays(7 - today.getDayOfWeek().getValue());
+        return today.plusDays(7 - today.getDayOfWeek().getValue()).plusDays(7);
     }
 }
