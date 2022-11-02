@@ -29,6 +29,8 @@ public class ChallengeService {
     private final AuthClassificationRepository authClassificationRepository;
     private final ParticipationRepository participationRepository;
 
+    private final ChallengePresetRepository challengePresetRepository;
+
     public ChallengeCreatedData createChallenge(ChallengePostReq challengePostReq) throws NoSuchElementException, InvalidDateTimeException, DuplicatedPeriodTopicRankingChallengeException, InvalidAuthTypeException, InvalidFieldException {
         ChallengePreset challengePreset = null;
         // 날짜 검증
@@ -158,5 +160,17 @@ public class ChallengeService {
     private boolean isDuplicatedTopicPeriod(User user, LocalDate startDate, LocalDate endDate, ChallengePreset challengePreset) {
         List<Challenge> challengeList = challengeRepositorySupport.getRankingChallengeTopicPeriod(user, startDate, endDate, challengePreset);
         return !challengeList.isEmpty();
+    }
+
+    public List<ChallengePreset> getChallengePreset() {
+        return challengePresetRepository.findAll();
+    }
+
+    public LocalDate getChallengePresetStartDate(LocalDate today) {
+        return today.minusDays(today.getDayOfWeek().getValue() - 1);
+    }
+
+    public LocalDate getChallengePresetEndDate(LocalDate today) {
+        return today.plusDays(7 - today.getDayOfWeek().getValue());
     }
 }
