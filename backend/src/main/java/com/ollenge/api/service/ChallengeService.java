@@ -67,13 +67,12 @@ public class ChallengeService {
                 .challengeDescription(challengePostReq.getChallengeDescription())
                 .build();
 
-        long challengeId = challengeRepository.save(challenge).getChallengeId();
+        challenge = challengeRepository.save(challenge);
         if (challengePostReq.getAuthType().equals("classifi")) {
             if(challengePostReq.getClassificationTypeID() == null) {
                 throw new InvalidFieldException("Cannot match auth type to classification type");
             }
             ClassificationType classificationType = classificationTypeRepository.findById(challengePostReq.getClassificationTypeID()).orElseThrow(() -> { return new InvalidFieldException("Not exist classification type ID"); });
-            challenge.setChallengeId(challengeId);
             AuthClassification authClassification = AuthClassification.builder()
                     .classificationType(classificationType)
                     .challenge(challenge)
@@ -81,13 +80,14 @@ public class ChallengeService {
             authClassificationRepository.save(authClassification);
         }
 
+        challenge.setPeopleCnt(challenge.getPeopleCnt()+1);
         Participation participation = Participation.builder()
                 .user(User.builder().userId(challengePostReq.getUserId()).build())
                 .challenge(challenge)
                 .build();
         participationRepository.save(participation);
 
-        return ChallengeCreatedData.of(challengeId, inviteCode);
+        return ChallengeCreatedData.of(challenge.getChallengeId(), inviteCode);
     }
 
     public void participateChallenge(ChallengeParticipationPostReq challengeParticipationPostReq) throws NoSuchElementException, DuplicatedPeriodTopicRankingChallengeException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException, InvalidInviteCodeException {
@@ -107,6 +107,8 @@ public class ChallengeService {
         else if (!LocalDateTimeUtils.isValidStartDate(challenge.getStartDate())) {
             throw new InvalidDateTimeException("Already started challenge.");
         }
+
+        challenge.setPeopleCnt(challenge.getPeopleCnt()+1);
         Participation participation = Participation.builder()
                 .user(user)
                 .challenge(challenge)
@@ -127,6 +129,7 @@ public class ChallengeService {
             throw new InvalidDateTimeException("Already started challenge.");
         }
 
+        challenge.setPeopleCnt(challenge.getPeopleCnt()-1);
         participationRepository.deleteByChallengeAndUser(challenge, user);
         if (participationRepository.findByChallenge(challenge).isEmpty()) {
             challengeRepository.delete(challenge);
