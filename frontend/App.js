@@ -10,6 +10,7 @@ import MyCGScreen from "./src/screens/MyCGScreen"
 import RankingCGScreen from "./src/screens/RankingCGScreen"
 import UserRankScreen from "./src/screens/UserRankScreen"
 import MyPageScreen from "./src/screens/MyPageScreen"
+import CreateCGScreen from "./src/screens/CreateCGScreen"
 
 import ColorSet from "./src/style/ColorSet"
 
@@ -20,6 +21,8 @@ const RankingCGRoute = () => <RankingCGScreen />
 const UserRankRoute = () => <UserRankScreen />
 
 const MyPageRoute = () => <MyPageScreen />
+
+const CreateCGRoute = () => <CreateCGScreen />
 
 const App = () => {
   const [isReady, setIsReady] = useState(false)
@@ -45,6 +48,7 @@ const App = () => {
       title: "마이페이지",
       focusedIcon: "account",
     },
+    { key: "createCG", title: "챌린지 생성", focusedIcon: "crown" },
   ])
 
   const renderScene = BottomNavigation.SceneMap({
@@ -52,6 +56,7 @@ const App = () => {
     rankingCG: RankingCGRoute,
     userRank: UserRankRoute,
     myPage: MyPageRoute,
+    createCG: CreateCGRoute,
   })
 
   function startScreenChange() {
@@ -60,7 +65,7 @@ const App = () => {
   // index == 4인 경우 StartScreen 출력, 그 외엔 BottomNav랑 해당 스크린 출력
   return isReady ? (
     <View style={styles.rootScreen}>
-      {index == 4 ? (
+      {index == 5 ? (
         <StartScreen startScreenChange={startScreenChange} />
       ) : (
         <BottomNavigation
