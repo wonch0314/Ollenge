@@ -85,8 +85,8 @@ export default function ProceedingCard(props) {
                     top: 5,
                   }}
                 >
-                  <AppBoldText size="15" color="navy">
-                    {startDate} - {endDate}
+                  <AppBoldText pxSize={15} color="navy">
+                    {startDate} - {endDate} (2주)
                   </AppBoldText>
                 </TextRow>
                 {/* 얜 안씀 */}
@@ -99,12 +99,15 @@ export default function ProceedingCard(props) {
                     left: -5,
                   }}
                 >
+                  {/* 버튼 자체 => styled component */}
                   <Button
                     style={{
                       backgroundColor: ColorSet.navyColor(1),
                     }}
                   >
+                    {/* 버튼 내부 공간, 양 50%공간으로 쪼갬 */}
                     <ButtonInner>
+                      {/* 아이콘 들어가는 공간 */}
                       <View
                         style={{
                           justifyContent: "center",
@@ -114,6 +117,7 @@ export default function ProceedingCard(props) {
                       >
                         <BoyIcon />
                       </View>
+                      {/* ~명 들어가는 공간 */}
                       <View
                         style={{
                           justifyContent: "center",
@@ -122,7 +126,7 @@ export default function ProceedingCard(props) {
                           right: 3,
                         }}
                       >
-                        <AppBoldText color="white" size={14}>
+                        <AppBoldText color="white" pxSize={14}>
                           {peopleNumber}
                         </AppBoldText>
                       </View>
@@ -139,7 +143,7 @@ export default function ProceedingCard(props) {
                           justifyContent: "center",
                         }}
                       >
-                        <AppBoldText color="white" size={13}>
+                        <AppBoldText color="white" pxSize={13}>
                           참여 중
                         </AppBoldText>
                       </ButtonInner>
@@ -149,6 +153,7 @@ export default function ProceedingCard(props) {
               </View>
             </View>
             {/* 오른쪽 => 이미지만 들어갈곳 */}
+            {/* 각 이미지는, 사이즈 설정을 다르게 해야 해서, 이미지 모듈 파일에서 직접 조정 */}
             <View
               style={{
                 flex: 5,
