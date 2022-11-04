@@ -154,13 +154,16 @@ public class ChallengeController {
             @ApiResponse(code = 400, message = "해당하는 챌린지가 없습니다."),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
-    public ResponseEntity<? extends BaseResponseBody> getChallengeInfo(@PathVariable long challengeId) {
+    public ResponseEntity<? extends BaseResponseBody> getChallengeInfo(@ApiIgnore Authentication authentication, @PathVariable long challengeId) {
         try {
-            ChallengeInfoData challengeInfoData = challengeService.getChallengeInfo(challengeId);
+            ChallengeInfoData challengeInfoData = challengeService.getChallengeInfo(authentication, challengeId);
             return ResponseEntity.status(200).body(ChallengeInfoGetRes.of(200, "챌린지 정보 조회 성공", challengeInfoData));
         } catch (InvalidChallengeIdException invalidChallengeIdException) {
             invalidChallengeIdException.printStackTrace();
             return ResponseEntity.status(400).body(BaseResponseBody.of(400, "해당하는 챌린지가 없습니다."));
+        } catch (InvalidUserException invalidUserException) {
+            invalidUserException.printStackTrace();
+            return ResponseEntity.status(500).body(BaseResponseBody.of(400, "권한이 없습니다."));
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));

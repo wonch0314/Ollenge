@@ -140,7 +140,11 @@ public class ChallengeService {
         }
     }
 
-    public ChallengeInfoData getChallengeInfo(long challengeId) throws InvalidChallengeIdException {
+    public ChallengeInfoData getChallengeInfo(Authentication authentication, long challengeId) throws InvalidChallengeIdException, InvalidUserException {
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
+
         Challenge challenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> { return new InvalidChallengeIdException("Invalid challenge ID " + challengeId); });
 
