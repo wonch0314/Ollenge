@@ -31,11 +31,19 @@ function SignupScreen() {
     setNicknameInput(text)
   }
 
+  function nicknameCheck(str) {
+    const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g
+    if (reg.test(str)) {
+      return false
+    }
+    return true
+  }
+
   async function buttonHandler() {
     const data = new Object()
     // 프로필 이미지 등록
     if (profileImageBase64) {
-      instance
+      await instance
         .post("/auth/upload", { profile_img: profileImageBase64 }, {})
         .then((res) => {
           console.log(res.data.profile_img)
@@ -43,15 +51,24 @@ function SignupScreen() {
         })
         .catch((err) => console.log(err))
     }
-
-    // const data = {}
-    // instance
-    //   .patch("/api/user", { nickname: "웅야" })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     authCxt.signed(true)
-    //   })
-    //   .catch((err) => console.log(err.response.data))
+    // 닉네임
+    if (1 < nicknameInput.length && nicknameInput.lenth <= 12 && nicknameCheck(nicknameInput)) {
+      data.nickname = nicknameInput
+      instance
+        .patch("/api/user", data)
+        .then((res) => {
+          console.log(res)
+          authCxt.signed(true)
+        })
+        .catch((err) => {
+          console.log(err)
+          if (err.response.data.message === "이미 존재하는 닉네임입니다") {
+            alert(err.response.data.message)
+          }
+        })
+    } else {
+      alert("닉네임 형식이 틀렸습니다")
+    }
   }
 
   return (
