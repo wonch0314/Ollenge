@@ -183,31 +183,6 @@ public class ChallengeController {
         }
     }
 
-    @GetMapping("/ongoing/{challengePresetId}/{userId}")
-    @ApiOperation(value = "주제별 진행 중인 랭킹 챌린지의 순위 조회", notes = "주제별 진행 중인 랭킹 챌린지의 순위를 조회합니다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "조회 성공"),
-            @ApiResponse(code = 400, message = "권한이 없습니다."),
-            @ApiResponse(code = 500, message = "서버 에러 발생")
-    })
-    public ResponseEntity<? extends BaseResponseBody> getChallengeOngoingRanking(@ApiIgnore Authentication authentication, @PathVariable long challengePresetId) {
-        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
-        User user = userService.getUserByUserId(userId);
-
-        if (user == null) return ResponseEntity.status(400).body(BaseResponseBody.of(400, "권한이 없습니다."));
-
-        try {
-            LocalDate now = LocalDate.now();
-            UserRankData userRank = challengeService.getUserRank(userId, challengePresetId, now);
-            List<RankingData> rankingList = challengeService.getRankingList(challengePresetId, now);
-
-            return ResponseEntity.status(200).body(ChallengeRankingGetRes.of(200, "주제별 랭킹 챌린지 순위 조회 성공", userRank, rankingList));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));
-        }
-    }
-
     @GetMapping("/scheduled")
     @ApiOperation(value = "모집 중인 랭킹 챌린지 조회", notes = "모집 중인 랭킹 챌린지를 조회합니다.")
     @ApiResponses({

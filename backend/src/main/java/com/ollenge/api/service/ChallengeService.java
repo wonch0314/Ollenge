@@ -9,6 +9,7 @@ import com.ollenge.db.entity.*;
 import com.ollenge.db.repository.*;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -165,20 +166,12 @@ public class ChallengeService {
     }
 
     public LocalDate getChallengePresetStartDate(LocalDate today) {
-        return today.minusDays(today.getDayOfWeek().getValue() - 1);
+        return today.plusDays(today.lengthOfMonth() - today.getDayOfMonth() + 1);
     }
 
     public LocalDate getChallengePresetEndDate(LocalDate today) {
-        return today.plusDays(7 - today.getDayOfWeek().getValue());
-    }
-
-    public UserRankData getUserRank(long userId, long challengePresetId, LocalDate today) {
-
-        return null;
-    }
-
-    public List<RankingData> getRankingList(long challengePresetId, LocalDate today) {
-        return null;
+        LocalDate start = getChallengePresetStartDate(today);
+        return start.plusDays(start.lengthOfMonth() - 1);
     }
 
 }
