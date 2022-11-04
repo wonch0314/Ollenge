@@ -16,15 +16,6 @@ function AuthContextProvider({ children }) {
   const [authToken, setAuthToken] = useState()
   const [userFalg, setUserFlag] = useState()
 
-  useEffect(() => {
-    async function fetchToken() {
-      const storedToken = await AsyncStorage.getItem("token")
-      if (storedToken) {
-        setAuthToken(storedToken)
-      }
-    }
-  }, [])
-
   function authenticate(token) {
     setAuthToken(token)
     AsyncStorage.setItem("token", token)
@@ -32,10 +23,13 @@ function AuthContextProvider({ children }) {
 
   function signed(flag) {
     setUserFlag(flag)
+    AsyncStorage.setItem("userFlag", userFalg)
   }
 
   function logout() {
     setAuthToken(null)
+    AsyncStorage.removeItem("token")
+    AsyncStorage.removeItem("userFlag")
   }
 
   const value = {
