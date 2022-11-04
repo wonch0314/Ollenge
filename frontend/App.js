@@ -32,7 +32,7 @@ const App = () => {
     })
   }
 
-  const [index, setIndex] = React.useState(4)
+  const [index, setIndex] = React.useState(1)
   const [routes] = React.useState([
     {
       key: "myCG",
