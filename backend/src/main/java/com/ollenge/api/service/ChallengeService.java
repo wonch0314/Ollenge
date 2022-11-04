@@ -3,13 +3,16 @@ package com.ollenge.api.service;
 import com.ollenge.api.exception.*;
 import com.ollenge.api.request.ChallengeParticipationPostReq;
 import com.ollenge.api.request.ChallengePostReq;
-import com.ollenge.api.response.data.*;
+import com.ollenge.api.response.data.ChallengeCreatedData;
+import com.ollenge.api.response.data.ChallengeInfoData;
+import com.ollenge.api.response.data.ChallengeStateData;
+import com.ollenge.common.util.JwtTokenUtil;
 import com.ollenge.common.util.LocalDateTimeUtils;
 import com.ollenge.db.entity.*;
 import com.ollenge.db.repository.*;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.tomcat.jni.Local;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,8 +30,8 @@ public class ChallengeService {
     private final ClassificationTypeRepository classificationTypeRepository;
     private final AuthClassificationRepository authClassificationRepository;
     private final ParticipationRepository participationRepository;
-
     private final ChallengePresetRepository challengePresetRepository;
+    private final UserRepository userRepository;
 
     public ChallengeCreatedData createChallenge(ChallengePostReq challengePostReq) throws NoSuchElementException, InvalidDateTimeException, DuplicatedPeriodTopicRankingChallengeException, InvalidAuthTypeException, InvalidFieldException {
         ChallengePreset challengePreset = null;
@@ -149,7 +152,10 @@ public class ChallengeService {
         return ChallengeInfoData.of(challenge, classificationType);
     }
 
-    public List<ChallengeStateData> getChallengeState(long challengeId) throws InvalidChallengeIdException {
+    public List<ChallengeStateData> getChallengeState(Authentication authentication, long challengeId) throws InvalidChallengeIdException, InvalidUserException {
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
         Challenge challenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> { return new InvalidChallengeIdException("Invalid challenge ID " + challengeId); });
         return challengeRepositorySupport.getChallengeState(challenge);
