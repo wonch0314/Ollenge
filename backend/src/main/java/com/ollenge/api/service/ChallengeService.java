@@ -33,7 +33,11 @@ public class ChallengeService {
     private final ChallengePresetRepository challengePresetRepository;
     private final UserRepository userRepository;
 
-    public ChallengeCreatedData createChallenge(ChallengePostReq challengePostReq) throws NoSuchElementException, InvalidDateTimeException, DuplicatedPeriodTopicRankingChallengeException, InvalidAuthTypeException, InvalidFieldException {
+    public ChallengeCreatedData createChallenge(Authentication authentication, ChallengePostReq challengePostReq) throws NoSuchElementException, InvalidDateTimeException, DuplicatedPeriodTopicRankingChallengeException, InvalidAuthTypeException, InvalidFieldException, InvalidUserException {
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        if(userId != challengePostReq.getUserId()) throw new InvalidUserException("Invalid ID " + userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
         ChallengePreset challengePreset = null;
         // 날짜 검증
         if (!LocalDateTimeUtils.isValidStartDate(challengePostReq.getStartDate()) || !LocalDateTimeUtils.isValidEndDate(challengePostReq.getStartDate(), challengePostReq.getEndDate()))
@@ -43,7 +47,7 @@ public class ChallengeService {
             challengePreset = ChallengePreset.builder()
                     .challengePresetId(challengePostReq.getChallengePresetId())
                     .build();
-            if (isDuplicatedTopicPeriod(User.builder().userId(challengePostReq.getUserId()).build(), challengePostReq.getStartDate(), challengePostReq.getEndDate(), challengePreset)) {
+            if (isDuplicatedTopicPeriod(user, challengePostReq.getStartDate(), challengePostReq.getEndDate(), challengePreset)) {
                 throw new DuplicatedPeriodTopicRankingChallengeException("Duplicated ranking challenge that has same period and topic exception");
             }
         }
@@ -96,6 +100,7 @@ public class ChallengeService {
 
     public void participateChallenge(Authentication authentication, ChallengeParticipationPostReq challengeParticipationPostReq) throws NoSuchElementException, DuplicatedPeriodTopicRankingChallengeException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException, InvalidInviteCodeException, InvalidUserException {
         long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        if(userId != challengeParticipationPostReq.getUserId()) throw new InvalidUserException("Invalid ID " + userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
 
