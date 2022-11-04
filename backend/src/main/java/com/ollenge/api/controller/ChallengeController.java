@@ -89,14 +89,14 @@ public class ChallengeController {
             @ApiResponse(code = 400, message = "입력 형식에 맞지 않습니다."),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
-    public ResponseEntity<? extends BaseResponseBody> participateChallenge(@Validated @RequestBody ChallengeParticipationPostReq challengeParticipationPostReq,
+    public ResponseEntity<? extends BaseResponseBody> participateChallenge(@ApiIgnore Authentication authentication, @Validated @RequestBody ChallengeParticipationPostReq challengeParticipationPostReq,
                                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(400).body(BaseResponseBody.of(400, "입력 형식에 맞지 않습니다."));
         }
 
         try {
-            challengeService.participateChallenge(challengeParticipationPostReq);
+            challengeService.participateChallenge(authentication, challengeParticipationPostReq);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "챌린지 참여 성공"));
         } catch (InvalidChallengeIdException invalidChallengeIdException) {
             invalidChallengeIdException.printStackTrace();
@@ -113,6 +113,9 @@ public class ChallengeController {
         } catch (InvalidDateTimeException invalidDateTimeException) {
             invalidDateTimeException.printStackTrace();
             return ResponseEntity.status(400).body(BaseResponseBody.of(400, "이미 시작한 챌린지 입니다."));
+        } catch (InvalidUserException invalidUserException) {
+            invalidUserException.printStackTrace();
+            return ResponseEntity.status(500).body(BaseResponseBody.of(400, "권한이 없습니다."));
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));

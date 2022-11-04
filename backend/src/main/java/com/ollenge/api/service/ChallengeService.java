@@ -94,10 +94,13 @@ public class ChallengeService {
         return ChallengeCreatedData.of(challenge.getChallengeId(), inviteCode);
     }
 
-    public void participateChallenge(ChallengeParticipationPostReq challengeParticipationPostReq) throws NoSuchElementException, DuplicatedPeriodTopicRankingChallengeException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException, InvalidInviteCodeException {
+    public void participateChallenge(Authentication authentication, ChallengeParticipationPostReq challengeParticipationPostReq) throws NoSuchElementException, DuplicatedPeriodTopicRankingChallengeException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException, InvalidInviteCodeException, InvalidUserException {
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
+
         Challenge challenge = challengeRepository.findById(challengeParticipationPostReq.getChallengeId())
                 .orElseThrow(() -> { return new InvalidChallengeIdException("Invalid challenge ID " + challengeParticipationPostReq.getChallengeId()); });
-        User user = User.builder().userId(challengeParticipationPostReq.getUserId()).build();
         
         if (!challenge.getInviteCode().equals(challengeParticipationPostReq.getInviteCode())) {
             throw new InvalidInviteCodeException("Invalid invite code");
