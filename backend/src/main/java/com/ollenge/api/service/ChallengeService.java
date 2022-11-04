@@ -121,10 +121,13 @@ public class ChallengeService {
     }
 
     @Transactional
-    public void giveUpChallenge(long challengeId, long userId) throws NoSuchElementException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException {
+    public void giveUpChallenge(Authentication authentication, long challengeId) throws NoSuchElementException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException, InvalidUserException {
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
+
         Challenge challenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> { return new InvalidChallengeIdException("Invalid challenge ID " + challengeId); });
-        User user = User.builder().userId(userId).build();
 
         if (participationRepository.findByChallengeAndUser(challenge, user).isEmpty()) {
             throw new InvalidParticipationException("Not in challenge.");

@@ -119,7 +119,7 @@ public class ChallengeController {
         }
     }
 
-    @DeleteMapping("/{challengeId}/{userId}")
+    @DeleteMapping("/{challengeId}")
     @ApiOperation(value = "챌린지 포기", notes = "챌린지를 포기합니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "챌린지 포기 성공"),
@@ -128,9 +128,9 @@ public class ChallengeController {
             @ApiResponse(code = 400, message = "이미 시작한 챌린지 입니다."),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
-    public ResponseEntity<? extends BaseResponseBody> giveUpChallenge(@PathVariable long challengeId, @PathVariable long userId) {
+    public ResponseEntity<? extends BaseResponseBody> giveUpChallenge(@ApiIgnore Authentication authentication, @PathVariable long challengeId) {
         try {
-            challengeService.giveUpChallenge(challengeId, userId);
+            challengeService.giveUpChallenge(authentication, challengeId);
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "챌린지 포기 성공"));
         } catch (InvalidChallengeIdException invalidChallengeIdException) {
             invalidChallengeIdException.printStackTrace();
@@ -141,6 +141,9 @@ public class ChallengeController {
         } catch (InvalidDateTimeException invalidDateTimeException) {
             invalidDateTimeException.printStackTrace();
             return ResponseEntity.status(400).body(BaseResponseBody.of(400, "이미 시작한 챌린지 입니다."));
+        } catch (InvalidUserException invalidUserException) {
+            invalidUserException.printStackTrace();
+            return ResponseEntity.status(500).body(BaseResponseBody.of(400, "권한이 없습니다."));
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));
