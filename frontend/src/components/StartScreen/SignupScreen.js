@@ -32,33 +32,32 @@ function SignupScreen() {
   }
 
   function nicknameCheck(str) {
-    const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g
-    if (reg.test(str)) {
-      return false
+    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/
+    if (regex.test(str) && 2 <= str.length && str.length <= 12) {
+      return true
     }
-    return true
+    return false
   }
 
   async function buttonHandler() {
+    console.log(nicknameInput)
     const data = new Object()
     // 프로필 이미지 등록
     if (profileImageBase64) {
       await instance
         .post("/auth/upload", { profile_img: profileImageBase64 }, {})
         .then((res) => {
-          console.log(res.data.profile_img)
           data.profileImg = `${res.data.profile_img}`
         })
         .catch((err) => console.log(err))
     }
     // 닉네임
-    if (1 < nicknameInput.length && nicknameInput.lenth <= 12 && nicknameCheck(nicknameInput)) {
+    if (nicknameCheck(nicknameInput)) {
       data.nickname = nicknameInput
       instance
         .patch("/api/user", data)
         .then((res) => {
-          console.log(res)
-          authCxt.signed(true)
+          authCxt.signed("signedUser")
         })
         .catch((err) => {
           console.log(err)
