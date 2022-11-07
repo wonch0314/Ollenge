@@ -1,5 +1,5 @@
 import React from "react-native"
-import { View, Text, Dimensions } from "react-native"
+import { View, Text, Dimensions, Image } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import AppText from "../common/AppText"
 import AppBoldText from "../common/AppBoldText"
@@ -11,14 +11,18 @@ export default function ChallengingCard(props) {
   const windowWidth = Dimensions.get("window").width
 
   const challengeInfo = props.challengeInfo
-  console.log(typeof challengeInfo.startDate)
   // 카드 높이 * 70%(상단높이) * 상단높이 위쪽 깎기 * 보다 약간 작게
   const circleHeightWidth = 200 * 0.7 * 0.95 * 0.75
-
   const func = props.func
+  const nowDate = new Date()
+  const passedDay = Math.ceil(
+    (nowDate.getTime() - challengeInfo.startDate.getTime()) / 1000 / 60 / 60 / 24,
+  )
 
-  const progress = 0.7
+  const wholeDay =
+    (challengeInfo.endDate.getTime() - challengeInfo.startDate.getTime()) / 1000 / 60 / 60 / 24 + 2
 
+  const progress = parseInt((passedDay / wholeDay) * 100)
   return (
     <View
       style={{
@@ -72,6 +76,11 @@ export default function ChallengingCard(props) {
                 >
                   {/* 나중에 여기에도 예시파일처럼 직접 borderRadius 먹여주어야 함 */}
                   {/* <ExampleIcon /> */}
+                  <Image
+                    source={{ uri: challengeInfo.challengeImg }}
+                    style={{ height: "100%", width: "100%", borderRadius: 200 * 0.7 * 0.95 * 0.75 }}
+                    resizeMode="contain"
+                  />
                 </View>
                 {/* 사진 옆 뿔 */}
                 <View
@@ -101,7 +110,9 @@ export default function ChallengingCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <AppBoldText color="white">{challengeInfo.challengeTopic}</AppBoldText>
+                    <AppBoldText color="white" pxSize={20}>
+                      {challengeInfo.challengeTopic}
+                    </AppBoldText>
                   </View>
                 </View>
               </View>
@@ -131,17 +142,7 @@ export default function ChallengingCard(props) {
                     }}
                   >
                     <AppText size="2">{challengeInfo.challengeName}</AppText>
-                    {/* <View
-                      style={{
-                        width: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.5,
-                        height: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.5,
-                        borderRadius: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.5,
-                        marginLeft: 5,
-                        backgroundColor: "#FCBE32",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    > */}
+
                     <Badge
                       size={35}
                       style={{
@@ -151,7 +152,6 @@ export default function ChallengingCard(props) {
                     >
                       <AppText size="2">{challengeInfo.peopleCnt}명</AppText>
                     </Badge>
-                    {/* </View> */}
                   </View>
                 </View>
               </View>
@@ -180,7 +180,7 @@ export default function ChallengingCard(props) {
                     color: ColorSet.navyColor(1),
                   }}
                 >
-                  {challengeInfo.startDate.getMonth()}.{challengeInfo.startDate.getDay()}
+                  {challengeInfo.startDate.getMonth() + 1}.{challengeInfo.startDate.getDate()}
                 </Text>
                 <View
                   style={{
@@ -216,7 +216,7 @@ export default function ChallengingCard(props) {
                     color: ColorSet.navyColor(1),
                   }}
                 >
-                  {challengeInfo.endDate.getMonth()}.{challengeInfo.endDate.getDay()}
+                  {challengeInfo.endDate.getMonth() + 1}.{challengeInfo.endDate.getDate()}
                 </Text>
               </View>
             </View>
