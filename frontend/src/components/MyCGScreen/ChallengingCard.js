@@ -23,6 +23,14 @@ export default function ChallengingCard(props) {
     (challengeInfo.endDate.getTime() - challengeInfo.startDate.getTime()) / 1000 / 60 / 60 / 24 + 2
 
   const progress = parseInt((passedDay / wholeDay) * 100)
+
+  const dates = {
+    startMonth: (challengeInfo.startDate.getMonth() + 1).toString(),
+    startDay: challengeInfo.startDate.getDate().toString(),
+    endMonth: (challengeInfo.endDate.getMonth() + 1).toString(),
+    endDay: challengeInfo.endDate.getDate().toString(),
+  }
+
   return (
     <View
       style={{
@@ -110,7 +118,7 @@ export default function ChallengingCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <AppBoldText color="white" pxSize={20}>
+                    <AppBoldText lineNumber={1} color="white" pxSize={20}>
                       {challengeInfo.challengeTopic}
                     </AppBoldText>
                   </View>
@@ -141,7 +149,9 @@ export default function ChallengingCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <AppText size="2">{challengeInfo.challengeName}</AppText>
+                    <AppText lineNumber={1} size="2">
+                      {challengeInfo.challengeName}
+                    </AppText>
 
                     <Badge
                       size={35}
@@ -172,16 +182,10 @@ export default function ChallengingCard(props) {
                   justifyContent: "space-between",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    fontFamily: "HyeminRegular",
-                    color: ColorSet.navyColor(1),
-                  }}
-                >
-                  {challengeInfo.startDate.getMonth() + 1}.{challengeInfo.startDate.getDate()}
-                </Text>
+                <AppBoldText pxSize={15}>
+                  {dates.startMonth}.
+                  {dates.startDay.length === 1 ? "0" + dates.startDay : dates.startDay}
+                </AppBoldText>
                 <View
                   style={{
                     position: "absolute",
@@ -208,16 +212,9 @@ export default function ChallengingCard(props) {
                   ) : null}
                 </View>
 
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    fontFamily: "HyeminRegular",
-                    color: ColorSet.navyColor(1),
-                  }}
-                >
-                  {challengeInfo.endDate.getMonth() + 1}.{challengeInfo.endDate.getDate()}
-                </Text>
+                <AppBoldText pxSize={15}>
+                  {dates.endMonth}.{dates.endDay.length === 1 ? "0" + dates.endDay : dates.endDay}
+                </AppBoldText>
               </View>
             </View>
             <View

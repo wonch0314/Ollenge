@@ -68,104 +68,56 @@ const BeforeStart = (props) => {
   }
 
   return (
-    <Provider>
-      <Portal>
-        <ScrollBackground>
-          <DivideView>
-            <IconView>
-              <RankingChallengeIcon />
-            </IconView>
-            <AppBoldText>랭킹 챌린지</AppBoldText>
-          </DivideView>
-          {tempRankingCGList.map((challengeInfo) => (
-            <BeforeStartCard
-              key={challengeInfo.challengeId}
-              challengeInfo={challengeInfo}
-              func={() => {
-                pressHandler(challengeInfo.challengeId)
-              }}
-            />
-          ))}
-          {/* {rankingCGList.map((challengeInfo) => (
-            <BeforeStartCard
-              key={challengeInfo.challengeId}
-              challengeInfo={challengeInfo}
-              func={() => {
-                pressHandler(challengeInfo.challengeId)
-              }}
-            />
-          ))} */}
-          <DivideView>
-            <IconView>
-              <NormalChallengeIcon />
-            </IconView>
-            <AppBoldText>일반 챌린지</AppBoldText>
-          </DivideView>
-          {tempUserCGList.map((challengeInfo) => (
-            <BeforeStartCard
-              key={challengeInfo.challengeId}
-              challengeInfo={challengeInfo}
-              func={() => {
-                pressHandler(challengeInfo.challengeId)
-              }}
-            />
-          ))}
-          {/* {userCGList.map((challengeInfo) => (
-            <BeforeStartCard
-              key={challengeInfo.challengeId}
-              challengeInfo={challengeInfo}
-              func={() => {
-                pressHandler(challengeInfo.challengeId)
-              }}
-            />
-          ))} */}
-        </ScrollBackground>
-        <FAB.Group
-          open={fabButton}
-          visible
-          icon={fabButton ? "minus" : "plus"}
-          color="white"
-          fabStyle={{
-            backgroundColor: "#FCBE32",
-            borderRadius: 100,
+    <ScrollBackground>
+      <DivideView>
+        <IconView>
+          <RankingChallengeIcon />
+        </IconView>
+        <AppBoldText>랭킹 챌린지</AppBoldText>
+      </DivideView>
+      {tempRankingCGList.map((challengeInfo) => (
+        <BeforeStartCard
+          key={challengeInfo.challengeId}
+          challengeInfo={challengeInfo}
+          func={() => {
+            pressHandler(challengeInfo.challengeId)
           }}
-          actions={[
-            {
-              icon: "barcode-scan",
-              label: "초대 코드 입력",
-              color: "white",
-              onPress: () => console.log("여기 함수 넣자"),
-              labelStyle: {
-                color: "#FCBE32",
-                fontWeight: "bold",
-              },
-              style: {
-                backgroundColor: "#FCBE32",
-                borderRadius: 100,
-              },
-              size: "medium",
-            },
-            {
-              icon: "run",
-              label: "새 챌린지 생성",
-              labelStyle: {
-                fontWeight: "bold",
-                color: "#FCBE32",
-              },
-              color: "white",
-              onPress: () => console.log("여기 함수 넣자"),
-              style: {
-                color: "white",
-                borderRadius: 100,
-                backgroundColor: "#FCBE32",
-              },
-              size: "medium",
-            },
-          ]}
-          onStateChange={onStateChange}
         />
-      </Portal>
-    </Provider>
+      ))}
+      {/* {rankingCGList.map((challengeInfo) => (
+            <BeforeStartCard
+              key={challengeInfo.challengeId}
+              challengeInfo={challengeInfo}
+              func={() => {
+                pressHandler(challengeInfo.challengeId)
+              }}
+            />
+          ))} */}
+      <DivideView>
+        <IconView>
+          <NormalChallengeIcon />
+        </IconView>
+        <AppBoldText>일반 챌린지</AppBoldText>
+      </DivideView>
+      {tempUserCGList.map((challengeInfo) => (
+        <BeforeStartCard
+          key={challengeInfo.challengeId}
+          challengeInfo={challengeInfo}
+          func={() => {
+            pressHandler(challengeInfo.challengeId)
+          }}
+        />
+      ))}
+      {/* {userCGList.map((challengeInfo) => (
+            <BeforeStartCard
+              key={challengeInfo.challengeId}
+              challengeInfo={challengeInfo}
+              func={() => {
+                pressHandler(challengeInfo.challengeId)
+              }}
+            />
+          ))} */}
+    </ScrollBackground>
   )
 }
 
