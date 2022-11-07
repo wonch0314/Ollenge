@@ -9,17 +9,15 @@ import { ExampleIcon, RunningIcon } from "../../assets/images/MyCGScreen/MyCGScr
 
 export default function ChallengingCard(props) {
   const windowWidth = Dimensions.get("window").width
-  const isChallenge = props.challengeInfo.isChallenge
-  const title = props.challengeInfo.title
-  const teamName = props.challengeInfo.teamName
-  const memberNumber = props.challengeInfo.memberNumber
-  const progress = props.challengeInfo.progress
-  const startDate = props.challengeInfo.startDate
-  const endDate = props.challengeInfo.endDate
+
+  const challengeInfo = props.challengeInfo
+  console.log(typeof challengeInfo.startDate)
   // 카드 높이 * 70%(상단높이) * 상단높이 위쪽 깎기 * 보다 약간 작게
   const circleHeightWidth = 200 * 0.7 * 0.95 * 0.75
 
   const func = props.func
+
+  const progress = 0.7
 
   return (
     <View
@@ -73,7 +71,7 @@ export default function ChallengingCard(props) {
                   }}
                 >
                   {/* 나중에 여기에도 예시파일처럼 직접 borderRadius 먹여주어야 함 */}
-                  <ExampleIcon />
+                  {/* <ExampleIcon /> */}
                 </View>
                 {/* 사진 옆 뿔 */}
                 <View
@@ -103,7 +101,7 @@ export default function ChallengingCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <AppBoldText color="white">{title}</AppBoldText>
+                    <AppBoldText color="white">{challengeInfo.challengeTopic}</AppBoldText>
                   </View>
                 </View>
               </View>
@@ -132,7 +130,7 @@ export default function ChallengingCard(props) {
                       alignItems: "center",
                     }}
                   >
-                    <AppText size="2">{teamName}</AppText>
+                    <AppText size="2">{challengeInfo.challengeName}</AppText>
                     {/* <View
                       style={{
                         width: 200 * 0.7 * 0.95 * 0.9 * 0.6 * 0.5,
@@ -151,7 +149,7 @@ export default function ChallengingCard(props) {
                         backgroundColor: ColorSet.yellowColor(1),
                       }}
                     >
-                      <AppText size="2">{memberNumber}명</AppText>
+                      <AppText size="2">{challengeInfo.peopleCnt}명</AppText>
                     </Badge>
                     {/* </View> */}
                   </View>
@@ -182,7 +180,7 @@ export default function ChallengingCard(props) {
                     color: ColorSet.navyColor(1),
                   }}
                 >
-                  {startDate}
+                  {challengeInfo.startDate.getMonth()}.{challengeInfo.startDate.getDay()}
                 </Text>
                 <View
                   style={{
@@ -218,7 +216,7 @@ export default function ChallengingCard(props) {
                     color: ColorSet.navyColor(1),
                   }}
                 >
-                  {endDate}
+                  {challengeInfo.endDate.getMonth()}.{challengeInfo.endDate.getDay()}
                 </Text>
               </View>
             </View>
