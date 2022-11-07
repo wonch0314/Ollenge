@@ -21,19 +21,19 @@ public class LocalDateTimeUtils {
         return endTime.compareTo(startTime) >= 0;
     }
 
-    public LocalDate getFirstDayOfTargetMonth(LocalDate target) {
+    public static LocalDate getFirstDayOfTargetMonth(LocalDate target) {
         return target.with(TemporalAdjusters.firstDayOfMonth());
     }
 
-    public LocalDate getLastDayOfTargetMonth(LocalDate target) {
+    public static LocalDate getLastDayOfTargetMonth(LocalDate target) {
         return target.with(TemporalAdjusters.lastDayOfMonth());
     }
 
-    public LocalDate getFirstDayOfTargetNextMonth(LocalDate target) {
+    public static LocalDate getFirstDayOfTargetNextMonth(LocalDate target) {
         return target.with(TemporalAdjusters.firstDayOfNextMonth());
     }
 
-    public LocalDate getLastDayOfTargetNextMonth(LocalDate target) {
+    public static LocalDate getLastDayOfTargetNextMonth(LocalDate target) {
         return target.with(TemporalAdjusters.firstDayOfNextMonth()).with(TemporalAdjusters.lastDayOfMonth());
     }
 }
