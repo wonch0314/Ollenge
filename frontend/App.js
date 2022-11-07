@@ -27,14 +27,11 @@ const MyPageRoute = () => <MyPageScreen />
 const CreateCGRoute = () => <CreateCGScreen />
 
 function AuthStack() {
-  const authCtx = useContext(AuthContext)
-  console.log("000", authCtx.token)
   return <StartScreen />
 }
 
 function AuthenticatedStack() {
   const authCtx = useContext(AuthContext)
-  console.log("111", authCtx.token)
   const [index, setIndex] = React.useState(4)
   const [routes] = React.useState([
     {
@@ -89,10 +86,11 @@ function AuthenticatedStack() {
 function Navigation() {
   const authCtx = useContext(AuthContext)
   const [authFlag, setAuthFlag] = useState(false)
-  console.log(authCtx.isAuthenticated, authCtx.isSigned)
   useEffect(() => {
     if (authCtx.isAuthenticated && authCtx.isSigned) {
       setAuthFlag(true)
+    } else {
+      setAuthFlag(false)
     }
   }, [authCtx])
   return (
@@ -108,11 +106,13 @@ function Root() {
   const authCtx = useContext(AuthContext)
   async function fetchToken() {
     const storedToken = await AsyncStorage.getItem("token")
-    const storedUserFlag = await AsyncStorage.getItem("userFlag")
-    console.log(":store", storedToken, storedUserFlag)
     if (storedToken) {
       authCtx.authenticate(storedToken)
     }
+  }
+
+  async function fetchSigned() {
+    const storedUserFlag = await AsyncStorage.getItem("userFlag")
     if (storedUserFlag) {
       authCtx.signed(storedUserFlag)
     }
@@ -128,8 +128,9 @@ function Root() {
   }
   useEffect(() => {
     fetchToken()
+    fetchSigned()
     getFonts()
-  }, [])
+  }, [authCtx])
 
   if (isTryingLogin) {
     return <AppLoading />
@@ -146,96 +147,6 @@ function App() {
     </>
   )
 }
-
-// const MyCGRoute = () => <MyCGScreen />
-
-// const RankingCGRoute = () => <RankingCGScreen />
-
-// const UserRankRoute = () => <UserRankScreen />
-
-// const MyPageRoute = () => <MyPageScreen />
-
-// const CreateCGRoute = () => <CreateCGScreen />
-
-// const App = () => {
-//   const [isReady, setIsReady] = useState(false)
-//   const getFonts = async () => {
-//     await Font.loadAsync({
-//       Recipekorea: require("./src/assets/fonts/Recipekorea.ttf"),
-//       HyeminRegular: require("./src/assets/fonts/HyeminRegular.ttf"),
-//       HyeminBold: require("./src/assets/fonts/HyeminBold.ttf"),
-//     })
-//   }
-
-//   const [index, setIndex] = React.useState(4)
-//   const [routes] = React.useState([
-//     {
-//       key: "myCG",
-//       title: "내 챌린지",
-//       focusedIcon: "home",
-//     },
-//     { key: "rankingCG", title: "랭킹 챌린지", focusedIcon: "fire" },
-//     { key: "userRank", title: "유저랭킹", focusedIcon: "crown" },
-//     {
-//       key: "myPage",
-//       title: "마이페이지",
-//       focusedIcon: "account",
-//     },
-//     { key: "createCG", title: "챌린지 생성", focusedIcon: "crown" },
-//   ])
-
-//   const renderScene = BottomNavigation.SceneMap({
-//     myCG: MyCGRoute,
-//     rankingCG: RankingCGRoute,
-//     userRank: UserRankRoute,
-//     myPage: MyPageRoute,
-//     createCG: CreateCGRoute,
-//   })
-
-//   function startScreenChange() {
-//     setIndex(0)
-//   }
-//   // index == 4인 경우 StartScreen 출력, 그 외엔 BottomNav랑 해당 스크린 출력
-
-//   const authCtx = useContext(AuthContext)
-//   console.log(authCtx.isAuthenticated)
-//   return (
-//     <AuthContextProvider>
-//       {isReady ? (
-//         <View style={styles.rootScreen}>
-//           {index == 4 ? (
-//             <StartScreen startScreenChange={startScreenChange} />
-//           ) : (
-//             <BottomNavigation
-//               navigationState={{ index, routes }}
-//               onIndexChange={setIndex}
-//               renderScene={renderScene}
-//               compact={false}
-//               sceneAnimationType={"shifting"}
-//               barStyle={styles.bottomNavContainer}
-//               activeColor={`${ColorSet.orangeColor(1)}`}
-//               inactiveColor={`${ColorSet.navyColor(1)}`}
-//               theme={{
-//                 fonts: {
-//                   labelMedium: {
-//                     fontFamily: "HyeminBold",
-//                   },
-//                 },
-//                 colors: {
-//                   onSurfaceVariant: `${ColorSet.navyColor(1)}`,
-//                   onSurface: `${ColorSet.orangeColor(1)}`,
-//                   secondaryContainer: "#FF999900",
-//                 },
-//               }}
-//             />
-//           )}
-//         </View>
-//       ) : (
-//         <AppLoading startAsync={getFonts} onFinish={() => setIsReady(true)} onError={() => {}} />
-//       )}
-//     </AuthContextProvider>
-//   )
-// }
 
 export default App
 
