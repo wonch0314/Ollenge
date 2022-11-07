@@ -40,7 +40,7 @@ function MyCGListScreen({ idHandler }) {
         }}
       >
         <Tab.Screen name="도전 중">{(props) => <Challenging idHandler={idHandler} />}</Tab.Screen>
-        <Tab.Screen name="시작 전" component={BeforeStart} />
+        <Tab.Screen name="시작 전">{(props) => <BeforeStart idHandler={idHandler} />}</Tab.Screen>
         <Tab.Screen name="종료" component={Ended} />
       </Tab.Navigator>
       {/* 아래부분 */}
