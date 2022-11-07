@@ -28,7 +28,7 @@ from PIL import Image
 from datetime import datetime
 
 # S3연결
-from pys3 import s3_connection, s3_upload, s3_download, BUCKET_NAME, make_std_url_name, make_feature_url_name, make_classification_url_name, make_common_url_name
+from pys3 import s3_connection, s3_upload, s3_download, BUCKET_NAME, make_std_url_name, make_feature_url_name, make_classification_url_name, make_common_url_name, make_profile_url_name
 # DB 연결
 from pysql import execute_insert_std_img, execute_select_std_img, execute_insert_feed, execute_select_challenge_auth_time, execute_select_isauth, execute_select_token_user_id, execute_update_profile_img
 # model 연결
@@ -93,7 +93,7 @@ config = dotenv_values(".env")
 YOUR_CLARIFAI_API_KEY = config.get('CLARIFYKEY')
 JWT_SECRET_KEY=config.get('JWTSECRETKEY')
 YOUR_APPLICATION_ID = "my-first-application"
-metadata = (("authorization", f"Key {YOUR_CLARIFAI_API_KEY}"),)
+metadata = (("Authorization", f"Key {YOUR_CLARIFAI_API_KEY}"),)
 
 app = FastAPI()
 
@@ -109,14 +109,15 @@ async def root():
     )
 
 @app.post("/auth/upload")
-async def uploadimg(data: uploadImg, authorization: Optional[str] = Header(None)):
-    if authorization:
-        btoken = authorization.split()[1]
+async def uploadimg(data: uploadImg, Authorization: Optional[str] = Header(None)):
+    if Authorization:
+        btoken = Authorization.split()[1]
         try:
             # dictionary{sub: userid(int), iss:"ollenge.com", exp, iat}
             decoded = jwt.decode(btoken, JWT_SECRET_KEY, algorithms="HS512")
             user_id = int(decoded["sub"])
-        except:
+        except Exception as e:
+            print(e)
             return JSONResponse(
                 status_code=403,
                 content={
@@ -124,7 +125,6 @@ async def uploadimg(data: uploadImg, authorization: Optional[str] = Header(None)
                     "errcode": 3,
                     },
             )
-
     else:
         return JSONResponse(
             status_code=403,
@@ -134,28 +134,71 @@ async def uploadimg(data: uploadImg, authorization: Optional[str] = Header(None)
                 },
         ) 
 
-    img = data.profile_img
-    execute_update_profile_img(user_id,img)
+    try:
+        profile_img = data.profile_img
+    except Exception as e:
+        print(e)
+        return JSONResponse(
+            status_code=400,
+            content={
+                "message": f"입력이 바르지 않습니다.",
+                "errcode": 1,
+                },
+        )
+
+    try:
+        imgdata = base64.b64decode(profile_img)
+        filename = "./imgs/"+make_profile_url_name(user_id)
+        with open(filename, 'wb') as f:
+            f.write(imgdata)
+    except Exception as e:
+        print(e)
+        return JSONResponse(
+            status_code=400,
+            content={
+                "message": f"입력이 바르지 않습니다.",
+                "errcode": 1,
+                },
+        )
+
+    try:
+        to = make_profile_url_name(user_id)
+        file_url = s3_upload(filename, 'homybk', to)
+        if file_url:
+            execute_update_profile_img(user_id, file_url)
+    except Exception as e:
+        print(e)
+        remove_img(filename)
+        return JSONResponse(
+            status_code=500,
+            content={
+                "message": f"S3 오류 혹은 DB 오류",
+                "errcode": 2
+                },
+        )
+
+    remove_img(filename)
     return JSONResponse(
         status_code=200,
         content={
-            "message": f"Oops! did something. There goes a rainbow...",
-            "errcode": 0,
+            "message": f"완료 되었습니다.",
+            "profile_img": file_url
             },
     )
 
 
 # 아무런 인증 방법이 없는 경우
 @app.post("/auth/common")
-async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header(None)):
+async def authimgcommon(data: CommonInput, Authorization: Optional[str] = Header(None)):
     result = {}
-    if authorization:
-        btoken = authorization.split()[1]
+    if Authorization:
+        btoken = Authorization.split()[1]
         try:
             # dictionary{sub: userid(int), iss:"ollenge.com", exp, iat}
             decoded = jwt.decode(btoken, JWT_SECRET_KEY, algorithms="HS512")
             user_id = int(decoded["sub"])
-        except:
+        except Exception as e:
+            print(e)
             return JSONResponse(
                 status_code=403,
                 content={
@@ -176,7 +219,8 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
         participation_id = str(data.participation_id)
         feed_img = data.feed_img
         feed_content = data.feed_content
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=400,
             content={
@@ -206,7 +250,8 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
                     "errcode": 6,
                     },
             )
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=500,
             content={
@@ -225,7 +270,8 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
         file_url = s3_upload(filename, 'homybk', to)
         if file_url:
             execute_insert_feed(participation_id, file_url, feed_content,feed_time)
-    except:
+    except Exception as e:
+        print(e)
         remove_img(filename)
         return JSONResponse(
             status_code=500,
@@ -246,15 +292,16 @@ async def authimgcommon(data: CommonInput, authorization: Optional[str] = Header
 
 # base64를 통해 이미지 분류
 @app.post("/auth/classification")
-async def authimgclassification(data: classificationpicture, authorization: Optional[str] = Header(None)):
+async def authimgclassification(data: classificationpicture, Authorization: Optional[str] = Header(None)):
     result = {}
-    if authorization:
-        btoken = authorization.split()[1]
+    if Authorization:
+        btoken = Authorization.split()[1]
         try:
             # dictionary{sub: userid(int), iss:"ollenge.com", exp, iat}
             decoded = jwt.decode(btoken, JWT_SECRET_KEY, algorithms="HS512")
             user_id = int(decoded["sub"])
-        except:
+        except Exception as e:
+            print(e)
             return JSONResponse(
                 status_code=403,
                 content={
@@ -277,7 +324,8 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
         feed_img = data.feed_img
         feed_content = data.feed_content
         classification_keyword = data.classification_keyword
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=400,
             content={
@@ -307,7 +355,8 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
                     "errcode": 6,
                     },
             )
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=500,
             content={
@@ -335,7 +384,8 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
             ],
         )
         response = stub.PostModelOutputs(request, metadata=metadata)
-    except:
+    except Exception as e:
+        print(e)
         remove_img(filename)
         return JSONResponse(
             status_code=500,
@@ -366,7 +416,8 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
             file_url = s3_upload(filename, 'homybk', to)
             if file_url:
                 execute_insert_feed(participation_id, file_url, feed_content, feed_time)
-        except:
+        except Exception as e:
+            print(e)
             remove_img(filename)
             return JSONResponse(
                 status_code=500,
@@ -396,15 +447,16 @@ async def authimgclassification(data: classificationpicture, authorization: Opti
 
 # 이미지 특징점 확인
 @app.post("/auth/stdimg")
-async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
+async def test(data: StdImgInput, Authorization: Optional[str] = Header(None)):
     filename = ''
-    if authorization:
-        btoken = authorization.split()[1]
+    if Authorization:
+        btoken = Authorization.split()[1]
         try:
             # dictionary{sub: userid(int), iss:"ollenge.com", exp, iat}
             decoded = jwt.decode(btoken, JWT_SECRET_KEY, algorithms="HS512")
             user_id = int(decoded["sub"])
-        except:
+        except Exception as e:
+            print(e)
             return JSONResponse(
                 status_code=403,
                 content={
@@ -424,7 +476,8 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
     try:
         participation_id = str(data.participation_id)
         std_img=data.std_img
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=400,
             content={
@@ -438,7 +491,8 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
         with open(filename, 'wb') as f:
             f.write(imgdata)
         src1 = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
-    except:
+    except Exception as e:
+        print(e)
         if filename:
             remove_img(filename)
         return JSONResponse(
@@ -457,7 +511,8 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
                     "errcode": 4,
                     },
             )
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=500,
             content={
@@ -484,7 +539,8 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
             file_url = s3_upload(filename, 'homybk', to)
             if file_url:
                 execute_insert_std_img(participation_id, file_url)
-        except:
+        except Exception as e:
+            print(e)
             remove_img(filename)
             return JSONResponse(
                 status_code=500,
@@ -511,16 +567,17 @@ async def test(data: StdImgInput, authorization: Optional[str] = Header(None)):
 
 # 이미지 특징점 비교
 @app.post("/auth/feature")
-async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)):
+async def featimg(data:FeatureInput, Authorization: Optional[str] = Header(None)):
     # 영상 불러오기
     # image_nparray2 = np.asarray(bytearray(requests.get(url2).content), dtype=np.uint8)
-    if authorization:
-        btoken = authorization.split()[1]
+    if Authorization:
+        btoken = Authorization.split()[1]
         try:
             # dictionary{sub: userid(int), iss:"ollenge.com", exp, iat}
             decoded = jwt.decode(btoken, JWT_SECRET_KEY, algorithms="HS512")
             user_id = int(decoded["sub"])
-        except:
+        except Exception as e:
+            print(e)
             return JSONResponse(
                 status_code=403,
                 content={
@@ -542,7 +599,8 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
         participation_id = str(data.participation_id)
         feed_img = data.feed_img
         feed_content = data.feed_content
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=400,
             content={
@@ -580,7 +638,8 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
                     "errcode": 6,
                     },
             )
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=500,
             content={
@@ -681,7 +740,8 @@ async def featimg(data:FeatureInput, authorization: Optional[str] = Header(None)
             file_url = s3_upload(filename, 'homybk', to)
             if file_url:
                 execute_insert_feed(participation_id, file_url, feed_content, feed_time)
-        except:
+        except Exception as e:
+            print(e)
             remove_img(filename)
             return JSONResponse(
                 status_code=500,
@@ -721,7 +781,8 @@ async def isauthedtoday(participation_id: int):
                     "isauthed": False
                     },
             )
-    except:
+    except Exception as e:
+        print(e)
         return JSONResponse(
             status_code=500,
             content={
