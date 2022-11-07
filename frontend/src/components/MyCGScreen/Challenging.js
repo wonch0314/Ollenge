@@ -54,7 +54,7 @@ const Challenging = () => {
   return (
     <ScrollBackground>
       {openModal && (
-        <AppModal openAndClose={openAndClose} title={}>
+        <AppModal openAndClose={openAndClose} title={myFunc}>
           <Feed />
         </AppModal>
       )}
