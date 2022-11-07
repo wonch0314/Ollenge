@@ -2,6 +2,7 @@ package com.ollenge.api.controller;
 
 import com.ollenge.api.exception.InvalidBadgeException;
 import com.ollenge.api.exception.InvalidBadgeStatusException;
+import com.ollenge.api.exception.InvalidReqUserException;
 import com.ollenge.api.exception.InvalidUserException;
 import com.ollenge.api.request.BadgePatchReq;
 import com.ollenge.api.response.BadgeGetRes;
@@ -35,6 +36,7 @@ public class BadgeController {
     @ApiOperation(value = "뱃지 리스트 조회", notes = "뱃지 리스트를 조회합니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "뱃지 리스트 조회 성공"),
+            @ApiResponse(code = 400, message = "존재하지 않는 유저입니다."),
             @ApiResponse(code = 400, message = "권한이 없습니다."),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
@@ -42,6 +44,9 @@ public class BadgeController {
         try {
             List<BadgeGetData> badgeList = badgeService.getBadgeList(authentication, userId);
             return ResponseEntity.status(200).body(BadgeGetRes.of(200, "뱃지 리스트 조회 성공", badgeList));
+        } catch (InvalidReqUserException invalidReqUserException) {
+            invalidReqUserException.printStackTrace();
+            return ResponseEntity.status(500).body(BaseResponseBody.of(400, "존재하지 않는 유저입니다."));
         } catch (InvalidUserException invalidUserException) {
             invalidUserException.printStackTrace();
             return ResponseEntity.status(500).body(BaseResponseBody.of(400, "권한이 없습니다."));

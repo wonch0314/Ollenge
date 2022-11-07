@@ -1,5 +1,6 @@
 package com.ollenge.api.service;
 
+import com.ollenge.api.exception.InvalidReqUserException;
 import com.ollenge.api.exception.InvalidUserException;
 import com.ollenge.api.response.data.BadgeGetData;
 import com.ollenge.common.util.JwtTokenUtil;
@@ -23,11 +24,13 @@ public class BadgeService {
 
     private final BadgeRepository badgeRepository;
 
-    public List<BadgeGetData> getBadgeList(Authentication authentication, long reqUserId) throws InvalidUserException {
+    public List<BadgeGetData> getBadgeList(Authentication authentication, long reqUserId) throws InvalidUserException, InvalidReqUserException {
         long userId = JwtTokenUtil.getUserIdByJWT(authentication);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
-        List<Badge> badgeList = badgeRepository.findByUser(user);
+        User reqUser = userRepository.findById(reqUserId)
+                .orElseThrow(() -> { return new InvalidReqUserException("Invalid ID " + reqUserId); });
+        List<Badge> badgeList = badgeRepository.findByUser(reqUser);
         List<BadgeGetData> badgeGetDataList = new ArrayList<>();
         for (Badge badge : badgeList) {
             badgeGetDataList.add(new BadgeGetData(badge.getBadgeId(), badge.getType(), badge.getGrade(), badge.getCreatedDatetime(), badge.isBadgeFlag()));
