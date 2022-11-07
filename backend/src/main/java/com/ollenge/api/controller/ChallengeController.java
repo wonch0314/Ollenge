@@ -203,6 +203,32 @@ public class ChallengeController {
         }
     }
 
+    @GetMapping("/ongoing")
+    @ApiOperation(value = "진행 중인 랭킹 챌린지 조회", notes = "진행 중인 랭킹 챌린지를 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "진행 중인 랭킹 챌린지 주제 조회 성공"),
+            @ApiResponse(code = 400, message = "권한이 없습니다."),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    public ResponseEntity<? extends BaseResponseBody> getRankingChallengeOngoing(@ApiIgnore Authentication authentication) {
+        long userId = JwtTokenUtil.getUserIdByJWT(authentication);
+        User user = userService.getUserByUserId(userId);
+        if (user == null) return ResponseEntity.status(400).body(BaseResponseBody.of(400, "권한이 없습니다."));
+        try {
+            List<ChallengePreset> challengePresetList = challengeService.getChallengePreset();
+            LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+            LocalDate start = LocalDateTimeUtils.getFirstDayOfTargetMonth(now);
+            LocalDate end = LocalDateTimeUtils.getLastDayOfTargetMonth(now);
+            return ResponseEntity.status(200).body(ChallengePresetGetRes.of(200, "진행 중인 랭킹 챌린지 주제 조회 성공", start, end, challengePresetList));
+//        } catch (InvalidUserException invalidUserException) {
+//            invalidUserException.printStackTrace();
+//            return ResponseEntity.status(500).body(BaseResponseBody.of(400, "권한이 없습니다."));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "서버 에러 발생"));
+        }
+    }
+
     @GetMapping("/scheduled")
     @ApiOperation(value = "모집 중인 랭킹 챌린지 조회", notes = "모집 중인 랭킹 챌린지를 조회합니다.")
     @ApiResponses({
@@ -210,7 +236,7 @@ public class ChallengeController {
             @ApiResponse(code = 400, message = "권한이 없습니다."),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
-    public ResponseEntity<? extends BaseResponseBody> getChallengeScheduled(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<? extends BaseResponseBody> getRankingChallengeScheduled(@ApiIgnore Authentication authentication) {
         long userId = JwtTokenUtil.getUserIdByJWT(authentication);
         User user = userService.getUserByUserId(userId);
         if (user == null) return ResponseEntity.status(400).body(BaseResponseBody.of(400, "권한이 없습니다."));
