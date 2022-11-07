@@ -35,7 +35,6 @@ public class ChallengeService {
 
     public ChallengeCreatedData createChallenge(Authentication authentication, ChallengePostReq challengePostReq) throws NoSuchElementException, InvalidDateTimeException, DuplicatedPeriodTopicRankingChallengeException, InvalidAuthTypeException, InvalidFieldException, InvalidUserException {
         long userId = JwtTokenUtil.getUserIdByJWT(authentication);
-        if(userId != challengePostReq.getUserId()) throw new InvalidUserException("Invalid ID " + userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
         ChallengePreset challengePreset = null;
