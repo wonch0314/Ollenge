@@ -3,6 +3,7 @@ package com.ollenge.common.util;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 
 public class LocalDateTimeUtils {
 
@@ -18,5 +19,21 @@ public class LocalDateTimeUtils {
 
     public static boolean isValidTime(LocalTime startTime, LocalTime endTime) {
         return endTime.compareTo(startTime) >= 0;
+    }
+
+    public LocalDate getFirstDayOfTargetMonth(LocalDate target) {
+        return target.with(TemporalAdjusters.firstDayOfMonth());
+    }
+
+    public LocalDate getLastDayOfTargetMonth(LocalDate target) {
+        return target.with(TemporalAdjusters.lastDayOfMonth());
+    }
+
+    public LocalDate getFirstDayOfTargetNextMonth(LocalDate target) {
+        return target.with(TemporalAdjusters.firstDayOfNextMonth());
+    }
+
+    public LocalDate getLastDayOfTargetNextMonth(LocalDate target) {
+        return target.with(TemporalAdjusters.firstDayOfNextMonth()).with(TemporalAdjusters.lastDayOfMonth());
     }
 }
