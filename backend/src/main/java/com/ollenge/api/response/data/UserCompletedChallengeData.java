@@ -24,9 +24,9 @@ public class UserCompletedChallengeData {
     LocalDate endDate;
     int peopleCnt;
     int challengeScore;
-    int totalCnt;
-    int challengeRank;
-    int feedCnt;
+    Integer totalCnt;
+    Integer challengeRank;
+    int myFeedCnt;
 
     public static UserCompletedChallengeData of(Challenge challenge, int feedCnt, ChallengeResult challengeResult) {
         UserCompletedChallengeData userParticipatedChallengeData = new UserCompletedChallengeData();
@@ -38,9 +38,11 @@ public class UserCompletedChallengeData {
         userParticipatedChallengeData.endDate = challenge.getEndDate();
         userParticipatedChallengeData.peopleCnt = challenge.getPeopleCnt();
         userParticipatedChallengeData.challengeScore = challenge.getChallengeScore();
-        userParticipatedChallengeData.totalCnt = challengeResult.getTotalCnt();
-        userParticipatedChallengeData.challengeRank = challengeResult.getChallengeRank();
-        userParticipatedChallengeData.feedCnt = feedCnt;
+        if(challengeResult != null) {
+            userParticipatedChallengeData.totalCnt = challengeResult.getTotalCnt();
+            userParticipatedChallengeData.challengeRank = challengeResult.getChallengeRank();
+        }
+        userParticipatedChallengeData.myFeedCnt = feedCnt;
         return userParticipatedChallengeData;
     }
 }
