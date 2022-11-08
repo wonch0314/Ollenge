@@ -10,11 +10,13 @@ import AppBoldText from "../common/AppBoldText"
 import AppText from "../common/AppText"
 import AppButton from "../common/AppButton"
 import * as Images from "../../assets/images/RankingCGScreen/RankingCGScreen.js"
+import { AuthorizationInstance } from "../../api/settings"
 
 const screenWidth = Dimensions.get("window").width
 const screenHeight = Dimensions.get("window").height
 
 export default function ParticipatingDetailCard(props) {
+  const instance = AuthorizationInstance()
   const index = props.index
   const arrayLength = props.arrayLength
   const challengeInfo = props.challengeInfo
@@ -56,6 +58,14 @@ export default function ParticipatingDetailCard(props) {
         헬스 기구, 운동 용품 등을 사진을 통해 인식하여 당일 달성 여부를 판단합니다.
       </AppText>
     )
+  }
+
+  const makeChallenge = async () => {
+    try {
+      const res = await instance.post("/api/challenge")
+    } catch (err) {
+      console.log(err.response.data)
+    }
   }
 
   return (
@@ -236,7 +246,12 @@ export default function ParticipatingDetailCard(props) {
                   elevation: 9,
                 }}
               >
-                <AppButton handler={() => {}} title="챌린지 팀 만들기" />
+                <AppButton
+                  handler={() => {
+                    makeChallenge()
+                  }}
+                  title="챌린지 팀 만들기"
+                />
               </View>
             </ButtonView>
           </View>

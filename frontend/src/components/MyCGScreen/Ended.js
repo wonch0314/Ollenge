@@ -10,8 +10,24 @@ import {
 } from "../../assets/images/MyCGScreen/MyCGScreen"
 import { DataTable } from "react-native-paper"
 import ColorSet from "../../style/ColorSet"
+import { useEffect, useState } from "react"
+import { AuthorizationInstance } from "../../api/settings"
 
 const Ended = () => {
+  const instance = AuthorizationInstance()
+
+  const [rankingCGList, setRankingCGList] = useState([])
+  const [userCGList, setUserCGList] = useState([])
+
+  useEffect(() => {
+    const getList = async () => {
+      const res = await instance.get("/api/user/completed")
+      setRankingCGList(res.data.rankingChallengeList)
+      setUserCGList(res.data.userChallengeList)
+    }
+    getList()
+  }, [])
+
   const windowWidth = Dimensions.get("window").width
   const tempList = [
     {
