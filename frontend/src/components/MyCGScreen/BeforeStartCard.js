@@ -4,7 +4,7 @@ import ColorSet from "../../style/ColorSet"
 import AppText from "../common/AppText"
 import AppBoldText from "../common/AppBoldText"
 import AppCard from "../common/AppCard"
-import { ProgressBar } from "react-native-paper"
+import { ProgressBar, Badge } from "react-native-paper"
 import { ExampleIcon, RunningIcon } from "../../assets/images/MyCGScreen/MyCGScreen"
 
 export default function BeforeStartCard(props) {
@@ -25,6 +25,7 @@ export default function BeforeStartCard(props) {
   const startDate = challengeInfo.startDate.getTime()
   const dDate = Math.ceil((startDate - nowDate) / 1000 / 60 / 60 / 24)
 
+  const pxSize = windowWidth * 0.045
   return (
     <View
       style={{
@@ -80,7 +81,7 @@ export default function BeforeStartCard(props) {
                   <Image
                     source={{ uri: challengeInfo.challengeImg }}
                     style={{ height: "100%", width: "100%", borderRadius: 200 * 0.7 * 0.95 * 0.75 }}
-                    resizeMode="contain"
+                    resizeMode="cover"
                   />
                 </View>
                 {/* 사진 옆 뿔 */}
@@ -99,7 +100,7 @@ export default function BeforeStartCard(props) {
                     paddingTop: circleHeightWidth * 0.1,
                   }}
                 >
-                  <AppBoldText pxSize={20}>{challengeInfo.challengeTopic}</AppBoldText>
+                  <AppBoldText lineNumber={1}>{challengeInfo.challengeTopic}</AppBoldText>
                 </View>
 
                 <View
@@ -121,7 +122,15 @@ export default function BeforeStartCard(props) {
                       alignItems: "center",
                     }}
                   > */}
-                  <AppText size="2"> ({challengeInfo.peopleCnt})</AppText>
+                  <Badge
+                    size={35}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: ColorSet.yellowColor(1),
+                    }}
+                  >
+                    <AppText size="2">{challengeInfo.peopleCnt}명</AppText>
+                  </Badge>
                   {/* </View> */}
                 </View>
               </View>
@@ -156,16 +165,7 @@ export default function BeforeStartCard(props) {
                   />
                 </View>
 
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    fontFamily: "HyeminRegular",
-                    color: ColorSet.navyColor(1),
-                  }}
-                >
-                  시작까지 D-{dDate}
-                </Text>
+                <AppBoldText pxSize={15}>시작까지 D-{dDate}</AppBoldText>
               </View>
             </View>
             <View

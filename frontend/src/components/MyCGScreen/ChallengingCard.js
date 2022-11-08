@@ -31,6 +31,8 @@ export default function ChallengingCard(props) {
     endDay: challengeInfo.endDate.getDate().toString(),
   }
 
+  const pxSize = windowWidth * 0.045
+
   return (
     <View
       style={{
@@ -87,7 +89,7 @@ export default function ChallengingCard(props) {
                   <Image
                     source={{ uri: challengeInfo.challengeImg }}
                     style={{ height: "100%", width: "100%", borderRadius: 200 * 0.7 * 0.95 * 0.75 }}
-                    resizeMode="contain"
+                    resizeMode="cover"
                   />
                 </View>
                 {/* 사진 옆 뿔 */}
@@ -111,14 +113,14 @@ export default function ChallengingCard(props) {
                   <View
                     style={{
                       position: "absolute",
-                      left: (200 * 0.7 * 0.95 * 0.75) / 2,
+                      left: (200 * 0.7 * 0.95 * 0.75) / 2 - 5,
                       right: 10,
                       height: "100%",
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    <AppBoldText lineNumber={1} color="white" pxSize={20}>
+                    <AppBoldText lineNumber={1} color="white">
                       {challengeInfo.challengeTopic}
                     </AppBoldText>
                   </View>
@@ -182,7 +184,7 @@ export default function ChallengingCard(props) {
                   justifyContent: "space-between",
                 }}
               >
-                <AppBoldText pxSize={15}>
+                <AppBoldText pxSize={pxSize * 0.9}>
                   {dates.startMonth}.
                   {dates.startDay.length === 1 ? "0" + dates.startDay : dates.startDay}
                 </AppBoldText>
@@ -212,7 +214,7 @@ export default function ChallengingCard(props) {
                   ) : null}
                 </View>
 
-                <AppBoldText pxSize={15}>
+                <AppBoldText pxSize={pxSize * 0.9}>
                   {dates.endMonth}.{dates.endDay.length === 1 ? "0" + dates.endDay : dates.endDay}
                 </AppBoldText>
               </View>
