@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 
 import { Pressable, StyleSheet, View } from "react-native"
-import { RFPercentage } from "react-native-responsive-fontsize"
 import { Modal, Portal } from "react-native-paper"
 
 import AppBoldText from "../../common/AppBoldText"
