@@ -1,8 +1,8 @@
 package com.ollenge.db.repository;
 
-import com.ollenge.api.response.data.ChallengeStateData;
-import com.ollenge.api.response.data.UserParticipatedChallengeData;
 import com.ollenge.api.response.data.TotalUserRankData;
+import com.ollenge.api.response.data.UserCompletedChallengeData;
+import com.ollenge.api.response.data.UserParticipatedChallengeData;
 import com.ollenge.db.entity.*;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ConstantImpl;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -43,6 +42,27 @@ public class UserRepositorySupport {
             ,"DATE_FORMAT({0}, {1})"
             , qParticipation.challenge.endDate
             , ConstantImpl.create("%Y-%m-%d"));
+
+    public List<UserCompletedChallengeData> getUserCompletedChallenge(User user, boolean isRankingChallenge) {
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formatedToday = today.format(formatter);
+
+        List<Tuple> result = jpaQueryFactory
+                .select(qParticipation.challenge, qParticipation.feedCnt, qParticipation.challenge.challengeResult)
+                .from(qParticipation)
+                .where(qParticipation.user.eq(user), formattedEndDate.lt(formatedToday) ,challengPreseteNotNull(isRankingChallenge))
+                .fetch();
+        List<UserCompletedChallengeData> participatedChallengeList = new ArrayList<>();
+        result.stream()
+                .forEach(tuple -> {
+                    Challenge challenge = tuple.get(qParticipation.challenge);
+                    int feedCnt = tuple.get(qParticipation.feedCnt);
+                    ChallengeResult challengeResult = tuple.get(qParticipation.challenge.challengeResult);
+                    participatedChallengeList.add(UserCompletedChallengeData.of(challenge, feedCnt, challengeResult));
+                });
+        return participatedChallengeList;
+    }
 
     public List<UserParticipatedChallengeData> getUserChallenge(User user, String type, boolean isRankingChallenge) {
         LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
