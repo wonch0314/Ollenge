@@ -1,44 +1,109 @@
-import React, { useState } from "react"
-import { Image, StyleSheet, Text, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import {
+  Image,
+  KeyboardAvoidingView,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native"
 import ColorSet from "../../style/ColorSet"
 import PageBase, { fontStyles } from "./PageBase"
+import DeviceInfo from "../../style/DeviceInfo"
 
 const iconLinks = ["../../assets/images/thumb-up.png", "../../assets/images/thumb-down.png"]
+const { dw, dh } = DeviceInfo
 
-// const SignBall = ({ isFilled }) => {
-//   const color = isFilled !== "" ? "light green" : "grey"
-//   return (
-//     <Text style={{ position: "absolute", top: "2%", left: "10%", fontSize: 32, color: `${color}` }}>
-//       ●
-//     </Text>
-//   )
-// }
-
-export default function Page7() {
-  const [reward, setReward] = useState("asdasd")
-  const [penalty, setpenalty] = useState("")
-
+const Modal = ({ title, value, valueHandler, setPick }) => {
   return (
-    <PageBase toNext={"Final"}>
-      <View flex={2} justifyContent="flex-end">
-        <Text style={fontStyles.HyeminBold({ size: 9, bold: "bold" })}>보상 / 벌칙 입력</Text>
-        <Text style={fontStyles.HyeminBold({ size: 5 })}>
-          챌린지가 끝난 후 등수에 따른{"\n"}보상 혹은 벌칙이 있다면 입력해주세요
-        </Text>
+    <View
+      style={{
+        width: dw,
+        height: dh,
+        backgroundColor: "rgba(0, 0, 0 ,0.6)",
+        zIndex: 100,
+        position: "absolute",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <View
+        style={{
+          width: dw * 0.8,
+          height: dw * 0.8,
+          backgroundColor: "white",
+          borderRadius: 24,
+          padding: 36,
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={{ ...fontStyles.HyeminBold({ size: 8 }), marginBottom: 18 }}>{title}</Text>
+        <TextInput
+          style={{ width: "100%", flex: 1, borderWidth: 4, marginBottom: 18, borderRadius: 12 }}
+          value={value}
+          onChangeText={valueHandler}
+        />
+        <Pressable
+          onPress={() => setPick(0)}
+          style={{
+            width: "100%",
+            backgroundColor: `${ColorSet.navyColor(1)}`,
+            borderRadius: 24,
+            padding: 12,
+          }}
+        >
+          <Text style={{ ...fontStyles.HyeminBold({ size: 4.5, color: "white" }) }}>입력 완료</Text>
+        </Pressable>
       </View>
-      <View style={{ flexDirection: "row", flex: 6 }}>
-        <View style={styles.iconFrame}>
-          <View style={styles.thumbIcon(reward)}>
-            <Image source={require("../../assets/images/thumb-up.png")} />
-          </View>
+    </View>
+  )
+}
+
+export default function Page7({ info, setInfo }) {
+  const [reward, setReward] = useState(info.rewardContent)
+  const [penalty, setpenalty] = useState(info.penaltyContent)
+  const [disabled, setDisabled] = useState(true)
+  const [pick, setPick] = useState(0)
+
+  useEffect(() => {
+    setDisabled(reward === "" || penalty === "")
+    setInfo((prev) => {
+      return { ...prev, rewardContent: reward, penaltyContent: penalty }
+    })
+  }, [reward, setReward, penalty, setpenalty])
+  return (
+    <>
+      <PageBase toNext={"Final"} disabled={disabled}>
+        <View flex={2} justifyContent="flex-end">
+          {/* <Text style={fontStyles.HyeminBold({ size: 9, bold: "bold" })}>보상 / 벌칙 입력</Text> */}
+          <Text style={fontStyles.HyeminBold({ size: 5 })}>
+            챌린지가 끝난 후 등수에 따른{"\n"}보상 혹은 벌칙이 있다면 입력해주세요
+          </Text>
         </View>
-        <View style={styles.iconFrame}>
-          <View style={styles.thumbIcon(penalty)}>
-            <Image source={require("../../assets/images/thumb-down.png")} />
-          </View>
+        <View style={{ flexDirection: "row", flex: 6 }}>
+          <Pressable style={styles.iconFrame} onPress={() => setPick(1)}>
+            <View style={styles.thumbIcon(reward)}>
+              <Image source={require("../../assets/images/thumb-up.png")} />
+            </View>
+          </Pressable>
+
+          <Pressable style={styles.iconFrame} onPress={() => setPick(2)}>
+            <View style={styles.thumbIcon(penalty)}>
+              <Image source={require("../../assets/images/thumb-down.png")} />
+            </View>
+          </Pressable>
         </View>
-      </View>
-    </PageBase>
+      </PageBase>
+
+      {pick === 1 && (
+        <Modal title={"보상 입력"} value={reward} valueHandler={setReward} setPick={setPick} />
+      )}
+      {pick === 2 && (
+        <Modal title={"벌칙 입력"} value={penalty} valueHandler={setpenalty} setPick={setPick} />
+      )}
+    </>
   )
 }
 

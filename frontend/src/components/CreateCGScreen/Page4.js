@@ -11,8 +11,9 @@ export default function Page4({ info, setInfo }) {
       return { ...prev, challengeDescription: description }
     })
   }, [description, setDescription])
+
   return (
-    <PageBase toNext={"Page5"}>
+    <PageBase toNext={"Page5"} disabled={false}>
       <View style={{ width: "100%", height: "100%", flex: 1, justifyContent: "center" }}>
         <View>
           {/* <Text style={styles.Title}>챌린지 설명</Text> */}
@@ -40,7 +41,7 @@ const styles = {
     marginTop: 36,
     elevation: 12,
     padding: 36,
-    ...fontStyles.Hyemin({ size: 5, align: "left", color: "black" }),
+    ...fontStyles.Hyemin({ size: 5, bold: "bold", align: "left", color: "black" }),
   },
   Title: {
     ...fontStyles.HyeminBold({ size: 9, bold: "bold", align: "center" }),

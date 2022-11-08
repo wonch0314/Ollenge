@@ -13,13 +13,18 @@ const words = {
 export default function Page2({ info, setInfo }) {
   const [auth, setAuth] = useState(info.authType)
   const [selIndex, setSelIndex] = useState(-1)
+  const [disabled, setDisabled] = useState(true)
+
   useEffect(() => {
     setInfo((prev) => {
       return { ...prev, authType: Object.keys(words)[selIndex] }
     })
+    setDisabled(auth === "")
+    console.log(auth)
   }, [auth, setAuth])
+
   return (
-    <PageBase toNext={"Page4"}>
+    <PageBase toNext={"Page4"} disabled={disabled}>
       {/* 랭킹 챌린지 종류별 카드 렌더링 */}
       {Object.keys(words).map((key, ind) => {
         return (
@@ -27,6 +32,7 @@ export default function Page2({ info, setInfo }) {
             key={ind}
             onPress={() => {
               setSelIndex(ind)
+              setAuth(Object.keys(words)[ind])
             }}
             style={{ width: "100%" }}
           >
@@ -34,7 +40,7 @@ export default function Page2({ info, setInfo }) {
               style={{
                 ...styles.Card,
                 borderWidth: selIndex === ind ? 4 : 0,
-                borderColor: `${ColorSet.greenColor(1)}`,
+                borderColor: `${ColorSet.greenColor(0.4)}`,
               }}
             >
               <Text style={styles.Title}>{key}</Text>
@@ -51,12 +57,12 @@ export default function Page2({ info, setInfo }) {
 
 const styles = {
   Title: {
-    ...fontStyles.HyeminBold({ size: 6, bold: "bold", align: "left" }),
+    ...fontStyles.HyeminBold({ size: 6.5, align: "left" }),
     marginBottom: 15,
   },
 
   Content: {
-    ...fontStyles.Hyemin({ size: 4, align: "left" }),
+    ...fontStyles.Hyemin({ size: 4.5, align: "left" }),
   },
   Card: {
     width: "100%",
@@ -64,6 +70,6 @@ const styles = {
     marginBottom: 12,
     borderRadius: 12,
     elevation: 12,
-    padding: 6,
+    padding: 12,
   },
 }

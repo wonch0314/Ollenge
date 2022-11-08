@@ -21,10 +21,19 @@ const CancelBtn = () => {
   )
 }
 
-const NextBtn = ({ toNext }) => {
+const NextBtn = ({ toNext, disabled }) => {
   const navigation = useNavigation()
+
   return (
-    <Pressable style={styles.NextBtn} onPress={() => navigation.navigate(toNext)}>
+    <Pressable
+      disabled={disabled}
+      style={{ ...styles.NextBtn, backgroundColor: disabled ? "grey" : ColorSet.orangeColor(1) }}
+      onPress={() => {
+        if (!disabled) {
+          navigation.navigate(toNext)
+        }
+      }}
+    >
       <Text style={styles.NextBtnText}>다음</Text>
     </Pressable>
   )
@@ -54,7 +63,8 @@ export default function PageBase(props) {
           <View style={styles.ContentArea}>{props.children}</View>
           {showKey !== true && props.hideBtn !== true && (
             <View style={styles.BottomArea}>
-              <NextBtn toNext={props.toNext} />
+              <NextBtn toNext={props.toNext} disabled={false} />
+              {/* props.disabled */}
               <CancelBtn />
             </View>
           )}
@@ -104,7 +114,6 @@ const styles = {
 
   NextBtn: {
     ...baseStyle,
-    backgroundColor: ColorSet.orangeColor(1),
     borderRadius: 15,
     padding: 12,
     marginBottom: 10,

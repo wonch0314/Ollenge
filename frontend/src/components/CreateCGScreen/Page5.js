@@ -15,6 +15,7 @@ const formDate = (date) => {
 }
 
 export default function Page5({ info, setInfo }) {
+  const [disabled, setDisabled] = useState(true)
   const [date, setDate] = useState({
     startDate: new Date(info.startDate),
     endDate: new Date(info.endDate),
@@ -26,10 +27,12 @@ export default function Page5({ info, setInfo }) {
     setInfo((prev) => {
       return { ...prev, startDate: SD, endDate: ED }
     })
+
+    setDisabled(isNaN(date.startDate) || isNaN(date.endDate))
   }, [date, setDate])
 
   return (
-    <PageBase toNext={"Page6"}>
+    <PageBase toNext={"Page6"} disabled={disabled}>
       {/* <Text style={fontStyles.HyeminBold({ size: 9 })}>챌린지 기간 설정</Text> */}
       <Text style={fontStyles.HyeminBold({ size: 5 })}>챌린지를 진행할 기간을 입력해주세요</Text>
       <View
