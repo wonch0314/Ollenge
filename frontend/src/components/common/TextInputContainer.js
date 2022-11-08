@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   textInputBox: {
     backgroundColor: "rgb(255, 255, 255)",
     width: "100%",
-    height: RFPercentage(8),
+    height: RFPercentage(6),
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {

@@ -24,39 +24,56 @@ const Modal = ({ title, value, valueHandler, setPick }) => {
         backgroundColor: "rgba(0, 0, 0 ,0.6)",
         zIndex: 100,
         position: "absolute",
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      <View
-        style={{
-          width: dw * 0.8,
-          height: dw * 0.8,
-          backgroundColor: "white",
-          borderRadius: 24,
-          padding: 36,
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+      <KeyboardAvoidingView
+        style={{ width: "100%", flex: 1, justifyContent: "center", alignItems: "center" }}
+        behavior="padding"
       >
-        <Text style={{ ...fontStyles.HyeminBold({ size: 8 }), marginBottom: 18 }}>{title}</Text>
-        <TextInput
-          style={{ width: "100%", flex: 1, borderWidth: 4, marginBottom: 18, borderRadius: 12 }}
-          value={value}
-          onChangeText={valueHandler}
-        />
-        <Pressable
-          onPress={() => setPick(0)}
+        <View
           style={{
-            width: "100%",
-            backgroundColor: `${ColorSet.navyColor(1)}`,
+            width: dw * 0.8,
+            height: dw * 0.8,
+            backgroundColor: "white",
             borderRadius: 24,
-            padding: 12,
+            padding: 36,
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <Text style={{ ...fontStyles.HyeminBold({ size: 4.5, color: "white" }) }}>입력 완료</Text>
-        </Pressable>
-      </View>
+          <Text style={{ ...fontStyles.HyeminBold({ size: 8 }), marginBottom: 18 }}>{title}</Text>
+          <TextInput
+            multiline
+            numberOfLines={6}
+            maxLength={50}
+            style={{
+              ...fontStyles.HyeminBold({ size: 5, color: "black" }),
+              width: "100%",
+              flex: 1,
+              padding: 12,
+              borderWidth: 2,
+              marginBottom: 18,
+              borderRadius: 12,
+              textAlign: "left",
+            }}
+            value={value}
+            onChangeText={valueHandler}
+          />
+          <Pressable
+            onPress={() => setPick(0)}
+            style={{
+              width: "100%",
+              backgroundColor: `${ColorSet.navyColor(1)}`,
+              borderRadius: 24,
+              padding: 12,
+            }}
+          >
+            <Text style={{ ...fontStyles.HyeminBold({ size: 4.5, color: "white" }) }}>
+              입력 완료
+            </Text>
+          </Pressable>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   )
 }
@@ -79,7 +96,7 @@ export default function Page7({ info, setInfo }) {
         <View flex={2} justifyContent="flex-end">
           {/* <Text style={fontStyles.HyeminBold({ size: 9, bold: "bold" })}>보상 / 벌칙 입력</Text> */}
           <Text style={fontStyles.HyeminBold({ size: 5 })}>
-            챌린지가 끝난 후 등수에 따른{"\n"}보상 혹은 벌칙이 있다면 입력해주세요
+            챌린지가 끝난 후 등수에 따른{"\n"}보상 혹은 벌칙이 있다면 입력해주세요{"\n"}(선택 사항)
           </Text>
         </View>
         <View style={{ flexDirection: "row", flex: 6 }}>
@@ -119,8 +136,7 @@ const styles = StyleSheet.create({
       backgroundColor: "white",
       padding: 24,
       borderRadius: 12,
-      borderWidth: 6,
-      borderColor: content === "" ? "grey" : `${ColorSet.greenColor(1)}`,
+      elevation: 8,
     }
   },
 })

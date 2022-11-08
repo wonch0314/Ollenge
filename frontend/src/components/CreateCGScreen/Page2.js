@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Pressable, ScrollView, Text, View } from "react-native"
+import { KeyboardAvoidingView, Pressable, ScrollView, Text, View } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import DeviceInfo from "../../style/DeviceInfo"
 import PageBase, { fontStyles } from "./PageBase"
@@ -64,44 +64,46 @@ export default function Page2({ info, setInfo }) {
 
   return (
     <PageBase toNext={"Page3"} disabled={disabled}>
-      {clicked === false && (
-        <>
-          {/* Choiced Topic */}
-          <View flex={1} style={{ width: "100%", justifyContent: "center" }}>
-            {/* <Text style={textStyles.Title}>선택한 목표{"\n"}</Text> */}
-            <Text style={textStyles.Title}>{topic}</Text>
-          </View>
-
-          {/* Ranking CG Area */}
-          <View style={{ width: "100%" }}>
-            {/* <Text style={textStyles.TopTitle}>{words.TopTitle}</Text> */}
-            <Text style={textStyles.TopContent}>{words.TopContent}</Text>
-            <ScrollView style={frameStyles.rankingCGList} horizontal={true}>
-              {RankingCGs.map((rcg, index) => {
-                return <RankingCard title={rcg} key={index} />
-              })}
-            </ScrollView>
-          </View>
-
-          {/* User CG Area */}
-          <View flex={1} style={{ width: "100%", justifyContent: "center" }}>
-            <View>
-              <Text style={textStyles.BotTitle}>{words.BotTitle}</Text>
-              <Text style={textStyles.BotContent}>{words.BotContent}</Text>
+      <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="padding">
+        {clicked === false && (
+          <>
+            {/* Choiced Topic */}
+            <View flex={1} style={{ width: "100%", justifyContent: "center" }}>
+              {/* <Text style={textStyles.Title}>선택한 목표{"\n"}</Text> */}
+              <Text style={textStyles.Title}>{topic}</Text>
             </View>
-            <Pressable onPress={() => setClicked(true)}>
-              <View style={frameStyles.customArea}>
-                <Text style={textStyles.customArea}>{words.customContent}</Text>
+
+            {/* Ranking CG Area */}
+            <View style={{ width: "100%" }}>
+              {/* <Text style={textStyles.TopTitle}>{words.TopTitle}</Text> */}
+              <Text style={textStyles.TopContent}>{words.TopContent}</Text>
+              <ScrollView style={frameStyles.rankingCGList} horizontal={true}>
+                {RankingCGs.map((rcg, index) => {
+                  return <RankingCard title={rcg} key={index} />
+                })}
+              </ScrollView>
+            </View>
+
+            {/* User CG Area */}
+            <View flex={1} style={{ width: "100%", justifyContent: "center" }}>
+              <View>
+                <Text style={textStyles.BotTitle}>{words.BotTitle}</Text>
+                <Text style={textStyles.BotContent}>{words.BotContent}</Text>
               </View>
-            </Pressable>
-          </View>
-        </>
-      )}
-      {clicked === true && (
-        <>
-          <CustomTopicInput topic={topic} setTopic={setTopic} setClicked={setClicked} />
-        </>
-      )}
+              <Pressable onPress={() => setClicked(true)}>
+                <View style={frameStyles.customArea}>
+                  <Text style={textStyles.customArea}>{words.customContent}</Text>
+                </View>
+              </Pressable>
+            </View>
+          </>
+        )}
+        {clicked === true && (
+          <>
+            <CustomTopicInput topic={topic} setTopic={setTopic} setClicked={setClicked} />
+          </>
+        )}
+      </KeyboardAvoidingView>
     </PageBase>
   )
 }

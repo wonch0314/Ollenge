@@ -36,15 +36,9 @@ export default function Page2({ info, setInfo }) {
             }}
             style={{ width: "100%" }}
           >
-            <View
-              style={{
-                ...styles.Card,
-                borderWidth: selIndex === ind ? 4 : 0,
-                borderColor: `${ColorSet.greenColor(0.4)}`,
-              }}
-            >
-              <Text style={styles.Title}>{key}</Text>
-              <Text style={styles.Content} numberOfLines={2}>
+            <View style={styles.Card(selIndex === ind)}>
+              <Text style={styles.Title(selIndex === ind)}>{key}</Text>
+              <Text style={styles.Content(selIndex === ind)} numberOfLines={2}>
                 {words[key]}
               </Text>
             </View>
@@ -56,20 +50,28 @@ export default function Page2({ info, setInfo }) {
 }
 
 const styles = {
-  Title: {
-    ...fontStyles.HyeminBold({ size: 6.5, align: "left" }),
-    marginBottom: 15,
+  Title: (selected) => {
+    const color = selected ? "white" : `${ColorSet.navyColor(1)}`
+    return {
+      ...fontStyles.HyeminBold({ size: 6.5, align: "left", color }),
+      marginBottom: 15,
+    }
   },
 
-  Content: {
-    ...fontStyles.Hyemin({ size: 4.5, align: "left" }),
+  Content: (selected) => {
+    const color = selected ? "white" : `${ColorSet.navyColor(1)}`
+    return {
+      ...fontStyles.Hyemin({ size: 4.5, align: "left", color }),
+    }
   },
-  Card: {
-    width: "100%",
-    backgroundColor: "white",
-    marginBottom: 12,
-    borderRadius: 12,
-    elevation: 12,
-    padding: 12,
+  Card: (selected) => {
+    return {
+      width: "100%",
+      backgroundColor: selected === true ? `${ColorSet.navyColor(1)}` : "white",
+      marginBottom: 12,
+      borderRadius: 12,
+      elevation: 12,
+      padding: 12,
+    }
   },
 }

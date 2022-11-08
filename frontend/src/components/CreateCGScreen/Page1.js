@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Text, View } from "react-native"
+import { KeyboardAvoidingView, Text, View } from "react-native"
 import PageBase, { fontStyles } from "./PageBase"
 import ImagePicker from "../common/ImagePicker"
 import TextInputContainer from "../common/TextInputContainer"
@@ -22,13 +22,17 @@ export default function Page1({ info, setInfo }) {
 
   return (
     <PageBase toNext={"Page2"} disabled={disabled}>
-      <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setBaseImg} />
-      <View style={{ width: "100%" }}>
-        <Text style={frameStyles.inputArea}>팀 이름</Text>
-        <View style={{ width: "100%", padding: 12 }}>
-          <TextInputContainer inputText={name} inputHandler={setName} />
+      <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="padding">
+        <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setBaseImg} />
+        <View style={{ width: "100%", flex: 1 }}>
+          <Text style={frameStyles.inputArea}>팀 이름</Text>
+          <View style={{ width: "100%" }}>
+            <View style={{ height: 30 }}>
+              <TextInputContainer inputText={name} inputHandler={setName} />
+            </View>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </PageBase>
   )
 }

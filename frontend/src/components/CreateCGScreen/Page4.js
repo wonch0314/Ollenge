@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { Text, TextInput, View } from "react-native"
-import TextInputContainer from "../common/TextInputContainer"
 import PageBase, { fontStyles } from "./PageBase"
 
 export default function Page4({ info, setInfo }) {
