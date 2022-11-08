@@ -19,7 +19,12 @@ function UserStatusItem({ user }) {
     setVisible(false)
   }
 
-  const containerStyle = { backgroundColor: "white", width: "80%", height: "90%", borderRadius: 10 }
+  const containerStyle = {
+    backgroundColor: "white",
+    width: "100%",
+    height: "100%",
+    borderRadius: 10,
+  }
   return (
     <>
       <Portal>
@@ -27,7 +32,7 @@ function UserStatusItem({ user }) {
           visible={visible}
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
-          style={{ alignItems: "center" }}
+          style={{ alignItems: "center", paddingHorizontal: "10%", paddingVertical: "10%" }}
         >
           <ModalContent user={user} />
         </Modal>

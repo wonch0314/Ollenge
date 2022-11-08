@@ -22,13 +22,27 @@ import { RFPercentage } from "react-native-responsive-fontsize"
 
 function RoomInfoModalContent({ roomInfo, hideModal }) {
   const [wholeDay, setWholeDay] = useState(0)
-  const [time, setTime] = useState()
+  const [time, setTime] = useState(["오전 00시", "오후 12시"])
+
+  function timeFunc(str) {
+    const hour = parseInt(str.substr(0, 2))
+    const min = parseInt(str.substr(3, 5))
+    if (min) {
+      return `${hour}시 ${min}분`
+    } else {
+      return `${hour}시`
+    }
+  }
+
   useEffect(() => {
     if (roomInfo) {
       const startDate = new Date(roomInfo.startDate)
       const endDate = new Date(roomInfo.endDate)
       const temp = (endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24 + 1
       setWholeDay(temp)
+      const startTime = timeFunc(roomInfo.startTime)
+      const endTime = timeFunc(roomInfo.endTime)
+      setTime([startTime, endTime])
     }
   }, [roomInfo])
 
@@ -77,7 +91,9 @@ function RoomInfoModalContent({ roomInfo, hideModal }) {
             </View>
             <View style={styles.infoTextBox}>
               <AppText pxSize={16}>인증 시간</AppText>
-              <AppText pxSize={18}>!!!</AppText>
+              <AppText pxSize={18}>
+                {time[0]} - {time[1]}
+              </AppText>
             </View>
           </View>
           {/* 인증 방식 */}

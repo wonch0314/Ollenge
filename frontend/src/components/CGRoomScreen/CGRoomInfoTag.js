@@ -25,8 +25,8 @@ function CGRoomInfoTag({ roomInfo }) {
 
   const containerStyle = {
     backgroundColor: "white",
-    width: "80%",
-    height: "90%",
+    width: "100%",
+    height: "100%",
     borderRadius: 10,
   }
 
@@ -37,7 +37,12 @@ function CGRoomInfoTag({ roomInfo }) {
           visible={visible}
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
-          style={{ alignItems: "center" }}
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            paddingHorizontal: "5%",
+            paddingVertical: "10%",
+          }}
         >
           <RoomInfoModalContent roomInfo={roomInfo} hideModal={hideModal} />
         </Modal>
