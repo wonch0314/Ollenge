@@ -35,7 +35,6 @@ public class ChallengeService {
 
     public ChallengeCreatedData createChallenge(Authentication authentication, ChallengePostReq challengePostReq) throws NoSuchElementException, InvalidDateTimeException, DuplicatedPeriodTopicRankingChallengeException, InvalidAuthTypeException, InvalidFieldException, InvalidUserException {
         long userId = JwtTokenUtil.getUserIdByJWT(authentication);
-        if(userId != challengePostReq.getUserId()) throw new InvalidUserException("Invalid ID " + userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
         ChallengePreset challengePreset = null;
@@ -90,7 +89,7 @@ public class ChallengeService {
 
         challenge.setPeopleCnt(challenge.getPeopleCnt()+1);
         Participation participation = Participation.builder()
-                .user(User.builder().userId(challengePostReq.getUserId()).build())
+                .user(user)
                 .challenge(challenge)
                 .build();
         participationRepository.save(participation);
@@ -100,7 +99,6 @@ public class ChallengeService {
 
     public void participateChallenge(Authentication authentication, ChallengeParticipationPostReq challengeParticipationPostReq) throws NoSuchElementException, DuplicatedPeriodTopicRankingChallengeException, InvalidChallengeIdException, InvalidParticipationException, InvalidDateTimeException, InvalidInviteCodeException, InvalidUserException {
         long userId = JwtTokenUtil.getUserIdByJWT(authentication);
-        if(userId != challengeParticipationPostReq.getUserId()) throw new InvalidUserException("Invalid ID " + userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> { return new InvalidUserException("Invalid ID " + userId); });
 
@@ -187,15 +185,6 @@ public class ChallengeService {
 
     public List<ChallengePreset> getChallengePreset() {
         return challengePresetRepository.findAll();
-    }
-
-    public LocalDate getChallengePresetStartDate(LocalDate today) {
-        return today.plusDays(today.lengthOfMonth() - today.getDayOfMonth() + 1);
-    }
-
-    public LocalDate getChallengePresetEndDate(LocalDate today) {
-        LocalDate start = getChallengePresetStartDate(today);
-        return start.plusDays(start.lengthOfMonth() - 1);
     }
 
 }
