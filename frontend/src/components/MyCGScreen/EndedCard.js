@@ -1,16 +1,15 @@
 import React from "react-native"
-import { View, Text, Dimensions, Image } from "react-native"
+import { View, Dimensions, Image } from "react-native"
 import ColorSet from "../../style/ColorSet"
-import AppText from "../common/AppText"
 import AppBoldText from "../common/AppBoldText"
 import AppCard from "../common/AppCard"
 import { ProgressBar } from "react-native-paper"
-import { ExampleIcon, RunningIcon, CrownIcon } from "../../assets/images/MyCGScreen/MyCGScreen"
+import { CrownIcon } from "../../assets/images/MyCGScreen/MyCGScreen"
+import defaultImage from "../../assets/images/default-image.png"
 
 export default function EndedCard(props) {
   const windowWidth = Dimensions.get("window").width
-
-  const challengeId = props.challengeInfo.challengeId
+  const defaultImageUri = Image.resolveAssetSource(defaultImage).uri
   const challengeImg = props.challengeInfo.challengeImg
   const challengeTopic = props.challengeInfo.challengeTopic
   const challengeScore = props.challengeInfo.challengeScore
@@ -22,7 +21,6 @@ export default function EndedCard(props) {
   const startDateForShow = props.challengeInfo.startDate.replace(/-/g, ".").slice(2)
   const endDateForShow = props.challengeInfo.endDate.replace(/-/g, ".").slice(2)
   const peopleCnt = props.challengeInfo.peopleCnt
-
   // 내 달성률
   const days =
     (new Date(endDate).getTime() - new Date(startDate).getTime()) / 1000 / 60 / 60 / 24 + 1
@@ -60,19 +58,28 @@ export default function EndedCard(props) {
           <View
             style={{
               flex: 8.5,
-              // backgroundColor: "red",
               flexDirection: "row",
+              // backgroundColor: "red",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
             {/* 전체 넓이 지정 View */}
             <View
-              style={{
-                height: "85%",
-                width: windowWidth * 0.8,
-                flexDirection: "row",
-              }}
+              style={
+                challengeRank
+                  ? {
+                      height: "85%",
+                      width: windowWidth * 0.8,
+                      flexDirection: "row",
+                    }
+                  : {
+                      height: "85%",
+                      width: windowWidth * 0.8,
+                      flexDirection: "row",
+                      top: 270 * 0.9 * 0.05,
+                    }
+              }
             >
               {/* 왼쪽 */}
               <View
@@ -93,12 +100,11 @@ export default function EndedCard(props) {
                   }}
                 >
                   {/* 나중에 여기에도 예시파일처럼 직접 borderRadius 먹여주어야 함 */}
-                  <ExampleIcon />
-                  {/* <Image
-                    source={{ uri: challengeInfo.challengeImg }}
+                  <Image
+                    source={challengeImg ? { uri: challengeImg } : { uri: defaultImageUri }}
                     style={{ height: "100%", width: "100%", borderRadius: 200 * 0.7 * 0.95 * 0.75 }}
                     resizeMode="cover"
-                  /> */}
+                  />
                 </View>
                 {/* 사진 옆 뿔 */}
                 <View
@@ -112,7 +118,6 @@ export default function EndedCard(props) {
                     left: circleHeightWidth * 0.5,
                     height: circleHeightWidth * 0.7,
                     zIndex: 5,
-                    // justifyContent: "space-between",
                   }}
                 >
                   {/* 뿔 안 글자 */}
@@ -227,45 +232,62 @@ export default function EndedCard(props) {
             </View>
           </View>
           {/* 하단 */}
-          <View
-            style={{
-              flex: 1.5,
-              alignItems: "center",
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  width: windowWidth * 0.8,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {challengeRank <= 3 ? (
-                  <View
-                    style={{
-                      width: 30,
-                      height: 30,
-                      bottom: 5,
-                      marginRight: 5,
-                    }}
-                  >
-                    <CrownIcon rank={challengeRank} />
-                  </View>
-                ) : null}
-                {challengeRank ? (
-                  <AppBoldText size={2} color={textColor[challengeRank]}>
-                    전체 {totalCnt}팀 중 {challengeRank}등 달성!
-                  </AppBoldText>
-                ) : (
-                  <AppBoldText size={2} color={textColor[challengeRank]}>
-                    전체 {totalCnt}팀 중 {challengeRank}등
-                  </AppBoldText>
-                )}
+          {challengeRank ? (
+            <View
+              style={{
+                flex: 1.5,
+                alignItems: "center",
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <View
+                  style={{
+                    width: windowWidth * 0.8,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {challengeRank <= 3 ? (
+                    <View
+                      style={{
+                        width: 30,
+                        height: 30,
+                        bottom: 5,
+                        marginRight: 5,
+                      }}
+                    >
+                      <CrownIcon rank={challengeRank} />
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        height: 30,
+                        bottom: 5,
+                        marginRight: 5,
+                      }}
+                    ></View>
+                  )}
+                  {challengeRank <= 3 ? (
+                    <AppBoldText size={2} color={textColor[challengeRank]}>
+                      전체 {totalCnt}팀 중 {challengeRank}등 달성!
+                    </AppBoldText>
+                  ) : (
+                    <AppBoldText size={2} color={textColor[challengeRank]}>
+                      전체 {totalCnt}팀 중 {challengeRank}등!
+                    </AppBoldText>
+                  )}
+                </View>
               </View>
             </View>
-          </View>
+          ) : (
+            <View
+              style={{
+                flex: 1.5,
+                alignItems: "center",
+              }}
+            ></View>
+          )}
         </AppCard>
       </View>
     </View>

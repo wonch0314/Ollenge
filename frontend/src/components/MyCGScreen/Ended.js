@@ -1,6 +1,5 @@
 import React from "react-native"
-import { View, ScrollView, Image, Dimensions } from "react-native"
-import AppText from "../common/AppText"
+import { View, Dimensions } from "react-native"
 import AppBoldText from "../common/AppBoldText"
 import styled from "styled-components"
 import EndedCard from "./EndedCard"
@@ -9,7 +8,6 @@ import {
   NormalChallengeIcon,
 } from "../../assets/images/MyCGScreen/MyCGScreen"
 import { DataTable } from "react-native-paper"
-import ColorSet from "../../style/ColorSet"
 import { useEffect, useState } from "react"
 import { AuthorizationInstance } from "../../api/settings"
 
