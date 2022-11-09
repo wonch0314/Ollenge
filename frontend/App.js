@@ -126,11 +126,12 @@ function Root() {
 
 function App() {
   return (
-    <>
-      <AuthContextProvider>
-        <Root />
-      </AuthContextProvider>
-    </>
+    // <>
+    //   <AuthContextProvider>
+    //     <Root />
+    //   </AuthContextProvider>
+    // </>
+    <MyCGScreen></MyCGScreen>
   )
 }
 
