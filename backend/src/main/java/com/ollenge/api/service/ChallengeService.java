@@ -196,7 +196,7 @@ public class ChallengeService {
                 challengeRankingDataList.add(ChallengeRankingData.of(challengeList.get(i), rank));
                 continue;
             }
-            if(challengeList.get(i).getChallengeScore() == challengeList.get(i-1).getChallengeScore()) {
+            if((double)challengeList.get(i).getChallengeScore()/challengeList.get(i).getPeopleCnt() == (double)challengeList.get(i-1).getChallengeScore()/challengeList.get(i).getPeopleCnt()) {
                 offset++;
                 challengeRankingDataList.add(ChallengeRankingData.of(challengeList.get(i), rank));
             } else {
