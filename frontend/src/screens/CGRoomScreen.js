@@ -27,13 +27,25 @@ function CGRoomScreen({ roomInfo }) {
         <View style={{ height: 50, marginTop: 100 }}>
           <AppButton
             title={"인증이미지등록"}
-            handler={() => navigation.push("CGImg", { methodNum: 0, participationId: 3 })}
+            handler={() =>
+              navigation.push(
+                "CGImg",
+                { methodNum: 0, participationId: 2 },
+                (roomInfo = { roomInfo }),
+              )
+            }
           ></AppButton>
         </View>
         <View style={{ height: 50 }}>
           <AppButton
             title={"인증"}
-            handler={() => navigation.push("CGAuth", { methodNum: 1, participationId: 3 })}
+            handler={() =>
+              navigation.push(
+                "CGAuth",
+                { methodNum: 3, participationId: 3 },
+                (roomInfo = { roomInfo }),
+              )
+            }
           ></AppButton>
         </View>
       </LinearGradient>
