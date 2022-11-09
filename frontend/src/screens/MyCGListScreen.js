@@ -16,10 +16,12 @@ import { MailIcon } from "../assets/images/MyCGScreen/MyCGScreen"
 import AppButton from "../components/common/AppButton"
 import { AuthorizationInstance } from "../api/settings"
 import { createStackNavigator } from "@react-navigation/stack"
+import { useNavigation } from "@react-navigation/native"
 
 function MyCGListScreen({ idHandler }) {
   const Tab = createMaterialTopTabNavigator()
   const Stack = createStackNavigator()
+  const navigation = useNavigation()
   const [fabButton, setfabButton] = useState(false)
   const [showCodeInput, setShowCodeInput] = useState(false)
   const [inputValue, setInputValue] = useState("")
@@ -35,10 +37,12 @@ function MyCGListScreen({ idHandler }) {
 
   const joinChallenge = async () => {
     try {
-      // const challengeId = inputValue.slice(8)
-      // const inviteCode = inputValue.slice(0, 8)
-      // const res = await instance.post("/api/challenge/participation", { challengeId, inviteCode })
-      Stack.Navigator
+      const challengeId = inputValue.slice(8)
+      const inviteCode = inputValue.slice(0, 8)
+      const res = await instance.post("/api/challenge/participation", { challengeId, inviteCode })
+      idHandler(challengeId)
+      setShowCodeInput(!showCodeInput)
+      navigation.push("CGRoom")
     } catch (error) {
       console.log(error.response.data)
     }
