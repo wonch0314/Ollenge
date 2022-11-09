@@ -42,7 +42,7 @@ function CGRoomScreen({ roomInfo, userList }) {
         <View style={styles.buttonContainer}>
           <InviteCodeBtn inviteCode={roomInfo.inviteCode} challengeId={roomInfo.challengeId} />
           <CGAuthBtn navigation={navigation} />
-          <ImageResistBtn navigation={navigation} />
+          <ImageResistBtn navigation={navigation} roomInfo={roomInfo} />
         </View>
         <CGLeaveBtn challengeId={roomInfo.challengeId} userNum={userList.length} />
       </LinearGradient>
