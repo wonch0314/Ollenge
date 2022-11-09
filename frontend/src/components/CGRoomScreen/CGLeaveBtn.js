@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { Portal, Modal, Button } from "react-native-paper"
 import { RFPercentage } from "react-native-responsive-fontsize"
 import { Pressable, View, StyleSheet } from "react-native"
+import { useNavigation } from "@react-navigation/native"
 
 import ColorSet from "../../style/ColorSet"
 import AppText from "./../common/AppText"
@@ -10,6 +11,7 @@ import AppBoldText from "../common/AppBoldText"
 import { AuthorizationInstance } from "../../api/settings"
 
 function CGLeaveBtn({ challengeID, userNum }) {
+  const navigation = useNavigation()
   const instance = AuthorizationInstance()
   const [visible, setVisible] = useState(false)
 
@@ -29,7 +31,9 @@ function CGLeaveBtn({ challengeID, userNum }) {
   function leaveHandler() {
     instance
       .delete(`/api/challenge/${challengeID}`)
-      .then((res) => console.log(res))
+      .then((res) => {
+        navigation.goBack("CGList")
+      })
       .catch((err) => console.log(err))
   }
 
@@ -51,28 +55,30 @@ function CGLeaveBtn({ challengeID, userNum }) {
             <AppBoldText>챌린지를 시작하지 않고</AppBoldText>
             <AppBoldText>떠나시겠어요?</AppBoldText>
             {userNum == 1 ? (
-              <View style={{ marginTop: "5%", marginBottom: "10%" }}>
+              <View style={{ marginTop: "5%" }}>
                 <AppText size={2} color={"deepOrange"}>
                   당신이 떠나시면 해당 챌린지는 삭제됩니다
                 </AppText>
               </View>
             ) : null}
-            <Button
-              icon="door-open"
-              mode="contained"
-              onPress={leaveHandler}
-              buttonColor={`${ColorSet.paleBlueColor(1)}`}
-              textColor={`${ColorSet.navyColor(1)}`}
-              theme={{
-                fonts: {
-                  labelLarge: {
-                    fontFamily: "HyeminBold",
+            <View style={{ marginTop: "10%" }}>
+              <Button
+                icon="door-open"
+                mode="contained"
+                onPress={leaveHandler}
+                buttonColor={`${ColorSet.paleBlueColor(1)}`}
+                textColor={`${ColorSet.navyColor(1)}`}
+                theme={{
+                  fonts: {
+                    labelLarge: {
+                      fontFamily: "HyeminBold",
+                    },
                   },
-                },
-              }}
-            >
-              떠나기
-            </Button>
+                }}
+              >
+                떠나기
+              </Button>
+            </View>
           </View>
         </Modal>
       </Portal>
