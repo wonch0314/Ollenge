@@ -16,18 +16,18 @@ export default function ParticipatingCard(props) {
 
   const startDate = props.startDate.replace(/-/g, ".").slice(2)
   const endDate = props.endDate.replace(/-/g, ".").slice(2)
-
   // 레이아웃 정보
   const spaceHeight = 180
   const cardHeight = spaceHeight * 0.9
   const pxSize = windowWidth * 0.05
   // 카드 높이 * 70%(상단높이) * 상단높이 위쪽 깎기 * 보다 약간 작게
   // const circleHeightWidth = 200 * 0.7 * 0.95 * 0.75
-  let startDateForCal = props.startDate.replace(/-/g, ",")
-  startDateForCal = new Date(startDateForCal)
 
-  const nowDate = new Date()
+  let startDateForCal = new Date(props.startDate).getTime()
+  const nowDate = new Date().getTime()
+
   const dDate = Math.ceil((startDateForCal - nowDate) / 1000 / 60 / 60 / 24)
+
   const openAndClose = () => {
     props.openAndClose()
   }

@@ -9,13 +9,35 @@ import { ExampleIcon, RunningIcon, CrownIcon } from "../../assets/images/MyCGScr
 
 export default function EndedCard(props) {
   const windowWidth = Dimensions.get("window").width
-  const isChallenge = props.challengeInfo.isChallenge
-  const title = props.challengeInfo.title
-  const teamName = props.challengeInfo.teamName
-  const memberNumber = props.challengeInfo.memberNumber
-  const progress = props.challengeInfo.progress
+
+  const challengeId = props.challengeInfo.challengeId
+  const challengeImg = props.challengeInfo.challengeImg
+  const challengeTopic = props.challengeInfo.challengeTopic
+  const challengeScore = props.challengeInfo.challengeScore
+  const challengeRank = props.challengeInfo.challengeRank
+  const totalCnt = props.challengeInfo.totalCnt
+  const myFeedCnt = props.challengeInfo.myFeedCnt
   const startDate = props.challengeInfo.startDate
   const endDate = props.challengeInfo.endDate
+  const startDateForShow = props.challengeInfo.startDate.replace(/-/g, ".").slice(2)
+  const endDateForShow = props.challengeInfo.endDate.replace(/-/g, ".").slice(2)
+  const peopleCnt = props.challengeInfo.peopleCnt
+
+  // 내 달성률
+  const days =
+    (new Date(endDate).getTime() - new Date(startDate).getTime()) / 1000 / 60 / 60 / 24 + 1
+  const myPercentage = Math.round((myFeedCnt / days) * 10000) / 100
+
+  // 팀 달성률
+  const wholeFeed = challengeScore / 10 / peopleCnt
+  const wholePercentage = Math.round((wholeFeed / days) * 10000) / 100
+
+  // 글자색 표시
+  const textColor = {
+    1: "yellow",
+    2: "silver",
+    3: "bronze",
+  }
   // 카드 높이 * 70%(상단높이) * 상단높이 위쪽 깎기 * 보다 약간 작게
   const circleHeightWidth = 200 * 0.7 * 0.95 * 0.75
   return (
@@ -109,7 +131,7 @@ export default function EndedCard(props) {
                         left: 8,
                       }}
                     >
-                      <AppBoldText color="white">{title}</AppBoldText>
+                      <AppBoldText color="white">{challengeTopic}</AppBoldText>
                     </View>
                     <View
                       style={{
@@ -117,7 +139,7 @@ export default function EndedCard(props) {
                       }}
                     >
                       <AppBoldText size={2} color="white">
-                        10.18 - 11.05
+                        {startDateForShow} - {endDateForShow}
                       </AppBoldText>
                     </View>
                   </View>
@@ -139,7 +161,6 @@ export default function EndedCard(props) {
                     right: 0,
                     justifyContent: "center",
                     alignItems: "center",
-                    // backgroundColor: "red",
                   }}
                 >
                   {/* 내용 부분 */}
@@ -156,7 +177,7 @@ export default function EndedCard(props) {
                         <AppBoldText size={2}>내 달성률</AppBoldText>
                       </View>
                       <View>
-                        <AppBoldText size={2}>76%</AppBoldText>
+                        <AppBoldText size={2}>{myPercentage}%</AppBoldText>
                       </View>
                     </View>
                     <View
@@ -169,7 +190,7 @@ export default function EndedCard(props) {
                       <ProgressBar
                         color={ColorSet.navyColor(1)}
                         style={{ height: 13 }}
-                        progress={0.76}
+                        progress={myPercentage / 100}
                       />
                     </View>
                     <View
@@ -184,7 +205,7 @@ export default function EndedCard(props) {
                         <AppBoldText size={2}>팀 달성률</AppBoldText>
                       </View>
                       <View>
-                        <AppBoldText size={2}>90%</AppBoldText>
+                        <AppBoldText size={2}>{wholePercentage}%</AppBoldText>
                       </View>
                     </View>
                     <View
@@ -197,7 +218,7 @@ export default function EndedCard(props) {
                       <ProgressBar
                         color={ColorSet.navyColor(1)}
                         style={{ height: 13 }}
-                        progress={0.9}
+                        progress={wholePercentage / 100}
                       />
                     </View>
                   </View>
@@ -221,19 +242,27 @@ export default function EndedCard(props) {
                   alignItems: "center",
                 }}
               >
-                <View
-                  style={{
-                    width: 30,
-                    height: 30,
-                    bottom: 5,
-                    marginRight: 5,
-                  }}
-                >
-                  <CrownIcon />
-                </View>
-                <AppBoldText size={2} color="yellow">
-                  전체 10팀 중 1등 달성!
-                </AppBoldText>
+                {challengeRank <= 3 ? (
+                  <View
+                    style={{
+                      width: 30,
+                      height: 30,
+                      bottom: 5,
+                      marginRight: 5,
+                    }}
+                  >
+                    <CrownIcon rank={challengeRank} />
+                  </View>
+                ) : null}
+                {challengeRank ? (
+                  <AppBoldText size={2} color={textColor[challengeRank]}>
+                    전체 {totalCnt}팀 중 {challengeRank}등 달성!
+                  </AppBoldText>
+                ) : (
+                  <AppBoldText size={2} color={textColor[challengeRank]}>
+                    전체 {totalCnt}팀 중 {challengeRank}등
+                  </AppBoldText>
+                )}
               </View>
             </View>
           </View>
