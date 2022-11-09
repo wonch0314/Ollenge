@@ -45,7 +45,6 @@ const BeforeStart = (props) => {
     const getChallenge = async () => {
       try {
         const res = await instance.get("/api/user/scheduled")
-        console.log(res.data)
         const NewRankingCGList = res.data.rankingChallengeList
         const NewUserCGList = res.data.userChallengeList
         setRankingCGList(NewRankingCGList)
