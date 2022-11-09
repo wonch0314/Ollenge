@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
@@ -10,49 +10,51 @@ import AuthScreen from "../components/CGRoomScreen/AuthScreen"
 import ImageRegisterPage from "../components/CGRoomScreen/ImageRegisterScreen"
 
 import ColorSet from "../style/ColorSet"
-
 import { AuthorizationInstance } from "../api/settings"
+import { RoomContext } from "../../store/room-context"
 
 const Stack = createNativeStackNavigator()
 
 const instance = AuthorizationInstance()
 
 function MyCGScreen() {
+  const roomCtx = useContext(RoomContext)
   const [selectedId, setSelectedId] = useState(-1)
   const [roomInfo, setRoomInfo] = useState(new Object())
   const [userList, setUserList] = useState(new Array())
 
-  function idHandler(id) {
-    setSelectedId(id)
+  async function idHandler(id) {
+    await roomCtx.getRoomInfo(id)
+    await roomCtx.getUserList(id)
   }
 
-  // 방 정보 조회
-  const getRoom = async () => {
-    try {
-      const res = await instance.get(`/api/challenge/${selectedId}`)
-      const newInfo = res.data.challengeInfoList
-      setRoomInfo(newInfo)
-    } catch (error) {
-      // console.log(error)
-    }
-  }
+  // // 방 정보 조회
+  // const getRoom = async () => {
+  //   try {
+  //     const res = await instance.get(`/api/challenge/${selectedId}`)
+  //     const newInfo = res.data.challengeInfoList
+  //     setRoomInfo(newInfo)
+  //   } catch (error) {
+  //     // console.log(error)
+  //   }
+  // }
 
-  // 방 유저 정보 조회
-  async function getUser() {
-    instance
-      .get(`/api/challenge/state/${selectedId}`)
-      .then((res) => {
-        setUserList(res.data.challengeStateList)
-      })
-      .catch((err) => console.log(err))
-  }
+  // // 방 유저 정보 조회
+  // async function getUser() {
+  //   instance
+  //     .get(`/api/challenge/state/${selectedId}`)
+  //     .then((res) => {
+  //       setUserList(res.data.challengeStateList)
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
 
-  useEffect(() => {
-    if (selectedId !== -1) {
-      getRoom()
-      getUser()
-    }
-  }, [selectedId])
+  // useEffect(() => {
+  //   if (selectedId !== -1) {
+  //     getRoom()
+  //     getUser()
+  //   }
+  // }, [selectedId])
 
   return (
     <NavigationContainer style={{ flex: 1 }}>
@@ -68,7 +70,7 @@ function MyCGScreen() {
         <Stack.Screen name="CGList" options={{ headerShown: false }}>
           {() => <MyCGListScreen idHandler={idHandler} />}
         </Stack.Screen>
-        <Stack.Screen name="CGRoom" options={{ title: `${roomInfo.challengeName}` }}>
+        <Stack.Screen name="CGRoom" options={{ title: `${roomCtx.roomInfo.challengeName}` }}>
           {() => <CGRoomScreen roomInfo={roomInfo} userList={userList} />}
         </Stack.Screen>
 
