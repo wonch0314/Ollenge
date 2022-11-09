@@ -23,7 +23,7 @@ function MyCGScreen() {
   const [userList, setUserList] = useState(new Array())
 
   function idHandler(id) {
-    setSelectedId(id)
+    setSelectedId(9)
   }
 
   // 방 정보 조회
