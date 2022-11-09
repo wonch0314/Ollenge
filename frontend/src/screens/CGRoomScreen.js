@@ -14,7 +14,7 @@ import InviteCodeBtn from "../components/CGRoomScreen/InviteCodeBtn"
 import CGAuthBtn from "../components/CGRoomScreen/CGAuthBtn"
 import ImageResistBtn from "../components/CGRoomScreen/ImageResistBtn"
 
-function CGRoomScreen({ roomInfo }) {
+function CGRoomScreen({ roomInfo, userList }) {
   const navigation = useNavigation()
 
   return (
@@ -26,10 +26,10 @@ function CGRoomScreen({ roomInfo }) {
         <TopMargin />
         <TopMargin />
         <UserListTap navigation={navigation} />
-        <CGRoomInfoTag roomInfo={roomInfo} />
+        <CGRoomInfoTag roomInfo={roomInfo} userList={userList} />
 
         <View style={styles.buttonContainer}>
-          <InviteCodeBtn inviteCode={roomInfo.inviteCode} />
+          <InviteCodeBtn inviteCode={roomInfo.inviteCode} challengeId={roomInfo.challengeId} />
           <CGAuthBtn navigation={navigation} />
           <ImageResistBtn navigation={navigation} />
         </View>
