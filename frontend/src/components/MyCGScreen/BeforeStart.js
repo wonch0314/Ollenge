@@ -69,7 +69,7 @@ const BeforeStart = (props) => {
         </IconView>
         <AppBoldText>랭킹 챌린지</AppBoldText>
       </DivideView>
-      {tempRankingCGList.map((challengeInfo) => (
+      {rankingCGList.map((challengeInfo) => (
         <BeforeStartCard
           key={challengeInfo.challengeId}
           challengeInfo={challengeInfo}
@@ -93,7 +93,7 @@ const BeforeStart = (props) => {
         </IconView>
         <AppBoldText>일반 챌린지</AppBoldText>
       </DivideView>
-      {tempUserCGList.map((challengeInfo) => (
+      {userCGList.map((challengeInfo) => (
         <BeforeStartCard
           key={challengeInfo.challengeId}
           challengeInfo={challengeInfo}
