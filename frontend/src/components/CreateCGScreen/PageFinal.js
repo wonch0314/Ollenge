@@ -74,9 +74,8 @@ export default function Final({ info }) {
 
 const frameStyles = StyleSheet.create({
   wholeArea: {
-    alignItems: "flex-start",
     width: "100%",
-    height: "100%",
+    flex: 1,
   },
 
   warnArea: {

@@ -17,14 +17,16 @@ export default function Page1({ info, setInfo }) {
   }, [name, setName, AwsUrl, setAwsUrl])
 
   useEffect(() => {
-    console.log(img)
-    setDisabled(name === "")
+    setDisabled(name.length < 2 || name.length > 12)
   }, [name, img, disabled, setDisabled])
 
   return (
     <PageBase toNext={"Page2"} disabled={disabled}>
-      <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="height">
-        <View style={{ width: "100%", flex: 1 }}>
+      <KeyboardAvoidingView
+        style={{ width: "100%", flex: 1, justifyContent: "center" }}
+        behavior="position"
+      >
+        <View style={{ width: "100%", flex: 1, justifyContent: "center" }}>
           <View style={{ flex: 1, marginBottom: dh * 0.1 }}>
             <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setAwsUrl} />
           </View>

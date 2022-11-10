@@ -100,7 +100,6 @@ const frameStyles = {
       borderRadius: 36,
       backgroundColor: isPicked ? `${ColorSet.navyColor(1)}` : "white",
       padding: 12,
-      marginBottom: 12,
       justifyContent: "center",
       marginRight: 12,
       elevation: 6,
@@ -120,11 +119,6 @@ const frameStyles = {
 const textStyles = {
   Title: {
     ...fontStyles.HyeminBold({ size: 8 }),
-    marginBottom: 15,
-  },
-  TopTitle: {
-    ...fontStyles.HyeminBold({ size: 6 }),
-    marginBottom: 15,
   },
   TopContent: {
     ...fontStyles.HyeminBold({ size: 5 }),

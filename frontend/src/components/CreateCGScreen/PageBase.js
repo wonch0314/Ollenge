@@ -76,7 +76,6 @@ export default function PageBase(props) {
           {/* <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="position"> */}
           <View style={styles.ContentArea}>{props.children}</View>
           {/* </KeyboardAvoidingView> */}
-          {/* {true && ( */}
           {showKey !== true && props.hideBtn !== true && (
             <View style={styles.BottomArea}>
               <NextBtn
@@ -126,14 +125,15 @@ const styles = {
   BottomArea: { ...baseStyle },
 
   CancelBtn: {
-    ...fontStyles.Hyemin({ size: 5 }),
-    padding: 10,
+    fontSize: dw * 0.05,
+    padding: 8,
+    textDecorationLine: "underline",
     textAlign: "center",
   },
 
   NextBtn: {
     ...baseStyle,
-    borderRadius: 10,
+    borderRadius: 18,
     padding: 12,
     marginBottom: 10,
     elevation: 12,
