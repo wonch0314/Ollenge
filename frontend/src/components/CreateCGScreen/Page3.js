@@ -19,10 +19,9 @@ export default function Page2({ info, setInfo }) {
 
   useEffect(() => {
     setInfo((prev) => {
-      return { ...prev, authType: reqForm[selIndex] }
+      return { ...prev, authType: auth }
     })
     setDisabled(auth === "")
-    console.log(auth)
   }, [auth, setAuth])
 
   return (
@@ -34,13 +33,13 @@ export default function Page2({ info, setInfo }) {
             key={ind}
             onPress={() => {
               setSelIndex(ind)
-              setAuth(Object.keys(words)[ind])
+              setAuth(reqForm[ind])
             }}
             style={{ width: "100%" }}
           >
-            <View style={styles.Card(selIndex === ind)}>
-              <Text style={styles.Title(selIndex === ind)}>{key}</Text>
-              <Text style={styles.Content(selIndex === ind)} numberOfLines={2}>
+            <View style={styles.Card(auth === reqForm[ind])}>
+              <Text style={styles.Title(auth === reqForm[ind])}>{key}</Text>
+              <Text style={styles.Content(auth === reqForm[ind])} numberOfLines={2}>
                 {words[key]}
               </Text>
             </View>

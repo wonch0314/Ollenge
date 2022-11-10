@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { Alert, StyleSheet, Text, View } from "react-native"
 import PageBase, { fontStyles } from "./PageBase"
 import DatepickerRange from "react-native-range-datepicker"
 import ColorSet from "../../style/ColorSet"
@@ -35,16 +35,21 @@ export default function Page5({ info, setInfo }) {
 
   return (
     <PageBase toNext={"Page6"} disabled={disabled}>
-      <Text style={{ ...fontStyles.HyeminBold({ size: 5 }) }}>
-        챌린지를 진행할 기간을 입력해주세요
-      </Text>
       <View style={styles.calendar}>
         <DatepickerRange
           showClose={false}
           onConfirm={(sd, ud) => {
-            setDate({ startDate: sd, endDate: ud })
+            const today = new Date()
+            const startDay = new Date(sd).setHours(9)
+
+            if (startDay > today) {
+              setDate({ startDate: sd, endDate: ud })
+            } else {
+              Alert.alert("시작일은 다음날부터 지정 가능합니다")
+            }
           }}
           buttonColor={`${ColorSet.navyColor(1)}`}
+          showReset={false}
           minimumDate={new Date().setHours(0)}
           placeHolderStart={"시작일"}
           placeHolderUntil={"종료일"}
@@ -58,12 +63,8 @@ export default function Page5({ info, setInfo }) {
 const styles = StyleSheet.create({
   calendar: {
     flex: 1,
-    marginTop: 48,
-    marginBottom: 48,
+    marginBottom: 28,
     borderRadius: 12,
     alignSelf: "center",
-    overflow: "hidden",
-    borderWidth: 2,
-    borderColor: `${ColorSet.navyColor(1)}`,
   },
 })

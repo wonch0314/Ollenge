@@ -23,6 +23,7 @@ export default function Page4({ info, setInfo }) {
           multiline
           editable
           numberOfLines={4}
+          maxLength={300}
           style={styles.inputArea}
           value={description}
           onChangeText={setDescription}
@@ -37,15 +38,14 @@ const styles = {
   inputArea: {
     backgroundColor: "white",
     textAlignVertical: "top",
-    height: 300,
     borderRadius: 24,
     marginTop: 36,
     elevation: 12,
-    padding: 36,
-    ...fontStyles.Hyemin({ size: 5, bold: "bold", align: "left", color: "black" }),
+    padding: 24,
+    ...fontStyles.Hyemin({ size: 5, align: "left", color: "black" }),
   },
   Title: {
-    ...fontStyles.HyeminBold({ size: 9, bold: "bold", align: "center" }),
+    ...fontStyles.HyeminBold({ size: 9, align: "center" }),
     marginBottom: 15,
     width: "100%",
   },

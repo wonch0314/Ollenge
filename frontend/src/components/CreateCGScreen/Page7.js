@@ -81,11 +81,9 @@ const Modal = ({ title, value, valueHandler, setPick }) => {
 export default function Page7({ info, setInfo }) {
   const [reward, setReward] = useState(info.rewardContent)
   const [penalty, setpenalty] = useState(info.penaltyContent)
-  const [disabled, setDisabled] = useState(true)
   const [pick, setPick] = useState(0)
 
   useEffect(() => {
-    setDisabled(reward === "" || penalty === "")
     setInfo((prev) => {
       return { ...prev, rewardContent: reward, penaltyContent: penalty }
     })

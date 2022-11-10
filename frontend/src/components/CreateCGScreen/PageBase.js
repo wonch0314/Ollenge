@@ -73,9 +73,10 @@ export default function PageBase(props) {
         locations={[0.2, 1]}
       >
         <View style={styles.TopArea}>
-          <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="position">
-            <View style={styles.ContentArea}>{props.children}</View>
-          </KeyboardAvoidingView>
+          {/* <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="position"> */}
+          <View style={styles.ContentArea}>{props.children}</View>
+          {/* </KeyboardAvoidingView> */}
+          {/* {true && ( */}
           {showKey !== true && props.hideBtn !== true && (
             <View style={styles.BottomArea}>
               <NextBtn
@@ -118,27 +119,26 @@ export const fontStyles = StyleSheet.create({
 const baseStyle = { width: "100%", justifyContent: "center", alignItems: "center" }
 
 const styles = {
-  TopArea: { ...baseStyle, flex: 1, padding: "4%" },
+  TopArea: { ...baseStyle, flex: 1, padding: "4%", marginTop: 120 },
 
   ContentArea: { ...baseStyle, flex: 1 },
 
   BottomArea: { ...baseStyle },
 
   CancelBtn: {
-    fontSize: dw * 0.05,
-    padding: 8,
-    textDecorationLine: "underline",
+    ...fontStyles.Hyemin({ size: 5 }),
+    padding: 10,
     textAlign: "center",
   },
 
   NextBtn: {
     ...baseStyle,
-    borderRadius: 15,
+    borderRadius: 10,
     padding: 12,
     marginBottom: 10,
     elevation: 12,
   },
   NextBtnText: {
-    ...fontStyles.HyeminBold({ size: 5, color: "white" }),
+    ...fontStyles.HyeminBold({ size: 6, color: "white" }),
   },
 }

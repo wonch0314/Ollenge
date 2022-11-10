@@ -50,7 +50,11 @@ export default function Page2({ info, setInfo }) {
 
             <View style={{ width: "100%" }}>
               <Text style={textStyles.TopContent}>{words.TopContent}</Text>
-              <ScrollView style={frameStyles.rankingCGList} horizontal={true}>
+              <ScrollView
+                style={frameStyles.rankingCGList}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              >
                 {RankingCGs.map((rcg, index) => {
                   return <RankingCard title={rcg} key={index} />
                 })}
@@ -108,14 +112,14 @@ const frameStyles = {
     marginBottom: 12,
     backgroundColor: `${ColorSet.navyColor(1)}`,
     borderRadius: 12,
-    padding: 12,
+    padding: 18,
     elevation: 6,
   },
 }
 
 const textStyles = {
   Title: {
-    ...fontStyles.HyeminBold({ size: 10 }),
+    ...fontStyles.HyeminBold({ size: 8 }),
     marginBottom: 15,
   },
   TopTitle: {

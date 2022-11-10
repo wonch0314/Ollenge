@@ -5,20 +5,22 @@ import { Page1, Page2, Page3, Page4 } from "../components/CreateCGScreen/index"
 import { Page5, Page6, Page7, Final } from "../components/CreateCGScreen/index"
 import { NavigationContainer } from "@react-navigation/native"
 import ColorSet from "../style/ColorSet"
+import { StyleSheet } from "react-native"
+import { fontStyles } from "../components/CreateCGScreen/PageBase"
 
 const Stack = createStackNavigator()
 const initialData = {
   challengeImg: "",
-  challengeName: "그룹명 초기값",
-  challengeTopic: "주제 초기값",
-  authType: "none",
-  startDate: "2022-11-29",
-  endDate: "2022-11-30",
-  startTime: "03:14:00",
-  endTime: "19:14:00",
+  challengeName: "",
+  challengeTopic: "",
+  authType: "",
+  startDate: "",
+  endDate: "",
+  startTime: "00:00:00",
+  endTime: "00:00:00",
   rewardContent: "",
   penaltyContent: "",
-  challengeDescription: "챌린지 설명 초기값",
+  challengeDescription: "",
 }
 
 export default function CreateCGScreen() {
@@ -26,12 +28,7 @@ export default function CreateCGScreen() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: `${ColorSet.paleBlueColor(1)}` },
-          headerTitleStyle: { fontSize: 24 },
-        }}
-      >
+      <Stack.Navigator screenOptions={styles.screenOptions}>
         <Stack.Screen name="Page1" options={{ title: "팀 정보 설정" }}>
           {() => <Page1 info={info} setInfo={setInfo} />}
         </Stack.Screen>
@@ -60,3 +57,16 @@ export default function CreateCGScreen() {
     </NavigationContainer>
   )
 }
+
+const styles = StyleSheet.create({
+  screenOptions: {
+    headerTransparent: true,
+    headerBackTitle: "",
+    headerTintColor: `${ColorSet.navyColor(1)}`,
+    headerTitleStyle: {
+      ...fontStyles.HyeminBold({ size: 7.5, color: `${ColorSet.navyColor(1)}` }),
+    },
+    headerTitleAlign: "center",
+    backgroundColor: "black",
+  },
+})

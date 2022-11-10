@@ -23,17 +23,19 @@ export default function Page1({ info, setInfo }) {
 
   return (
     <PageBase toNext={"Page2"} disabled={disabled}>
-      <View style={{ width: "100%", flex: 1 }}>
-        <View style={{ flex: 1, marginBottom: dh * 0.1 }}>
-          <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setAwsUrl} />
-        </View>
+      <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="height">
         <View style={{ width: "100%", flex: 1 }}>
-          <Text style={frameStyles.inputArea}>팀 이름</Text>
-          <View style={{ width: "100%" }}>
-            <TextInputContainer inputText={name} inputHandler={setName} />
+          <View style={{ flex: 1, marginBottom: dh * 0.1 }}>
+            <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setAwsUrl} />
+          </View>
+          <View style={{ width: "100%", flex: 1 }}>
+            <Text style={frameStyles.inputArea}>팀 이름</Text>
+            <View style={{ width: "100%" }}>
+              <TextInputContainer inputText={name} inputHandler={setName} />
+            </View>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </PageBase>
   )
 }
