@@ -7,7 +7,7 @@ import AppBoldText from "../../common/AppBoldText"
 import defaultImage from "../../../assets/images/default-image.png"
 import { HeartIcon1 } from "../../../assets/images"
 
-function RankUserItem({ user, rank, noRank }) {
+function RankUserItem({ user, rank, noRank, wholeDay }) {
   const defaultImageUri = Image.resolveAssetSource(defaultImage).uri
   return (
     <View style={styles.rootScreen}>
@@ -38,7 +38,7 @@ function RankUserItem({ user, rank, noRank }) {
           <></>
         ) : (
           <AppBoldText color={"orange"} pxSize={18}>
-            79%
+            {Math.round((user.datetimeList.length / wholeDay) * 100)}%
           </AppBoldText>
         )}
       </View>
