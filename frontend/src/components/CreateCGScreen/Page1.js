@@ -4,7 +4,8 @@ import PageBase, { fontStyles } from "./PageBase"
 import ImagePicker from "../common/ImagePicker"
 import TextInputContainer from "../common/TextInputContainer"
 import { dw, dh } from "../../style/DeviceInfo"
-export default function Page1({ info, setInfo }) {
+
+export default function Page1({ info, setInfo, toNext }) {
   const [name, setName] = useState(info.challengeName)
   const [img, setImg] = useState(info.challengeImg)
   const [AwsUrl, setAwsUrl] = useState("")
@@ -21,10 +22,10 @@ export default function Page1({ info, setInfo }) {
   }, [name, img, disabled, setDisabled])
 
   return (
-    <PageBase toNext={"Page2"} disabled={disabled}>
+    <PageBase toNext={toNext} disabled={disabled}>
       <KeyboardAvoidingView
         style={{ width: "100%", flex: 1, justifyContent: "center" }}
-        behavior="position"
+        behavior="height"
       >
         <View style={{ width: "100%", flex: 1, justifyContent: "center" }}>
           <View style={{ flex: 1, marginBottom: dh * 0.1 }}>

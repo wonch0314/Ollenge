@@ -15,7 +15,7 @@ const formDate = (date) => {
   return temp
 }
 
-export default function Page5({ info, setInfo }) {
+export default function Page5({ info, setInfo, toNext }) {
   const [disabled, setDisabled] = useState(true)
   const [date, setDate] = useState({
     startDate: new Date(info.startDate),
@@ -34,7 +34,7 @@ export default function Page5({ info, setInfo }) {
   }, [date, setDate])
 
   return (
-    <PageBase toNext={"Page6"} disabled={disabled}>
+    <PageBase toNext={toNext} disabled={disabled}>
       <View style={styles.calendar}>
         <DatepickerRange
           showClose={false}

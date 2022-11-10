@@ -17,7 +17,7 @@ const words = {
   customContent: "클릭하여 작성하기",
 }
 
-export default function Page2({ info, setInfo }) {
+export default function Page2({ info, setInfo, toNext }) {
   const [topic, setTopic] = useState(info.challengeTopic)
   const [clicked, setClicked] = useState(false)
   const [disabled, setDisabled] = useState(true)
@@ -40,7 +40,7 @@ export default function Page2({ info, setInfo }) {
   }
 
   return (
-    <PageBase toNext={"Page3"} disabled={disabled}>
+    <PageBase toNext={toNext} disabled={disabled}>
       <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="padding">
         {clicked === false && (
           <>
