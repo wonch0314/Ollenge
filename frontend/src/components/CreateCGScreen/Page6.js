@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import PageBase, { fontStyles } from "./PageBase"
 
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker"

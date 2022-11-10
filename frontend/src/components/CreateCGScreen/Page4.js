@@ -13,9 +13,8 @@ export default function Page4({ info, setInfo }) {
 
   return (
     <PageBase toNext={"Page5"} disabled={false}>
-      <View style={{ width: "100%", height: "100%", flex: 1, justifyContent: "center" }}>
+      <View style={styles.wholeFrame}>
         <View>
-          {/* <Text style={styles.Title}>챌린지 설명</Text> */}
           <Text style={styles.Content}>
             챌린지에 대한 설명을 간략히 입력해주세요!{"\n"}(선택사항)
           </Text>
@@ -34,6 +33,7 @@ export default function Page4({ info, setInfo }) {
 }
 
 const styles = {
+  wholeFrame: { width: "100%", height: "100%", flex: 1, justifyContent: "center" },
   inputArea: {
     backgroundColor: "white",
     textAlignVertical: "top",

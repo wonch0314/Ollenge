@@ -13,8 +13,8 @@ const words = {
 const reqForm = ["feature", "classifi", "none"]
 
 export default function Page2({ info, setInfo }) {
+  const [selIndex, setSelIndex] = useState(-1)
   const [auth, setAuth] = useState(info.authType)
-  const [selIndex, setSelIndex] = useState("none")
   const [disabled, setDisabled] = useState(true)
 
   useEffect(() => {

@@ -7,23 +7,23 @@ import TextInputContainer from "../common/TextInputContainer"
 export default function Page1({ info, setInfo }) {
   const [name, setName] = useState(info.challengeName)
   const [img, setImg] = useState(info.challengeImg)
-  const [baseImg, setBaseImg] = useState("")
+  const [AwsUrl, setAwsUrl] = useState("")
   const [disabled, setDisabled] = useState(true)
 
   useEffect(() => {
     setInfo(() => {
-      return { ...info, challengeName: name }
+      return { ...info, challengeName: name, challengeImg: AwsUrl }
     })
-  }, [name, setName])
+  }, [name, setName, AwsUrl, setAwsUrl])
 
   useEffect(() => {
-    setDisabled(!(name !== ""))
+    setDisabled(name === "")
   }, [name, img, disabled, setDisabled])
 
   return (
     <PageBase toNext={"Page2"} disabled={disabled}>
-      <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="padding">
-        <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setBaseImg} />
+      <View style={{ width: "100%", flex: 1 }}>
+        <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setAwsUrl} />
         <View style={{ width: "100%", flex: 1 }}>
           <Text style={frameStyles.inputArea}>팀 이름</Text>
           <View style={{ width: "100%" }}>
@@ -32,7 +32,7 @@ export default function Page1({ info, setInfo }) {
             </View>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </PageBase>
   )
 }

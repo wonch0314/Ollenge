@@ -19,7 +19,7 @@ import { StyleSheet } from "react-native"
 import DeviceInfo from "../../style/DeviceInfo"
 import { useNavigation } from "@react-navigation/native"
 
-const { dw, dh } = DeviceInfo
+const { dw } = DeviceInfo
 
 const CancelBtn = () => {
   return (
@@ -73,7 +73,9 @@ export default function PageBase(props) {
         locations={[0.2, 1]}
       >
         <View style={styles.TopArea}>
-          <View style={styles.ContentArea}>{props.children}</View>
+          <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="position">
+            <View style={styles.ContentArea}>{props.children}</View>
+          </KeyboardAvoidingView>
           {showKey !== true && props.hideBtn !== true && (
             <View style={styles.BottomArea}>
               <NextBtn

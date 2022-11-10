@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import PageBase, { fontStyles } from "./PageBase"
 import DeviceInfo from "../../style/DeviceInfo"
-import { styles } from "../common/AppCard"
+
 import { useNavigation } from "@react-navigation/native"
 import apiSet from "../../api/index"
 const { dw } = DeviceInfo
