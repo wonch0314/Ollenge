@@ -7,7 +7,7 @@ import ColorSet from "../../../style/ColorSet"
 
 import FirtstUserItem from "./FirstUserItem"
 import RankUserItem from "./RankUserItem"
-import MyRankItem from "../MyRankItem"
+import MyRankItem from "./MyRankItem"
 
 import { AuthContext } from "../../../../store/auth-context"
 
@@ -15,6 +15,7 @@ function UserRanking({ userList }) {
   const [myInfo, setMyInfo] = useState()
   const [myRank, setMyRank] = useState()
   const authCtx = useContext(AuthContext)
+  authCtx.userInfo.userId = 18
   return (
     <View style={styles.rootScreen}>
       <ScrollView style={styles.scrollScreen}>
@@ -33,7 +34,7 @@ function UserRanking({ userList }) {
           })}
         </View>
       </ScrollView>
-      {/* {myInfo ? <MyRankItem user={myInfo} rank={myRank} /> : null} */}
+      {myInfo ? <MyRankItem user={myInfo} rank={myRank} /> : null}
     </View>
   )
 }
