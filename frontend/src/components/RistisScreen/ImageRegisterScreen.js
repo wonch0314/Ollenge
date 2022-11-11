@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 
-import { Pressable, View, StyleSheet, Text, Button, Image, TextInput } from "react-native"
+import { View, StyleSheet, Text, Button, Image } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { Camera } from "expo-camera"
 import axios from "axios"
 import { decode as atob, encode as btoa } from "base-64"
-import AppText from "../common/AppText"
+import { RoomContext } from "../../../store/room-context"
 
 import { AuthorizationInstance } from "../../api/settings"
 
-function ImageRegisterPage({ route }) {
-  console.log(111, route)
-  const roomInfo = route.params.roomInfo
+function ImageRegisterScreen() {
+  const roomCtx = useContext(RoomContext)
+  const roomInfo = roomCtx.roomInfo
   const challengeId = roomInfo.challengeId // prop으로 challengeId 가져오고
   const methodNum = 0 // 인증 방식에 대하여, {0: std_img 등록, 1: feature 비교, 2: classification 3: common}
   const [hasCameraPermission, setHasCameraPermission] = useState(null)
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 })
-export default ImageRegisterPage
+export default ImageRegisterScreen
