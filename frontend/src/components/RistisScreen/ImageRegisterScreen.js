@@ -7,7 +7,11 @@ import axios from "axios"
 import { decode as atob, encode as btoa } from "base-64"
 import { RoomContext } from "../../../store/room-context"
 
+import { LinearGradient } from "expo-linear-gradient"
+import ColorSet from "../../style/ColorSet"
+
 import { AuthorizationInstance } from "../../api/settings"
+import TopMargin from "../common/TopMargin"
 
 function ImageRegisterScreen() {
   const roomCtx = useContext(RoomContext)
@@ -89,9 +93,17 @@ function ImageRegisterScreen() {
     return <Text>No access to camera</Text>
   }
   return (
-    <View style={{ flex: 1 }}>
+    <LinearGradient
+      colors={[
+        `${ColorSet.paleBlueColor(1)}`,
+        `${ColorSet.paleBlueColor(1)}`,
+        `${ColorSet.yellowColor(1)}`,
+      ]}
+      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+    >
+      <TopMargin />
       {!image ? (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, width: "100%", marginTop: "10%" }}>
           <View style={styles.cameraContainer}>
             <Camera
               ref={(ref) => setCamera(ref)}
@@ -109,7 +121,7 @@ function ImageRegisterScreen() {
           <Button title="Create Feed" onPress={() => createAuthImg()} />
         </View>
       )}
-    </View>
+    </LinearGradient>
   )
 }
 const styles = StyleSheet.create({
