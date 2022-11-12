@@ -52,6 +52,13 @@ function ResistScreen() {
     setVisible(false)
   }
 
+  function resetCamera() {
+    setUri()
+    setBase64()
+    hideModal()
+    cameraHandler()
+  }
+
   const containerStyle = {
     backgroundColor: `${ColorSet.paleBlueColor(1)}`,
     width: "100%",
@@ -65,14 +72,9 @@ function ResistScreen() {
           visible={visible}
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
-          style={{ alignItems: "center", padding: 0, margin: 0, flex: 1 }}
+          style={{ alignItems: "center", padding: 0, margin: 0, flex: 1, height: "100%" }}
         >
-          <ResistModalContent
-            uri={uri}
-            base64={base64}
-            cameraHandler={cameraHandler}
-            hideModal={hideModal}
-          />
+          <ResistModalContent uri={uri} base64={base64} resetCamera={resetCamera} />
         </Modal>
       </Portal>
       <LinearGradient
