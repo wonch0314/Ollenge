@@ -1,16 +1,39 @@
-import React, { Dimensions, Image } from "react-native"
+import React, { Dimensions, Image, Pressable, KeyboardAvoidingView, Modal } from "react-native"
+import { useState } from "react"
 import AppCard from "../common/AppCard"
 import styled from "styled-components"
 import AppBoldText from "../../components/common/AppBoldText"
 import AppText from "../../components/common/AppText"
 import defaultImage from "../../assets/images/default-image.png"
 import { CommentIcon } from "../../assets/images"
+import AppModal from "../../components/common/AppModal"
+import FeedComment from "./FeedComment"
+
 const windowWidth = Dimensions.get("window").width
 
 const FeedItem = (props) => {
+  const [openModal, setOpenModal] = useState(true)
+
+  const feedInfo = props.feedInfo
   const defaultImageUri = Image.resolveAssetSource(defaultImage).uri
+  const profileImg = feedInfo.item.profileImg
+  const nickname = feedInfo.item.nickname
+  const createdDatetime = feedInfo.item.createdDatetime
+  const feedImg = feedInfo.item.feedImg
+  const commentNum = feedInfo.item.commentNum
+  const feedContent = feedInfo.item.feedContent
+
+  const openAndClose = () => {
+    setOpenModal(!openModal)
+  }
+
   return (
     <FeedDistrict>
+      {!openModal && (
+        <Modal animationType="fade" statusBarTranslucent={true}>
+          <FeedComment openAndClose={openAndClose} feedInfo={props.feedInfo} />
+        </Modal>
+      )}
       <CardView>
         <AppCard>
           <InnerCard>
@@ -18,7 +41,7 @@ const FeedItem = (props) => {
               <TitleRow>
                 <UserImageView elevation={3}>
                   <Image
-                    source={{ uri: defaultImageUri }}
+                    source={profileImg ? { uri: profileImg } : { uri: defaultImageUri }}
                     style={{ width: "100%", height: "100%", borderRadius: 45 }}
                     resizeMode="cover"
                   />
@@ -26,46 +49,48 @@ const FeedItem = (props) => {
                 <UserView>
                   <UserNameView>
                     <AppBoldText align={"left"} pxSize={20}>
-                      차노차노
+                      {nickname}
                     </AppBoldText>
                   </UserNameView>
                   <DateTimeView>
-                    <AppBoldText align={"left"} pxSize={15}>
-                      차노차노
-                    </AppBoldText>
+                    <AppText align={"left"} pxSize={15}>
+                      {createdDatetime}
+                    </AppText>
                   </DateTimeView>
                 </UserView>
               </TitleRow>
               <ImageRow>
                 <FeedImage elevation={7}>
                   <Image
-                    source={{ uri: defaultImageUri }}
+                    source={feedImg ? { uri: feedImg } : { uri: defaultImageUri }}
                     style={{ width: "100%", height: "100%", borderRadius: 20 }}
                     resizeMode="cover"
                   />
                 </FeedImage>
               </ImageRow>
               <TextRow>
-                <FeedTextRow>
-                  <AppText
-                    style={{
-                      width: "100%",
-                    }}
-                    pxSize={18}
-                    lineNumber={1}
-                    align={"left"}
-                  >
-                    오늘 챌린지 인증 완료!
-                  </AppText>
-                </FeedTextRow>
-                <FeedCommentRow>
-                  <CommentImage>
-                    <CommentIcon />
-                  </CommentImage>
-                  <AppText pxSize={14} color="lightBlue">
-                    댓글 2개 모두 보기
-                  </AppText>
-                </FeedCommentRow>
+                <Pressable style={{ width: "100%", height: "100%" }} onPress={openAndClose}>
+                  <FeedTextRow>
+                    <AppText
+                      style={{
+                        width: "100%",
+                      }}
+                      pxSize={18}
+                      lineNumber={1}
+                      align={"left"}
+                    >
+                      {feedContent}
+                    </AppText>
+                  </FeedTextRow>
+                  <FeedCommentRow>
+                    <CommentImage>
+                      <CommentIcon />
+                    </CommentImage>
+                    <AppText pxSize={14} color="lightBlue">
+                      {commentNum ? `댓글 ${commentNum}개 모두 보기` : "아직 댓글이 없습니다"}
+                    </AppText>
+                  </FeedCommentRow>
+                </Pressable>
               </TextRow>
             </ContentCard>
           </InnerCard>

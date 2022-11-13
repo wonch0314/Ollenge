@@ -16,7 +16,7 @@ const FeedsArea = () => {
       commentNum: 3,
     },
     {
-      feedID: 1,
+      feedID: 2,
       feedType: "assdf",
       profileImg: "https://homybk.s3.ap-northeast-2.amazonaws.com/cat.jpg",
       userId: 37,
@@ -27,7 +27,7 @@ const FeedsArea = () => {
       commentNum: 3,
     },
     {
-      feedID: 1,
+      feedID: 3,
       feedType: "assdf",
       profileImg: "https://homybk.s3.ap-northeast-2.amazonaws.com/cat.jpg",
       userId: 37,
@@ -43,7 +43,13 @@ const FeedsArea = () => {
 
   const feedItem = (feedInfo) => <FeedItem feedInfo={feedInfo} />
 
-  return <FeedBody data={feedsList} renderItem={feedItem}></FeedBody>
+  return (
+    <FeedBody
+      data={feedsList}
+      renderItem={feedItem}
+      keyExtractor={(feedInfo) => feedInfo.feedID}
+    ></FeedBody>
+  )
 }
 
 const FeedBody = styled.FlatList`
