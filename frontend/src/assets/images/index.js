@@ -19,6 +19,8 @@ import { Image } from "react-native"
 import Triangle from "./triangle-icon.png"
 import Triangle2 from "./triangle-icon2.png"
 
+import Comment from "./comment-icon.png"
+
 export function OrangeLogo() {
   return <Image source={Orange} style={{ width: "100%", zIndex: -1 }} resizeMode="contain" />
 }
@@ -82,4 +84,8 @@ export function ExclamMartIcon() {
 
 export function ClockIcon() {
   return <Image source={Clock} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
+}
+
+export function CommentIcon() {
+  return <Image source={Comment} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
 }
