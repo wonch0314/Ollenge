@@ -6,7 +6,7 @@ import TopMargin from "../common/TopMargin"
 import { AntDesign } from "@expo/vector-icons"
 import AppBoldText from "../common/AppBoldText"
 import AppText from "../common/AppText"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import defaultImage from "../../assets/images/default-image.png"
 import CommentItem from "./CommentItem"
 
@@ -14,7 +14,7 @@ import CommentItem from "./CommentItem"
 
 const windowWidth = Dimensions.get("window").width
 
-const FeedComment = (props) => {
+const CommentArea = (props) => {
   const defaultImageUri = Image.resolveAssetSource(defaultImage).uri
   const openAndClose = props.openAndClose
 
@@ -134,7 +134,7 @@ const FeedComment = (props) => {
   )
 }
 
-export default FeedComment
+export default CommentArea
 
 const Body = styled.KeyboardAvoidingView`
   flex: 1;

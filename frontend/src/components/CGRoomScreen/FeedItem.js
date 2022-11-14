@@ -7,7 +7,7 @@ import AppText from "../../components/common/AppText"
 import defaultImage from "../../assets/images/default-image.png"
 import { CommentIcon } from "../../assets/images"
 import AppModal from "../../components/common/AppModal"
-import FeedComment from "./FeedComment"
+import CommentArea from "./CommentArea"
 
 const windowWidth = Dimensions.get("window").width
 
@@ -31,7 +31,7 @@ const FeedItem = (props) => {
     <FeedDistrict>
       {!openModal && (
         <Modal animationType="fade" statusBarTranslucent={true}>
-          <FeedComment openAndClose={openAndClose} feedInfo={props.feedInfo} />
+          <CommentArea openAndClose={openAndClose} feedInfo={props.feedInfo} />
         </Modal>
       )}
       <CardView>
