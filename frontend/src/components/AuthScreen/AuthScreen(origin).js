@@ -9,11 +9,9 @@ import AppText from "../common/AppText"
 
 import { AuthorizationInstance } from "../../api/settings"
 
-function ImageRegisterPage({ route }) {
-  console.log(111, route)
-  const roomInfo = route.params.roomInfo
-  const challengeId = roomInfo.challengeId // prop으로 challengeId 가져오고
-  const methodNum = 0 // 인증 방식에 대하여, {0: std_img 등록, 1: feature 비교, 2: classification 3: common}
+function AuthScreennnn({ route }, { roomInfo }) {
+  const participationId = route.params.participationId // prop으로 participation_id 가져오고
+  const methodNum = route.params.methodNum // 인증 방식에 대하여, {0: std_img 등록, 1: feature 비교, 2: classification 3: common}
   const [hasCameraPermission, setHasCameraPermission] = useState(null)
   const [camera, setCamera] = useState(null)
   const [image, setImage] = useState(null) // 사진 uri
@@ -21,6 +19,7 @@ function ImageRegisterPage({ route }) {
   const [base64, setBase64] = useState(null) // 사진 base64
   const [text, onChangeText] = useState("i'm feed") // 텍스트 기본 문구 설정 해야함
   const [type, setType] = useState(Camera.Constants.Type.back)
+  const BaseUrl = "https://k7a501.p.ssafy.io" // BaseUrl 설정 해야함
   const urlType = ["/auth/stdimg", "/auth/feature", "/auth/classification", "/auth/common"]
 
   const instance = AuthorizationInstance()
@@ -31,6 +30,23 @@ function ImageRegisterPage({ route }) {
       const cameraStatus = await Camera.requestCameraPermissionsAsync()
       setHasCameraPermission(cameraStatus.status === "granted")
     })()
+    if (methodNum == 1) {
+      //기준 이미지 불러오기
+      await axios({
+        method: "get",
+        url: BaseUrl + "/auth/isstdimg/" + participationId.toString(),
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => {
+          console.log(res.status, res.data.message)
+          setStdimg(res.data.stdimg)
+        })
+        .catch((error) => {
+          console.log(error.response.data.errcode)
+        })
+    }
   }, [])
 
   const takePicture = async () => {
@@ -47,18 +63,29 @@ function ImageRegisterPage({ route }) {
     }
   }
   const createAuthImg = async () => {
-    const dataForm = [{ challenge_id: challengeId, std_img: base64 }]
+    const dataForm = [
+      { participation_id: participationId, std_img: base64 },
+      { participation_id: participationId, feed_img: base64, feed_content: text },
+      {
+        participation_id: participationId,
+        feed_img: base64,
+        feed_content: text,
+        classification_keyword: "laptop", // 나중에 keyword 입력 해야함
+      },
+      { participation_id: participationId, feed_img: base64, feed_content: text },
+      { participation_id: participationId, feed_img: base64, feed_content: text },
+    ]
     await instance
       .post(urlType[methodNum], dataForm[methodNum], {})
       .then((res) => {
         console.log(res.status, res.data.message)
+        onChangeText("i'm feed")
         setImage(null)
-        navigation.goBack("CGRoom")
+        navigation.push("CGRoom", (roomInfo = { roomInfo }))
       })
       .catch((err) => {
         console.log(err)
         setImage(null)
-        navigation.goBack("CGRoom")
       })
     // const to_URL = BaseUrl + urlType[methodNum]
     // console.log(to_URL)
@@ -107,6 +134,7 @@ function ImageRegisterPage({ route }) {
         <View style={{ flex: 1 }}>
           <Image source={{ uri: image }} style={{ flex: 1 }} />
           <Button title="Create Feed" onPress={() => createAuthImg()} />
+          <TextInput style={styles.input} onChangeText={onChangeText} value={text} />
         </View>
       )}
     </View>
@@ -128,4 +156,4 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 })
-export default ImageRegisterPage
+export default AuthScreennnn
