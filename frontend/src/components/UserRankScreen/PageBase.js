@@ -18,7 +18,7 @@ export default function PageBase(props) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <LinearGradient
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center" }}
         colors={[`${ColorSet.paleBlueColor(1)}`, `${ColorSet.yellowColor(1)}`]}
         end={{ x: 0, y: 1 }}
         locations={[0.8, 1]}

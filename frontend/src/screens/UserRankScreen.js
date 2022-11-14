@@ -19,11 +19,11 @@ function UserRankScreen() {
   const getInfo = async () => {
     const instance = AuthorizationInstance()
     await instance.get("/api/user/ranking").then((res) => {
-      console.log(res.data)
       setData(res.data)
       setStatus("idle")
     })
   }
+
   useEffect(() => {
     if (status === "pending") {
       getInfo()
@@ -45,7 +45,7 @@ function UserRankScreen() {
             <Stack.Screen name="RankList" options={{ headerShown: false }}>
               {() => <RankList rankInfo={data} />}
             </Stack.Screen>
-            <Stack.Screen name="UserBadge">{() => <ShowUserBadge />}</Stack.Screen>
+            <Stack.Screen name="UserBadge" component={ShowUserBadge} />
           </Stack.Navigator>
         </NavigationContainer>
       )}

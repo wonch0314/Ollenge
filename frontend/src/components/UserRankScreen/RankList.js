@@ -36,7 +36,7 @@ export default function RankList({ rankInfo }) {
             margin: 4,
             paddingTop: 8,
             borderRadius: 12,
-            backgroundColor: "rgba(255, 255, 255, 1)",
+            backgroundColor: "rgba(255, 255, 255, 0)",
           }}
         >
           <UserCard user={myInfo} />

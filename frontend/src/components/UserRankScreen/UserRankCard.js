@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import AppText from "../common/AppText"
@@ -49,15 +50,19 @@ export const UserCard = ({ user }) => {
 export default function UserRankCard({ userList }) {
   const navigation = useNavigation()
 
-  function editPressHandler(num) {
-    navigation.push("UserBadge", { num })
+  function getDetail(user) {
+    navigation.navigate("UserBadge", { user })
   }
 
   return (
     <>
       <ScrollView style={{ width: "100%", flex: 1, paddingTop: 24 }}>
         {userList.map((user) => {
-          return <UserCard key={user.userId} user={user} />
+          return (
+            <TouchableOpacity key={user.userId} style={{ flex: 1 }} onPress={() => getDetail(user)}>
+              <UserCard user={user} />
+            </TouchableOpacity>
+          )
         })}
       </ScrollView>
     </>
@@ -86,7 +91,8 @@ const frameStyles = StyleSheet.create({
     flex: 16,
     flexDirection: "row",
     borderRadius: 10,
-    backgroundColor: `${ColorSet.whiteColor(0.7)}`,
+    backgroundColor: "rgb(250, 253, 255)",
+    elevation: 8,
   },
 
   rankNum: { ...baseStyle(2) },
