@@ -862,7 +862,7 @@ async def featimg(data:FeatureInput, Authorization: Optional[str] = Header(None)
             status_code=400,
             content={
                 "message": f"사진이 일치하지 않습니다.",
-                "errcode": 11
+                "errcode": 12
                 },
         )
     else:
