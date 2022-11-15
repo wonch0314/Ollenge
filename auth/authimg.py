@@ -960,7 +960,7 @@ async def isauthedtoday(challenge_id: int, Authorization: Optional[str] = Header
         )
 
 
-@app.get("/auth/isstdimg/{participation_id}")
+@app.get("/auth/isstdimg/{challenge_id}")
 async def isstdimg(challenge_id: str, Authorization: Optional[str] = Header(None)):
     if Authorization:
         btoken = Authorization.split()[1]
