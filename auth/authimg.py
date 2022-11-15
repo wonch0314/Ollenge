@@ -650,7 +650,10 @@ async def test(data: StdImgInput, Authorization: Optional[str] = Header(None)):
             to = make_std_url_name(participation_id)
             file_url = s3_upload(filename, 'homybk', to)
             if file_url:
+                now = datetime.now()
+                feed_time = now.strftime("%Y%m%d%H%M%S")
                 execute_insert_std_img(participation_id, file_url)
+                execute_insert_feed(participation_id, file_url, "", feed_time)
         except Exception as e:
             print(e)
             remove_img(filename)
