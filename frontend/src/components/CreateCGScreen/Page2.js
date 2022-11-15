@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { KeyboardAvoidingView, Pressable, ScrollView, Text, View } from "react-native"
 import ColorSet from "../../style/ColorSet"
-import { dw } from "../../style/DeviceInfo"
+import { dh, dw } from "../../style/DeviceInfo"
 import PageBase, { fontStyles } from "./PageBase"
 import CustomTopicInput from "./CustomTopicInput"
 
@@ -40,7 +40,8 @@ export default function Page2({ info, setInfo, toNext, cancelAll }) {
   }
 
   return (
-    <PageBase toNext={toNext} disabled={disabled} cancelAll={cancelAll}>
+    <PageBase toNext={toNext} disabled={disabled} hideBtn={clicked} cancelAll={cancelAll}>
+      <Text style={textStyles.header}>팀 목표 설정</Text>
       <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="padding">
         {clicked === false && (
           <>
@@ -95,13 +96,12 @@ const frameStyles = {
 
   rankingCard: (isPicked) => {
     return {
-      width: dw * 0.4,
-      height: dw * 0.4,
+      width: dh * 0.15,
+      height: dh * 0.15,
       borderRadius: 36,
       backgroundColor: isPicked ? `${ColorSet.navyColor(1)}` : "white",
-      padding: 12,
       justifyContent: "center",
-      marginRight: 12,
+      margin: dh * 0.005,
       elevation: 6,
     }
   },
@@ -117,6 +117,11 @@ const frameStyles = {
 }
 
 const textStyles = {
+  header: {
+    ...fontStyles.HyeminBold({ size: 9 }),
+    textAlign: "center",
+  },
+
   Title: {
     ...fontStyles.HyeminBold({ size: 8 }),
   },

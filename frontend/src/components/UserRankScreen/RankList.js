@@ -1,17 +1,15 @@
 import React from "react"
-import { Button, ScrollView, View } from "react-native"
-import TopMargin from "../common/TopMargin"
+import { ScrollView, View } from "react-native"
+
 import TopUserArea from "./TopUserArea"
 import UserRankCard from "./UserRankCard"
-import { LinearGradient } from "expo-linear-gradient"
-import ColorSet from "../../style/ColorSet"
 import DeviceInfo from "../../style/DeviceInfo"
 import PageBase from "./PageBase"
 import { UserCard } from "./UserRankCard"
 
-const { dw, dh } = DeviceInfo
+const { dw } = DeviceInfo
 
-export default function RankList({ rankInfo }) {
+const RankList = ({ rankInfo }) => {
   const userList = rankInfo.rankingList
   const myInfo = rankInfo.userRank
   return (
@@ -45,3 +43,5 @@ export default function RankList({ rankInfo }) {
     </PageBase>
   )
 }
+
+export default RankList

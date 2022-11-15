@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Pressable, Text, View } from "react-native"
 import ColorSet from "../../style/ColorSet"
+import { dh } from "../../style/DeviceInfo"
 import PageBase, { fontStyles } from "./PageBase"
 
 const words = {
@@ -26,6 +27,7 @@ export default function Page2({ info, setInfo, toNext, cancelAll }) {
 
   return (
     <PageBase toNext={toNext} disabled={disabled} cancelAll={cancelAll}>
+      <Text style={styles.header}>팀 목표 설정</Text>
       {/* 랭킹 챌린지 종류별 카드 렌더링 */}
       {Object.keys(words).map((key, ind) => {
         return (
@@ -75,4 +77,6 @@ const styles = {
       padding: 12,
     }
   },
+
+  header: { ...fontStyles.HyeminBold({ size: 9 }), textAlign: "center", marginBottom: dh * 0.04 },
 }

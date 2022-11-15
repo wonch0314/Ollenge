@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react"
 import RankList from "../components/UserRankScreen/RankList"
 import ShowUserBadge from "../components/UserRankScreen/ShowUserBadge"
 
-import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import ColorSet from "../style/ColorSet"
 import { Text, View } from "react-native"
-import userAPI from "../api/user/user"
+
 import PageBase from "../components/UserRankScreen/PageBase"
 import { AuthorizationInstance } from "../api/settings"
 
 const Stack = createNativeStackNavigator()
 
-function UserRankScreen() {
+const UserRankScreen = () => {
   const [data, setData] = useState({})
   const [status, setStatus] = useState("pending")
 
