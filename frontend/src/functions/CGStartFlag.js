@@ -4,7 +4,6 @@ const CGStartFlag = function (startDate, endDate) {
   const now = LocalTime()
   const start = DateTime(startDate, "00:00:00")
   const end = DateTime(endDate, "23:59:59")
-  console.log(now, start, end)
   if (now < start) {
     return "waiting"
   } else if (start <= now < end) {

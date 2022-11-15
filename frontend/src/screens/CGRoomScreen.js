@@ -7,7 +7,7 @@ import { Provider } from "react-native-paper"
 import { useHeaderHeight } from "@react-navigation/elements"
 
 import ColorSet from "../style/ColorSet"
-import { LocalTime, DateTime, TodayCheck, CGStartFlag } from "../functions/index"
+import { LocalTime, DateTime, CGStartFlag, CGAuthTimeFlag } from "../functions/index"
 import { RoomContext } from "../../store/room-context"
 import { AuthContext } from "../../store/auth-context"
 
@@ -36,15 +36,9 @@ function CGRoomScreen() {
   const [isResist, setIsResist] = useState(false)
   const [isTime, setIsTime] = useState(false)
 
-  console.log(CGStartFlag(roomInfo.startDate, roomInfo.endDate))
-
   useEffect(() => {
-    const now = LocalTime()
-    const start = DateTime(roomInfo.startDate, roomInfo.startTime)
-    console.log(start)
-    if (now.getTime() >= start.getTime()) {
-      setIsStarted(true)
-    }
+    setIsStarted(CGStartFlag(roomInfo.startDate, roomInfo.endDate))
+    setIsTime(CGAuthTimeFlag(roomInfo.startTime, roomInfo.endTime))
   }, [roomInfo])
 
   useEffect(() => {
@@ -63,7 +57,7 @@ function CGRoomScreen() {
         <CGRoomInfoTag roomInfo={roomInfo} userList={userList} />
         <View style={styles.buttonContainer}>
           <CGStartCount />
-          <TodayAuthCount />
+          <TodayAuthCount isTime={isTime} />
           <InviteCodeBtn inviteCode={roomInfo.inviteCode} challengeId={roomInfo.challengeId} />
           <CGAuthBtn navigation={navigation} />
           <ImageResistBtn navigation={navigation} roomInfo={roomInfo} />
