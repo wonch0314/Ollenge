@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react"
 
-import { View, StyleSheet, Alert } from "react-native"
+import { View, StyleSheet, Alert, ScrollView } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Provider } from "react-native-paper"
 import { useHeaderHeight } from "@react-navigation/elements"
 
 import ColorSet from "../style/ColorSet"
-import { LocalTime, DateTime, TodayCheck } from "../functions/index"
+import { LocalTime, DateTime, TodayCheck, CGStartFlag } from "../functions/index"
 import { RoomContext } from "../../store/room-context"
 import { AuthContext } from "../../store/auth-context"
 
@@ -21,6 +21,7 @@ import CGStartCount from "../components/CGRoomScreen/CGStartCount"
 import TodayAuthCount from "../components/CGRoomScreen/TodayAuthCount"
 import CGLeaveBtn from "../components/CGRoomScreen/CGLeaveBtn"
 import FeedsArea from "../components/CGRoomScreen/FeedsArea"
+import AppBoldText from "../components/common/AppBoldText"
 
 function CGRoomScreen() {
   const roomCtx = useContext(RoomContext)
@@ -30,13 +31,17 @@ function CGRoomScreen() {
 
   const navigation = useNavigation()
   const headerHight = useHeaderHeight()
-  const [isStarted, setIsStarted] = useState(false)
+  const [isStarted, setIsStarted] = useState("")
   const [isAuthed, setIsAuth] = useState(false)
   const [isResist, setIsResist] = useState(false)
+  const [isTime, setIsTime] = useState(false)
+
+  console.log(CGStartFlag(roomInfo.startDate, roomInfo.endDate))
 
   useEffect(() => {
     const now = LocalTime()
     const start = DateTime(roomInfo.startDate, roomInfo.startTime)
+    console.log(start)
     if (now.getTime() >= start.getTime()) {
       setIsStarted(true)
     }
@@ -56,7 +61,6 @@ function CGRoomScreen() {
         <View style={{ height: headerHight }} />
         <UserListTap navigation={navigation} />
         <CGRoomInfoTag roomInfo={roomInfo} userList={userList} />
-
         <View style={styles.buttonContainer}>
           <CGStartCount />
           <TodayAuthCount />
