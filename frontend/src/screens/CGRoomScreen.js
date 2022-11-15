@@ -34,6 +34,8 @@ function CGRoomScreen() {
   const [isAuthed, setIsAuth] = useState(false)
   const [isResist, setIsResist] = useState(false)
 
+  console.log(isResist)
+
   useEffect(() => {
     const now = LocalTime()
     const start = DateTime(roomInfo.startDate, roomInfo.startTime)
