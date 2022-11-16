@@ -6,6 +6,7 @@ import PageBase from "./PageBase"
 import AppText from "../common/AppText"
 import { AuthorizationInstance } from "../../api/settings"
 import NotGainedBedgeItem from "../MyPageScreen/NotGainedBedgeItem"
+import AppBoldText from "../common/AppBoldText"
 
 const { dw, dh } = DeviceInfo
 const instance = AuthorizationInstance()
@@ -27,7 +28,7 @@ const initialBadgeGrades = {
 }
 
 const ShowUserBadge = ({ navigation, route }) => {
-  const { nickname, userScore, userId } = route.params.user
+  const { nickname, userScore, userId, profileImg } = route.params.user
   const [status, setStatus] = useState("pending")
   const [badgeGrades, setBadgeGrades] = useState({ ...initialBadgeGrades })
   const [badges, setBadges] = useState()
@@ -41,7 +42,6 @@ const ShowUserBadge = ({ navigation, route }) => {
       }
     })
     setBadgeGrades(temp)
-    console.log(temp)
   }
   useEffect(() => {
     const focusEvent = navigation.addListener("focus", () => {
@@ -70,12 +70,16 @@ const ShowUserBadge = ({ navigation, route }) => {
           <View style={frameStyles.whole}>
             <View style={frameStyles.profile}>
               <Image
-                source={require("../../assets/profile/me2.jpg")}
+                source={
+                  profileImg === null
+                    ? require("../../assets/images/default-image.png")
+                    : profileImg
+                }
                 style={{ width: dw * 0.35, height: dw * 0.35 }}
               />
             </View>
-            <View alignItems="center" style={{ marginVertical: dh * 0.04 }}>
-              <AppText size={6}>{nickname}</AppText>
+            <View alignItems="center" style={{ marginVertical: dh * 0.025 }}>
+              <AppBoldText size={6}>{nickname}</AppBoldText>
               <AppText size={4} color={"orange"}>
                 {userScore}점
               </AppText>
@@ -87,37 +91,21 @@ const ShowUserBadge = ({ navigation, route }) => {
               return (
                 <View key={index} style={frameStyles.badgeFrame}>
                   {types.map((type) => {
-                    // console.log(badgesTitle[type].src[badgeGrades[type]])
                     const temp = badgeGrades[type] - 1
                     const badgeInd = temp !== -1 ? temp : 0
 
                     return (
                       <View key={type} style={frameStyles.badge}>
-                        <ImageBackground
+                        <Image
                           source={badgesTitle[type].src[badgeInd]}
-                          style={{ width: dw * 0.25, height: dw * 0.25, justifyContent: "center" }}
-                          blurRadius={temp === -1 ? 10 : 0}
-                        >
-                          {temp === -1 && (
-                            <View
-                              style={{
-                                flex: 1,
-                                justifyContent: "center",
-                                backgroundColor: "rgba(217, 217, 217, 0.7)",
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  textAlign: "center",
-                                  fontFamily: "HyeminBold",
-                                  fontSize: dw * 0.04,
-                                }}
-                              >
-                                아직 획득하지{"\n"}못했습니다!
-                              </Text>
-                            </View>
-                          )}
-                        </ImageBackground>
+                          style={{
+                            width: dw * 0.22,
+                            height: dw * 0.22,
+                            justifyContent: "center",
+                            tintColor: temp === -1 ? "gray" : null,
+                            opacity: temp === -1 ? 0.3 : 1,
+                          }}
+                        ></Image>
                       </View>
                     )
                   })}
@@ -133,19 +121,19 @@ const ShowUserBadge = ({ navigation, route }) => {
 
 const frameStyles = StyleSheet.create({
   whole: { width: "100%", marginBottom: dh * 0.02, alignItems: "center" },
-  profile: { borderRadius: 12, overflow: "hidden", elevation: 20 },
+  profile: { borderRadius: 200, overflow: "hidden", elevation: 20 },
   badgeFrame: { flexDirection: "row", justifyContent: "center" },
   badge: {
     borderRadius: 10,
     overflow: "hidden",
-    margin: "1%",
+    margin: "2%",
     elevation: 100,
   },
 })
 
 export default ShowUserBadge
 
-const badgesTitle = {
+export const badgesTitle = {
   user: {
     name: "꾸준한 노력가",
     title: "챌린지",

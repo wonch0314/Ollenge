@@ -8,26 +8,38 @@ import { Text, View } from "react-native"
 
 import PageBase from "../components/UserRankScreen/PageBase"
 import { AuthorizationInstance } from "../api/settings"
+import { useNavigation } from "@react-navigation/native"
 
 const Stack = createNativeStackNavigator()
 
 const UserRankScreen = () => {
   const [data, setData] = useState({})
   const [status, setStatus] = useState("pending")
+  const navigation = useNavigation()
 
   const getInfo = async () => {
     const instance = AuthorizationInstance()
     await instance.get("/api/user/ranking").then((res) => {
       setData(res.data)
+      console.log(res.data)
       setStatus("idle")
     })
   }
 
   useEffect(() => {
-    if (status === "pending") {
-      getInfo()
-    }
-  }, [])
+    const focusEvent = navigation.addListener("focus", () => {
+      const reload = async () => {
+        setStatus("pending")
+        const instance = AuthorizationInstance()
+        await instance.get("/api/user/ranking").then((res) => {
+          setData(res.data)
+          setStatus("idle")
+        })
+      }
+      reload()
+    })
+    return focusEvent
+  }, [navigation])
 
   return (
     <>
