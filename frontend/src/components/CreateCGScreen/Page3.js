@@ -6,12 +6,12 @@ import PageBase, { fontStyles } from "./PageBase"
 
 const words = {
   "이미지 비교": "최초 등록한 이미지를 기준으로 업로드 이미지와 비교하여 인증하는 방법입니다.",
-  "이미지 특성 분석":
-    "이미지에서 특성을 추출해 특정 단어와 매치되는 사진을 찍어 인증하는 방법입니다.",
   "자유 인증": "아무 사진을 등록해도 인증이 되는 방법입니다. 팀원들간의 기준에 따라 진행됩니다.",
+  // "이미지 특성 분석":
+  //   "이미지에서 특성을 추출해 특정 단어와 매치되는 사진을 찍어 인증하는 방법입니다.",
 }
 
-const reqForm = ["feature", "classifi", "none"]
+const reqForm = ["feature", "none", "classifi"]
 
 export default function Page2({ info, setInfo, toNext, cancelAll }) {
   const [selIndex, setSelIndex] = useState(-1)

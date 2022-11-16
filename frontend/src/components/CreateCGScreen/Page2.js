@@ -8,7 +8,7 @@ import CustomTopicInput from "./CustomTopicInput"
 const RankingCGs = ["아침 기상", "공부하기", "운동하기", "1일 1영양제", "1일 1샐러드", "정리정돈"]
 
 const words = {
-  TopTitle: "🍊 오랭지 목표 🍊",
+  TopTitle: "팀 목표 설정",
   TopContent: `오랭지에서 지정한${"\n"}목표와 인증 방식을 사용합니다.`,
 
   BotTitle: "원하시는 미션이 없나요?",
@@ -120,6 +120,7 @@ const textStyles = {
   header: {
     ...fontStyles.HyeminBold({ size: 9 }),
     textAlign: "center",
+    marginBottom: 12,
   },
 
   Title: {

@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native"
 import React, { useState } from "react"
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native"
+import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import ColorSet from "../../style/ColorSet"
 import PageBase, { fontStyles } from "./PageBase"
 
@@ -9,7 +9,6 @@ export default function CustinTopicInput({ topic, setTopic, setClicked }) {
 
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
-      <Text style={styles.titleText}>챌린지 목표 입력</Text>
       <Text style={styles.contentText}>진행할 목표을 입력해주세요</Text>
       <View style={styles.inputBox}>
         <TextInput
@@ -30,7 +29,7 @@ export default function CustinTopicInput({ topic, setTopic, setClicked }) {
         </Text>
       </View>
       <View flexDirection="row">
-        <Pressable
+        <TouchableOpacity
           style={{ flex: 1, padding: 4, marginTop: 24 }}
           onPress={() => {
             setTopic(inputText)
@@ -48,7 +47,7 @@ export default function CustinTopicInput({ topic, setTopic, setClicked }) {
           >
             목표 설정
           </Text>
-        </Pressable>
+        </TouchableOpacity>
         <Pressable
           style={{ flex: 1, padding: 4, marginTop: 24 }}
           onPress={() => {

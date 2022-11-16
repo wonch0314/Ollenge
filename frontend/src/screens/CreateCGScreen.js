@@ -67,7 +67,7 @@ export default function CreateCGScreen({ isRank = false, CGInfo = initialData })
       <Stack.Screen name="Page6" options={{ title: "" }}>
         {() => <Page6 info={info} setInfo={setInfo} toNext={"Page7"} cancelAll={goBack} />}
       </Stack.Screen>
-      <Stack.Screen name="Page7" options={{ title: "보상/벌칙 설정" }}>
+      <Stack.Screen name="Page7" options={{ title: "" }}>
         {() => <Page7 info={info} setInfo={setInfo} toNext={"Final"} cancelAll={goBack} />}
       </Stack.Screen>
       <Stack.Screen name="Final" options={{ title: "🍊" }}>
