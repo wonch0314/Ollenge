@@ -108,7 +108,7 @@ def execute_select_challenge_auth_time(participation_id):
 # challenge 오늘 인증 확인 용
 def execute_select_isauth(participation_id, feed_time):
     participation_id = int(participation_id)
-    sql = """SELECT * FROM feed WHERE participation_id=%s and created_datetime LIKE %s;"""
+    sql = """SELECT * FROM feed WHERE participation_id=%s and created_datetime LIKE %s and feed_type='user';"""
     qr = feed_time+"%"
     vals = (participation_id, qr)
     result = execute_select2(sql, vals)
