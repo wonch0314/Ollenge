@@ -150,7 +150,7 @@ export default function ProceedingCard(props) {
                         </View>
                       </ButtonInner>
                     </Button> */}
-                    {!participated && (
+                    {participated && (
                       <Button
                         style={{
                           backgroundColor: ColorSet.orangeColor(0.7),
