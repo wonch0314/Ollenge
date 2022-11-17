@@ -80,6 +80,4 @@ public class Challenge {
     @OneToMany(mappedBy = "challenge")
     List<Participation> participation;
 
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    boolean challengeFlag;
 }
