@@ -1,6 +1,15 @@
 import React, { useContext, useEffect, useState } from "react"
 
-import { View, StyleSheet, Pressable, Image, TextInput, Alert, Keyboard } from "react-native"
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  Image,
+  TextInput,
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+} from "react-native"
 import { useHeaderHeight } from "@react-navigation/elements"
 import { Button } from "react-native-paper"
 import * as ImagePicker from "expo-image-picker"
@@ -90,8 +99,9 @@ function AuthScreen({ route }) {
     await instance
       .post(urlType, dataForm, {})
       .then((res) => {
-        navigation.goBack("CGRoom")
+        console.log(res)
         showAuthModal()
+        navigation.goBack("CGRoom")
       })
       .catch((err) => {
         const errcode = err.response.data.errcode
@@ -123,11 +133,12 @@ function AuthScreen({ route }) {
           Alert.alert("사진이 일치하지 않습니다.") // 기준 사진과 일정 이상 일치하지 않는 겨우
         }
         navigation.goBack("CGRoom")
+        showAuthModal()
       })
   }
 
   return (
-    <View style={styles.rootScreen}>
+    <KeyboardAvoidingView style={styles.rootScreen} behavior={"height"}>
       <View style={{ height: headerHight }} />
       {loading && <Loader />}
       {showKey === false && (
@@ -175,7 +186,7 @@ function AuthScreen({ route }) {
           }}
         />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 export default AuthScreen

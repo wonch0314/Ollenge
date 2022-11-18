@@ -15,6 +15,7 @@ import CGRoomInfoTag from "../components/CGRoomScreen/CGRoomInfoTag"
 import CGLeaveBtn from "../components/CGRoomScreen/CGLeaveBtn"
 import FeedsArea from "../components/CGRoomScreen/FeedsArea"
 import EndCGModal from "../components/CGRoomScreen/EndCGModal"
+import CGAuthBtn from "../components/CGRoomScreen/CGAuthBtn"
 
 function CGRoomScreen() {
   const roomCtx = useContext(RoomContext)
@@ -66,12 +67,13 @@ function CGRoomScreen() {
         {isStarted == "waiting" && (
           <CGLeaveBtn challengeId={roomInfo.challengeId} userNum={userList.length} />
         )}
+        <CGAuthBtn navigation={navigation} />
         <FeedsArea
           roomInfo={roomInfo}
           isStarted={isStarted}
           isAuthed={isAuthed}
           isTime={isTime}
-          isResis={isResist}
+          isResist={isResist}
         ></FeedsArea>
       </LinearGradient>
     </Provider>
