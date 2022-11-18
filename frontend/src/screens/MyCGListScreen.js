@@ -1,4 +1,4 @@
-import React, { KeyboardAvoidingView } from "react-native"
+import React, { KeyboardAvoidingView, Text, View } from "react-native"
 import styled from "styled-components"
 import AppBoldText from "../components/common/AppBoldText"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
@@ -16,6 +16,8 @@ import AppButton from "../components/common/AppButton"
 import { AuthorizationInstance } from "../api/settings"
 import { useNavigation } from "@react-navigation/native"
 import { RoomContext } from "../../store/room-context"
+import AppText from "../components/common/AppText"
+import { RFPercentage } from "react-native-responsive-fontsize"
 
 function MyCGListScreen() {
   const Tab = createMaterialTopTabNavigator()
@@ -24,6 +26,7 @@ function MyCGListScreen() {
   const [showCodeInput, setShowCodeInput] = useState(false)
   const [inputValue, setInputValue] = useState("")
   const [errorFlag, setErrorFlag] = useState(true)
+
   const instance = AuthorizationInstance()
 
   const onStateChange = () => {
@@ -143,7 +146,21 @@ function MyCGListScreen() {
           >
             <Tab.Screen name="도전 중" component={Challenging} />
             <Tab.Screen name="시작 전" component={BeforeStart} />
-            <Tab.Screen name="종료" component={Ended} />
+            <Tab.Screen
+              name="종료"
+              component={Ended}
+              options={{
+                tabBarBadge: () => {
+                  return (
+                    <View style={{ position: "relative", right: "140%", bottom: "5%" }}>
+                      <AppBoldText size={2} color={"orange"}>
+                        new
+                      </AppBoldText>
+                    </View>
+                  )
+                },
+              }}
+            />
           </Tab.Navigator>
           <FAB.Group
             open={fabButton}

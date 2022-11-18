@@ -88,8 +88,6 @@ const Ended = ({ navigation }) => {
     navigation.push("CGRoom")
   }
 
-  const windowWidth = Dimensions.get("window").width
-
   return (
     <View
       style={{
