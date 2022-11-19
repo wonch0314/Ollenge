@@ -6,17 +6,40 @@ import TextInputContainer from "../common/TextInputContainer"
 import { dw, dh } from "../../style/DeviceInfo"
 import ColorSet from "../../style/ColorSet"
 import { RFPercentage } from "react-native-responsive-fontsize"
+import { AuthorizationInstance } from "../../api/settings"
 
 export default function Page1({ info, setInfo, toNext, cancelAll }) {
   const [name, setName] = useState(info.challengeName)
   const [img, setImg] = useState(info.challengeImg)
+  const [baseFile, setBaseFile] = useState("")
   const [AwsUrl, setAwsUrl] = useState("")
   const [disabled, setDisabled] = useState(true)
+
+  async function buttonHandler() {
+    const instance = AuthorizationInstance()
+
+    const data = new Object()
+    // 프로필 이미지 등록
+    if (baseFile !== "") {
+      await instance
+        .post("/auth/upload", { profile_img: baseFile }, {})
+        .then((res) => {
+          data.profileImg = `${res.data.profile_img}`
+          setAwsUrl(data.profileImg)
+          console.log("S3 URL: ", AwsUrl)
+        })
+        .catch((err) => console.log(err))
+    }
+  }
+
   useEffect(() => {
+    if (img !== "") {
+      buttonHandler()
+    }
     setInfo(() => {
       return { ...info, challengeName: name, challengeImg: AwsUrl }
     })
-  }, [name, setName, AwsUrl, setAwsUrl])
+  }, [name, setName, img, setAwsUrl])
 
   useEffect(() => {
     setDisabled(name.length < 2 || name.length > 12)
@@ -29,7 +52,7 @@ export default function Page1({ info, setInfo, toNext, cancelAll }) {
       <KeyboardAvoidingView style={{ width: "100%", flex: 1 }} behavior="height">
         <View style={{ height: "100%", justifyContent: "center" }}>
           <View flex={3}>
-            <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setAwsUrl} />
+            <ImagePicker imageUri={img} imageUriHandler={setImg} imageBase64Handler={setBaseFile} />
           </View>
           <View flex={2}>
             <Text style={frameStyles.inputArea}>팀 이름</Text>

@@ -152,6 +152,6 @@ const styles = {
     elevation: 12,
   },
   NextBtnText: {
-    ...fontStyles.HyeminBold({ size: 6, color: "white" }),
+    ...fontStyles.HyeminBold({ size: 5, color: "white" }),
   },
 }
