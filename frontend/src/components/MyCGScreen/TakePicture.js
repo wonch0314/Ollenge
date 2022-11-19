@@ -42,11 +42,16 @@ function TakePicture(props) {
   }, [])
 
   const takePicture = async () => {
+    // console.log("hi")
     if (camera) {
       const options = { quality: 0.5, base64: true }
       let photo = await camera.takePictureAsync(options)
       setImage(photo.uri)
+      // console.log(photo)
       setBase64(photo.base64)
+      // console.log("hihi")
+      // const file = dataURLtoFile("data:image/jpeg;base64," + imbase)
+      // formData.set("file", file)
     }
   }
   const createAuthImg = async () => {
