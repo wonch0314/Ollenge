@@ -33,7 +33,6 @@ function TakePicture(props) {
         },
       })
         .then((res) => {
-          console.log(res.status, res.data.message)
           setStdimg(res.data.stdimg)
         })
         .catch((error) => {
@@ -43,16 +42,11 @@ function TakePicture(props) {
   }, [])
 
   const takePicture = async () => {
-    // console.log("hi")
     if (camera) {
       const options = { quality: 0.5, base64: true }
       let photo = await camera.takePictureAsync(options)
       setImage(photo.uri)
-      // console.log(photo)
       setBase64(photo.base64)
-      // console.log("hihi")
-      // const file = dataURLtoFile("data:image/jpeg;base64," + imbase)
-      // formData.set("file", file)
     }
   }
   const createAuthImg = async () => {
@@ -79,7 +73,6 @@ function TakePicture(props) {
       data: dataForm[methodNum],
     })
       .then((res) => {
-        console.log(res.status, res.data.message)
         // 생성 완료시 빠져나가는 코드
         onChangeText("i'm feed")
         setImage(null)
