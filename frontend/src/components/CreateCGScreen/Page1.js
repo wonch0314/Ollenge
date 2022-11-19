@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { KeyboardAvoidingView, Text, View } from "react-native"
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native"
 import PageBase, { fontStyles } from "./PageBase"
 import ImagePicker from "../common/ImagePicker"
 import TextInputContainer from "../common/TextInputContainer"
 import { dw, dh } from "../../style/DeviceInfo"
 import ColorSet from "../../style/ColorSet"
+import { RFPercentage } from "react-native-responsive-fontsize"
 
 export default function Page1({ info, setInfo, toNext, cancelAll }) {
   const [name, setName] = useState(info.challengeName)
@@ -32,7 +33,7 @@ export default function Page1({ info, setInfo, toNext, cancelAll }) {
           </View>
           <View flex={2}>
             <Text style={frameStyles.inputArea}>팀 이름</Text>
-            <TextInputContainer inputText={name} inputHandler={setName} />
+            <TextInput style={styles.textInputBox} onChangeText={setName} value={name} />
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -42,8 +43,9 @@ export default function Page1({ info, setInfo, toNext, cancelAll }) {
 
 const frameStyles = {
   titleText: {
-    ...fontStyles.HyeminBold({ size: 9 }),
+    ...fontStyles.HyeminBold({ size: 8 }),
     textAlign: "center",
+    marginBottom: dh * 0.02,
   },
 
   inputArea: {
@@ -51,3 +53,27 @@ const frameStyles = {
     textAlign: "center",
   },
 }
+
+const styles = StyleSheet.create({
+  textInputBox: {
+    color: `${ColorSet.navyColor(1)}`,
+    backgroundColor: "rgb(255, 255, 255)",
+    width: "100%",
+    height: RFPercentage(8),
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+    fontSize: RFPercentage(3),
+    fontFamily: "HyeminRegular",
+    paddingHorizontal: 10,
+    marginBottom: "3%",
+    marginTop: "5%",
+  },
+})
