@@ -43,7 +43,7 @@ function CGRoomScreen() {
   useEffect(() => {
     setIsAuth(roomCtx.isAuthed)
     setIsResist(roomCtx.isResist)
-  }, [roomCtx])
+  }, [roomCtx.isAuthed, roomCtx, isResist])
 
   useEffect(() => {
     if (Object.keys(roomInfo).length !== 0) {
@@ -51,7 +51,7 @@ function CGRoomScreen() {
         setVisible(true)
       }
     }
-  }, [roomCtx])
+  }, [roomInfo])
 
   return (
     <Provider>
@@ -67,7 +67,6 @@ function CGRoomScreen() {
         {isStarted == "waiting" && (
           <CGLeaveBtn challengeId={roomInfo.challengeId} userNum={userList.length} />
         )}
-        <CGAuthBtn navigation={navigation} />
         <FeedsArea
           roomInfo={roomInfo}
           isStarted={isStarted}
@@ -80,31 +79,3 @@ function CGRoomScreen() {
   )
 }
 export default CGRoomScreen
-
-// 이하 예전 자료들
-{
-  /* <View style={styles.buttonContainer}>
-          {isStarted == "waiting" && (
-            <>
-              <CGStartCount />
-              <InviteCodeBtn inviteCode={roomInfo.inviteCode} challengeId={roomInfo.challengeId} />
-            </>
-          )}
-          {isStarted == "playing" && !isAuthed && <TodayAuthCount isTime={isTime} />}
-          {isStarted == "end" && <EndingReport />}
-          {isResist && isStarted == "playing" && isTime == "playing" && !isAuthed && (
-            <CGAuthBtn navigation={navigation} />
-          )}
-          {!isResist && <ImageResistBtn navigation={navigation} roomInfo={roomInfo} />}
-        </View> */
-}
-// const styles = StyleSheet.create({
-//   buttonContainer: {
-//     paddingHorizontal: "5%",
-//   },
-//   buttonBox: {
-//     width: "100%",
-//     height: "15%",
-//     marginTop: "5%",
-//   },
-// })

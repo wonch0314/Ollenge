@@ -99,9 +99,8 @@ function AuthScreen({ route }) {
     await instance
       .post(urlType, dataForm, {})
       .then((res) => {
-        console.log(res)
-        showAuthModal()
         navigation.goBack("CGRoom")
+        showAuthModal()
       })
       .catch((err) => {
         const errcode = err.response.data.errcode
@@ -133,7 +132,6 @@ function AuthScreen({ route }) {
           Alert.alert("사진이 일치하지 않습니다.") // 기준 사진과 일정 이상 일치하지 않는 겨우
         }
         navigation.goBack("CGRoom")
-        showAuthModal()
       })
   }
 
