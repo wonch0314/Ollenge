@@ -121,6 +121,7 @@ const textStyles = {
     ...fontStyles.HyeminBold({ size: 8 }),
     textAlign: "center",
     marginBottom: 12,
+    ...fontStyles.HyeminBold(),
   },
 
   Title: {

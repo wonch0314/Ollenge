@@ -108,6 +108,11 @@ export default function PageBase(props) {
 }
 
 export const fontStyles = StyleSheet.create({
+  /**
+   * @param {Object[]} props
+   * @param {number} props[].size
+   * @returns
+   */
   HyeminBold: (props) => {
     return {
       fontFamily: "HyeminBold",
